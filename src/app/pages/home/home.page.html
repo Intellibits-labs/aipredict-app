@@ -1,0 +1,55 @@
+<app-header></app-header>
+
+<ion-content>
+  <div class="main_content">
+    <div class="search">
+      <input
+        type="text"
+        class="searchTerm"
+        placeholder="What are you looking for?"
+      />
+      <ion-button type="submit" class="searchButton">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <h2 class="sub_title">Trending Assets</h2>
+
+    <ion-slides pager="false" [options]="AssetsSlideOpts">
+      <ion-slide *ngFor="let item of [0,1,2]">
+        <ion-card class="trending_card">
+          <div class="img_div">
+            <img src="assets/images/download.jpeg" alt="" />
+          </div>
+
+          <div class="details">
+            <p>
+              MSFT
+              <ion-icon class="down-icon" name="caret-down-outline"></ion-icon>
+              2.5%
+            </p>
+            <h3>$ 20,10,250</h3>
+          </div>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+    <h2 class="sub_title">Trending Communities</h2>
+
+    <ion-slides pager="false" [options]="CommunitiesSlideOpts">
+      <ion-slide
+        *ngFor="let item of [0,1,2,3,4,5,6]"
+        (click)="communityClick(item)"
+      >
+        <ion-card class="Communities_card">
+          <div class="img_div">
+            <img src="assets/images/download (1).jpeg" alt="" />
+          </div>
+
+          <h3 class="name">Stock</h3>
+          <p class="amount">$ 4,21,350</p>
+          <ion-button class="follow_btn" shape="round"> Follow </ion-button>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

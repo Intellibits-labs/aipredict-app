@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title>Log in </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="main-content">
+    <img class="logo" src="assets/images/logo.webp" alt="" />
+
+    <h2>Welcome back</h2>
+    <p class="desc">Please click your page</p>
+    <!-- <ts-google-signin></ts-google-signin> -->
+    <div *ngIf="!user" id="login-button-container" class="login_button">
+      <asl-google-signin-button
+        type="standard"
+        size="medium"
+        [style]="retracted ? 'display:none' : 'display:inherit'"
+      ></asl-google-signin-button>
+      <asl-google-signin-button
+        type="icon"
+        size="medium"
+        [style]="retracted ? 'display:inherit' : 'display:none'"
+      ></asl-google-signin-button>
+    </div>
+    <div
+      *ngIf="user"
+      id="logged-in-container"
+      [ngClass]="retracted ? 'one-column' : 'three-columns'"
+    >
+      <div class="photo_wrapper" (click)="retracted && signOut()">
+        <img src="{{ user.photoUrl }}" />
+      </div>
+      <p *ngIf="!retracted">{{ user.name }}</p>
+      <ion-icon
+        name="log-out-outline"
+        (click)="signOut()"
+        *ngIf="!retracted"
+      ></ion-icon>
+    </div>
+  </div>
+</ion-content>

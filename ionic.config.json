@@ -1,0 +1,7 @@
+{
+  "name": "aipredict",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

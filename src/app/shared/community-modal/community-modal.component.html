@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title>Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card class="profile_card">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="3">
+          <ion-thumbnail>
+            <img src="assets/images/download (1).jpeg" alt="" />
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col size="9">
+          <h2 class="name">Stock</h2>
+          <p class="work">private communities</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-segment value="active">
+    <ion-segment-button value="active">
+      <ion-label class="ion-text-capitalize">Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="fast">
+      <ion-label class="ion-text-capitalize">Fast</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-content>
