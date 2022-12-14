@@ -129,10 +129,7 @@ export class AuthService {
     return throwError(new Error('Unauthenticated'));
   }
   isLogged(): boolean {
-    return localStorage.getItem('token') ? true : false;
-  }
-  isStatusIncomplete(): boolean {
-    return localStorage.getItem('token') ? true : false;
+    return localStorage.getItem('session') ? true : false;
   }
   isprofileStatusIncomplete(): any {
     let user: any = localStorage.getItem('user');
@@ -174,24 +171,19 @@ export class AuthService {
     // );
   }
   get googleToken() {
-    return localStorage['user']
-      ? JSON.parse(localStorage['user']).idToken
+    return localStorage['googleUser']
+      ? JSON.parse(localStorage['googleUser']).idToken
       : null;
   }
   get accessToken() {
-    return localStorage['token']
-      ? JSON.parse(localStorage['token']).access.token
+    return localStorage['session']
+      ? JSON.parse(localStorage['session']).access.token
       : null;
   }
 
   get refreshToken() {
-    let session: any = localStorage.getItem('token');
+    let session: any = localStorage.getItem('session');
     let refresh = JSON.parse(session)?.refresh.token;
-    return session ? refresh : null;
-  }
-  get googleRefreshToken() {
-    let session: any = localStorage.getItem('user');
-    let refresh = JSON.parse(session)?.idToken;
     return session ? refresh : null;
   }
 }

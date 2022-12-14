@@ -2,6 +2,7 @@
   <ion-toolbar mode="md">
     <ion-buttons slot="end">
       <ion-button
+        *ngIf="!userData"
         class="logout"
         (click)="loginClick()"
         class="ion-text-capitalize"
@@ -10,11 +11,9 @@
         login
       </ion-button>
       <ion-button
-        class="login"
-        style="
-          background-image: url('assets/images/logo.webp');
-          background-size: cover;
-        "
+        *ngIf="userData"
+        class="login commonBackgroundImg"
+        [style.background]="'url(' + userData?.picture + ')'"
       >
       </ion-button>
     </ion-buttons>

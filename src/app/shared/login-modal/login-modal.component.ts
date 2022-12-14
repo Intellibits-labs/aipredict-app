@@ -34,20 +34,28 @@ export class LoginModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // (P x r x t) ÷ 100;
+
+    console.log(12000 * 12);
+
     // this.cookieService.deleteCookie('idToken');
     this._authService.authState.subscribe((user: any) => {
       this.user = user;
       console.log('🚀 ~ 37 ~ LoginModalComponent  ~ user', user);
       if (user) {
         this.cookieService.setCookie({ name: 'idToken', value: user.idToken });
-        localStorage.setItem('user', JSON.stringify(user));
-        this.dataService.getMethod(HttpApi.googleLogin).subscribe({
-          next: (res) => {
-            console.log(res);
-          },
-          error: (e) => console.log(e.message),
-          complete: () => console.log('complete'),
-        });
+        localStorage.setItem('googleUser', JSON.stringify(user));
+        this.dataService
+          .postMethod(HttpApi.googleLogin, { idToken: user.idToken })
+          .subscribe({
+            next: (res) => {
+              console.log(res);
+              localStorage.setItem('user', JSON.stringify(res.user));
+              localStorage.setItem('session', JSON.stringify(res.tokens));
+            },
+            error: (e) => console.log(e.message),
+            complete: () => console.log('complete'),
+          });
         this.modalController.dismiss();
       }
     });

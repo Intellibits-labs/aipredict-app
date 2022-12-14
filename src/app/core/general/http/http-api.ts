@@ -1,7 +1,7 @@
 export class HttpApi {
   // OAuth
   static oauthLogin = 'auth/login';
-  static me = 'user/me';
+  static me = 'users/me';
   static profileme = 'profile/me';
   static profilesearch = 'profile/search';
 

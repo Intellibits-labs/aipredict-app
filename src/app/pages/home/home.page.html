@@ -12,16 +12,13 @@
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
     </div>
-
     <h2 class="sub_title">Trending Assets</h2>
-
     <ion-slides pager="false" [options]="AssetsSlideOpts">
       <ion-slide *ngFor="let item of [0,1,2]">
         <ion-card class="trending_card">
           <div class="img_div">
             <img src="assets/images/download.jpeg" alt="" />
           </div>
-
           <div class="details">
             <p>
               MSFT
@@ -34,7 +31,6 @@
       </ion-slide>
     </ion-slides>
     <h2 class="sub_title">Trending Communities</h2>
-
     <ion-slides pager="false" [options]="CommunitiesSlideOpts">
       <ion-slide
         *ngFor="let item of [0,1,2,3,4,5,6]"
