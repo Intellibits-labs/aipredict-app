@@ -18,6 +18,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./home/home.module').then((m) => m.HomePageModule),
       },
+      {
+        path: 'prediction',
+        loadChildren: () =>
+          import('./prediction/prediction.module').then(
+            (m) => m.PredictionPageModule
+          ),
+      },
     ],
   },
 ];

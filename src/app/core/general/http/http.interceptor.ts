@@ -59,13 +59,13 @@ export class AppInterceptor implements HttpInterceptor {
     }
   }
   // Helpers and Casuistics
-  private isAuthenticationRequired(apiUrl: string): boolean {
+  private isAuthenticationRequired(apiUrl: any): boolean {
     // console.log(
     //   '🚀 ~ file: oauth2.interceptor.ts ~ line 60 ~ Oauth2Interceptor ~ isAuthenticationRequired ~ apiUrl',
     //   apiUrl
     // );
     // const blockedApiList = [HttpApi.oauthLogin, "assets/i18n"];
-    return apiUrl.includes('assets/i18n') ? false : true;
+    return apiUrl.includes('assets/i18n', 'www.alphavantage.co') ? false : true;
   }
 
   private handleSuccessfulResponse(event: any): HttpResponse<any> {
@@ -78,7 +78,7 @@ export class AppInterceptor implements HttpInterceptor {
   private handleErrorResponse(errorResponse: any): Observable<HttpEvent<any>> {
     if (errorResponse.url.includes('refresh-tokens')) {
       this.authService.logout();
-      this.navCtrl.navigateRoot(['/auth/']);
+      this.navCtrl.navigateRoot(['/']);
     }
     if (errorResponse instanceof TimeoutError) {
       return throwError('Timeout Exception');
@@ -90,9 +90,8 @@ export class AppInterceptor implements HttpInterceptor {
           return throwError(errorResponse.error);
         } else {
           this.authService.logout();
-          this.navCtrl.navigateRoot(['/auth/']);
+          this.navCtrl.navigateRoot(['/']);
         }
-
         break;
       case 503: // Service Unavailable
         break;

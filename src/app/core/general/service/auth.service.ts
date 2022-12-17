@@ -4,12 +4,13 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { empty, Observable, of, throwError } from 'rxjs';
+import { empty, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { HttpApi } from '../http/http-api';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 const OAUTH_DATA = environment.oauth;
 
@@ -17,7 +18,12 @@ const OAUTH_DATA = environment.oauth;
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  userSub = new Subject();
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private readonly _authService: SocialAuthService
+  ) {}
 
   register(userRequest: any): Observable<any> {
     // const data = {
@@ -31,6 +37,12 @@ export class AuthService {
         return response;
       })
     );
+  }
+  setUser(user: any) {
+    this.userSub.next(user);
+  }
+  getUser() {
+    return this.userSub;
   }
   login(userRequest: any): Observable<any> {
     // const data = {
@@ -131,44 +143,40 @@ export class AuthService {
   isLogged(): boolean {
     return localStorage.getItem('session') ? true : false;
   }
-  isprofileStatusIncomplete(): any {
-    let user: any = localStorage.getItem('user');
-    let userData = JSON.parse(user);
-    if (userData.personalInfoStatus == 0) {
-      return 0;
-    } else if (userData.verified == 1) {
-      return 1;
-    }
-  }
 
   logout() {
-    // let headers = new HttpHeaders();
-    // headers = headers.set('Content-Type', 'application/json');
-    // headers = headers.set('Authorization', 'Bearer ' + this.refreshToken);
-    // let rtoken = this.refreshToken;
-    // return this.http
-    //   .post(HttpApi.userLogout, { refresh_token: rtoken }, { headers: headers })
-    //   .pipe(
-    //     map((response: any) => {
-    //       return response;
-    //     })
-    //   );
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', 'Bearer ' + this.refreshToken);
+    let rtoken = this.refreshToken;
+    return this.http
+      .post(HttpApi.userLogout, { refresh_token: rtoken }, { headers: headers })
+      .pipe(
+        map((response: any) => {
+          console.log(response);
+
+          return response;
+        })
+      );
   }
   logoutUser() {
-    // this.logout().subscribe(
-    //   (x) => {
-    //     localStorage.clear();
-    //     this.router.navigate(['/splash']);
-    //   },
-    //   (err) => {
-    //     // console.log(
-    //     //   "🚀 ~ file: auth.service.ts ~ line 186 ~ AuthService ~ logoutUser ~ err",
-    //     //   err
-    //     // );
-    //     localStorage.clear();
-    //     this.router.navigate(['/splash']);
-    //   }
-    // );
+    this.logout().subscribe(
+      (x: any) => {
+        localStorage.clear();
+        this.router.navigate(['/splash']);
+        this.setUser(null);
+      },
+      (err: any) => {
+        // console.log(
+        //   "🚀 ~ file: auth.service.ts ~ line 186 ~ AuthService ~ logoutUser ~ err",
+        //   err
+        // );
+        this.setUser(null);
+        this._authService.signOut();
+        localStorage.clear();
+        this.router.navigate(['/splash']);
+      }
+    );
   }
   get googleToken() {
     return localStorage['googleUser']

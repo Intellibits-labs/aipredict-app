@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title>Stock details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div>
+    <p class="symbol_time">
+      <span class="stock_symbol"> TATACHEM.BSE</span>
+      <span class="time">Time : 09:00 to 17.40</span>
+    </p>
+    <h1 class="stock_name">TATA CHEMICALS LTD.</h1>
+    <h2 class="stock_price">
+      <span class="price">$ 2000.025</span>
+      <span *ngIf="symbolIcon" class="stock_percent_down"
+        ><ion-icon name="arrow-down-outline"></ion-icon>-252.058%
+      </span>
+      <span *ngIf="!symbolIcon" class="stock_percent_up"
+        ><ion-icon name="arrow-up-outline"></ion-icon>3250.254%
+      </span>
+    </h2>
+  </div>
+
+  <ion-segment [value]="segmentValue" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="active">
+      <ion-label class="ion-text-capitalize">Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="past">
+      <ion-label class="ion-text-capitalize">Past</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ng-container *ngIf="segmentValue == 'active'; else past">
+    <table class="active_table">
+      <thead>
+        <tr>
+          <th>Stock Name</th>
+          <th>Symbol</th>
+          <th>Tradedate</th>
+          <th>Buyprice</th>
+          <th>Sellprice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TATA CHEMICALS LTD.</td>
+          <td>TATACHEM.BSE</td>
+          <td>17/12/2022</td>
+          <td>$ 500</td>
+          <td>$ 600</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-template #past>
+    <table class="active_table">
+      <thead>
+        <tr>
+          <th>Stock Name</th>
+          <th>Symbol</th>
+          <th>Tradedate</th>
+          <th>Buyprice</th>
+          <th>Sellprice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TATA CHEMICALS LTD.</td>
+          <td>TATACHEM.BSE</td>
+          <td>17/12/2022</td>
+          <td>$ 500</td>
+          <td>$ 600</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</ion-content>

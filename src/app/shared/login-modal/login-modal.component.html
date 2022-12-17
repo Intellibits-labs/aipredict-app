@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar mode="md">
     <ion-title>Log in </ion-title>
     <ion-buttons slot="end">
@@ -7,18 +7,21 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 <ion-content>
   <div class="main-content">
     <img class="logo" src="assets/images/logo.webp" alt="" />
 
-    <h2>Welcome back</h2>
-    <p class="desc">Please click your page</p>
+    <h2>India Predict</h2>
+    <p class="desc">Please sign in to continue</p>
     <!-- <ts-google-signin></ts-google-signin> -->
     <div *ngIf="!user" id="login-button-container" class="login_button">
       <asl-google-signin-button
         type="standard"
-        size="medium"
+        size="large"
+        logo_alignment="left"
+        theme="filled_black"
+        width="400px"
         [style]="retracted ? 'display:none' : 'display:inherit'"
       ></asl-google-signin-button>
       <asl-google-signin-button

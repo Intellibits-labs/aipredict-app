@@ -1,10 +1,37 @@
 ion-header {
-  // .logout {
-  // }
-
+  ion-toolbar {
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-end: 10px;
+  }
   .login {
+    color: #ffffff;
+    --background: var(--ion-color-primary);
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --border-radius: 4px;
+  }
+  .logout {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+  }
+  .logo_img {
+    width: 200px;
+  }
+
+  .home_btn {
+    background: #ffffff;
+    border-bottom: 3px solid #ffffff;
+    height: 46px;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0;
+    margin-right: 10px;
+    padding: 0 20px;
+  }
+
+  .home_btn.selected {
+    border-bottom: 3px solid var(--ion-color-primary);
   }
 }

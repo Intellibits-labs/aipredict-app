@@ -12,10 +12,16 @@ export class HttpApi {
 
   static userRegister = 'user/register';
   static userLogin = 'user/login';
-  static userLogout = 'user/revoketoken';
+  static userLogout = 'auth/logout';
   static verifyOtp = 'user/verifyotp';
   static refreshToken = 'auth/refresh-tokens';
 
   //  googleLogin
   static googleLogin = 'auth/google';
+
+  // Prediction
+  static searchStock = 'stock/search/';
+  static getStock = 'stock/quote/';
+  static predictionNew = 'prediction/new';
+  static getPrediction = 'prediction';
 }

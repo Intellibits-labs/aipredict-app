@@ -1,0 +1,100 @@
+ion-content {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+
+  .input_item {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  .form_slide {
+    display: block !important;
+  }
+
+  .list_tag {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ion-searchbar.custom {
+    text-align: left;
+    --background: var(--ion-color-primary);
+    --color: #fff;
+    --placeholder-color: #fff;
+    --icon-color: #fff;
+    --clear-button-color: #fff;
+    --border-radius: 4px;
+    --box-shadow: none;
+  }
+  .stock_symbol {
+    text-align: left;
+    font-size: 13px;
+    margin-top: 0;
+    color: gray;
+    margin-bottom: 10px;
+  }
+  .stock_name {
+    font-size: 22px;
+    margin-top: 0;
+    color: #000000;
+    text-align: left;
+  }
+  .stock_price {
+    margin-top: 0;
+    text-align: left;
+    height: 37px;
+    line-height: 37px;
+
+    .price {
+      font-size: 24px;
+      color: #000000;
+      font-weight: 600;
+    }
+    .stock_percent_down {
+      background: #f3b3b3;
+      padding: 10px;
+      border-radius: 8px;
+      color: #b73f3f;
+      margin-left: 10px;
+      font-size: 16px;
+      ion-icon {
+        color: #b73f3f;
+        font-size: 16px;
+      }
+    }
+    .stock_percent_up {
+      background: #a4e3a4;
+      padding: 10px;
+      border-radius: 8px;
+      color: #238923;
+      margin-left: 10px;
+      font-size: 16px;
+      ion-icon {
+        color: #238923;
+        font-size: 16px;
+      }
+    }
+  }
+  .nodata {
+    width: 100%;
+    text-align: center;
+    padding-top: 40px;
+
+    img {
+      width: 150px;
+    }
+  }
+}
+ion-footer {
+  ion-toolbar {
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --padding-bottom: 20px;
+
+    .next {
+      background: var(--ion-color-primary);
+      color: #ffffff;
+    }
+  }
+}

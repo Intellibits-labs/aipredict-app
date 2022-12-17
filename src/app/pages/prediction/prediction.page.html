@@ -1,0 +1,85 @@
+<!-- <app-header></app-header> -->
+
+<!-- <ion-content> -->
+<div class="common_content">
+  <ion-toolbar>
+    <ion-title>Prediction</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="common_add" (click)="addpredict()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        add
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <table class="normal_table ion-hide-sm-down">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Symbol</th>
+        <th>Trade Date</th>
+        <th>Buyprice</th>
+        <th>Sellprice</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of predictions">
+        <td>{{item.stock.name}}</td>
+        <td>{{item.stock.symbol}}</td>
+        <td>{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
+        <td>$ {{item.buyPrice}}</td>
+        <td>$ {{item.sellPrice}}</td>
+        <td>{{item.status}}</td>
+        <td>
+          <ion-button
+            class="morebtn"
+            (click)="actionClick($event,item)"
+            fill="clear"
+          >
+            <ion-icon
+              slot="icon-only"
+              name="ellipsis-vertical-outline"
+            ></ion-icon>
+          </ion-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ion-item *ngFor="let item of predictions" class="predict_item">
+    <ion-label class="ion_label">
+      <p class="symbol_status">
+        <span> {{item.stock.symbol}}</span>
+        <ion-button
+          (click)="actionClick($event,item)"
+          class="morebtn"
+          fill="clear"
+        >
+          <ion-icon
+            slot="icon-only"
+            name="ellipsis-vertical-outline"
+          ></ion-icon>
+        </ion-button>
+      </p>
+      <h2 class="stock_name commonTextLine">{{item.stock.name}}</h2>
+      <p>{{item.tradeDate | date:'dd/MM/YYYY'}}</p>
+      <p class="price_tag">
+        <span>
+          <span>
+            <span>Buyprice :</span>
+            <span class="price">$ {{item.buyPrice}}</span>
+          </span>
+          <span class="space"></span>
+          <span>
+            <span>Sellprice :</span>
+            <span class="price">$ {{item.sellPrice}}</span>
+          </span></span
+        >
+        <span>{{item.status}}</span>
+      </p>
+    </ion-label>
+  </ion-item>
+</div>
+<!-- </ion-content> -->

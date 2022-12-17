@@ -1,0 +1,74 @@
+ion-toolbar {
+  --padding-start: 0;
+}
+.normal_table {
+  width: 100%;
+  border: 1px solid #dddddd;
+  border-bottom: none;
+  thead tr {
+    height: 50px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+    th {
+      padding-left: 8px;
+      font-size: 18px;
+    }
+  }
+  tbody tr {
+    height: 48px;
+    border-bottom: 1px solid #dddddd;
+    td {
+      padding-left: 8px;
+      font-size: 16px;
+    }
+  }
+}
+.predict_item {
+  .ion_label {
+    white-space: unset !important;
+  }
+  .symbol_status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stock_name {
+    margin: 0 !important;
+  }
+  .price_tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .space {
+    border-right: 2px solid #dddddd;
+    margin: 0 8px;
+  }
+  .price {
+    font-size: 18px;
+    color: #000000;
+    font-weight: 500;
+  }
+  .morebtn {
+    margin: 0;
+    width: 46px;
+    height: 46px;
+    --border-radius: 50%;
+  }
+}
+@media (min-width: 750px) {
+  .normal_table {
+    display: inline-table;
+  }
+  .predict_item {
+    display: none;
+  }
+}
+@media (max-width: 649px) {
+  .normal_table {
+    display: none;
+  }
+  .predict_item {
+    display: block;
+  }
+}

@@ -1,0 +1,41 @@
+.uploader {
+  border: 2px dashed gray;
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  margin: 20px;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+  margin-left: 0;
+  h2 {
+    color: gray;
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+  }
+  input {
+    display: none;
+  }
+}
+.uplaod-accepted {
+  border: none;
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  cursor: pointer;
+  position: relative;
+  ion-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #fff;
+    color: red;
+    font-size: 26px;
+  }
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+}

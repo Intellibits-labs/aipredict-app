@@ -1,0 +1,22 @@
+.logout {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.home_btn {
+  background: #ffffff;
+  border-left: 3px solid #ffffff;
+  height: 46px;
+  --padding-start: 10px;
+}
+
+.home_btn.selected {
+  border-left: 3px solid var(--ion-color-primary);
+}
+.login {
+  color: #ffffff;
+  --background: var(--ion-color-primary);
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --border-radius: 4px;
+}

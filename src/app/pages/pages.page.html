@@ -1,5 +1,5 @@
-<ion-split-pane when="xs" contentId="main">
-  <!-- <ion-menu side="end" contentId="main" type="overlay">
+<!-- <ion-split-pane when="xs" contentId="main"> -->
+<!-- <ion-menu side="end" contentId="main" type="overlay">
     <ion-header>
       <ion-toolbar color="tertiary">
         <ion-title>Menu</ion-title>
@@ -7,6 +7,65 @@
     </ion-header>
   
   </ion-menu> -->
-
+<!-- <app-header></app-header>
+<ion-content>
   <ion-router-outlet id="main" main> </ion-router-outlet>
-</ion-split-pane>
+</ion-content> -->
+<!-- </ion-split-pane> -->
+<ion-menu contentId="main-content" side="end">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="menuOpen()">
+          <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title> Menu </ion-title>
+      <ion-buttons slot="end" class="ion-hide-sm-up">
+        <ion-button
+          *ngIf="!userData"
+          (click)="loginClick()"
+          class="login ion-text-capitalize"
+        >
+          login</ion-button
+        >
+        <ion-button
+          (click)="logout($event)"
+          *ngIf="userData"
+          class="logout commonBackgroundImg"
+          [style.background]="'url(' + userData?.picture + ')'"
+        >
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item
+      class="home_btn"
+      button
+      lines="none"
+      [routerLink]="'/pages/home'"
+      routerLinkActive="selected"
+      routerDirection="root"
+    >
+      <ion-label>Home</ion-label>
+    </ion-item>
+    <ion-item
+      class="home_btn"
+      button
+      lines="none"
+      *ngIf="userData?.role == 'predictor'"
+      [routerLink]="'/pages/prediction'"
+      routerLinkActive="selected"
+      routerDirection="root"
+    >
+      <ion-label>Predictions</ion-label>
+    </ion-item>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <app-header></app-header>
+  <ion-content class="ion-padding">
+    <ion-router-outlet id="main" main> </ion-router-outlet>
+  </ion-content>
+</div>

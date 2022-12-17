@@ -16,6 +16,7 @@ import { ModalController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { CookieService } from 'src/app/core/general/service/cookie.service';
 import { DataService } from 'src/app/core/general/service/data.service';
+import { AuthService } from 'src/app/core/general/service/auth.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -30,15 +31,15 @@ export class LoginModalComponent implements OnInit {
     private readonly _authService: SocialAuthService,
     private cookieService: CookieService,
     private modalController: ModalController,
-    private dataService: DataService
+    private dataService: DataService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     // (P x r x t) ÷ 100;
+    // this._authService.signIn(FacebookLoginProvider.PROVIDER_ID);
 
-    console.log(12000 * 12);
-
-    // this.cookieService.deleteCookie('idToken');
+    this.cookieService.deleteCookie('idToken');
     this._authService.authState.subscribe((user: any) => {
       this.user = user;
       console.log('🚀 ~ 37 ~ LoginModalComponent  ~ user', user);
@@ -52,6 +53,7 @@ export class LoginModalComponent implements OnInit {
               console.log(res);
               localStorage.setItem('user', JSON.stringify(res.user));
               localStorage.setItem('session', JSON.stringify(res.tokens));
+              this.authService.setUser(res.user);
             },
             error: (e) => console.log(e.message),
             complete: () => console.log('complete'),

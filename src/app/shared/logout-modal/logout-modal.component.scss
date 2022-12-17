@@ -1,0 +1,21 @@
+ion-content {
+  ion-card {
+    margin: 0;
+    padding: 12px;
+    text-align: center;
+
+    ion-avatar {
+      margin: auto;
+      height: 50px;
+      width: 50px;
+    }
+    h4 {
+      font-size: 16px;
+      color: #000000;
+    }
+    p {
+      font-size: 13px;
+      color: gray;
+    }
+  }
+}

@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title>Add New Prediction</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-slides
+    #slider
+    pager="false"
+    [options]="slideOpts"
+    mode="md"
+    (ionSlideDidChange)="slideChange($event)"
+  >
+    <ion-slide class="form_slide">
+      <ion-searchbar
+        class="custom"
+        mode="md"
+        placeholder="Search Stock"
+        inputmode="search"
+        type="search"
+        (ionChange)="search($event)"
+        [debounce]="1000"
+      ></ion-searchbar>
+      <div class="nodata" *ngIf="!autoCompleteArray.length">
+        <img src="assets/images/no_data.svg" alt="" />
+        <h5>No data found</h5>
+      </div>
+      <ng-container *ngIf="autoCompleteArray.length">
+        <ion-item
+          ion-button
+          lines="none"
+          mode="md"
+          *ngFor="let item of autoCompleteArray"
+          (click)="selectStock(item)"
+        >
+          <ion-label>
+            <h2 class="list_tag">
+              <span>{{ item["1. symbol"] }}</span>
+              <span>{{ item["3. type"] }}</span>
+            </h2>
+            <h3>{{ item["2. name"] }}</h3>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ion-slide>
+    <ion-slide class="form_slide">
+      <form [formGroup]="predictForm" *ngIf="getStockDetail">
+        <!-- <image-uploader
+          [imageurl]="imageUrl"
+          (inputModelChange)="changeImage($event)"
+          [(inputModel)]="imageData"
+        ></image-uploader> -->
+        <p class="stock_symbol">{{ getStockDetail["01. symbol"] }}</p>
+        <h1 class="stock_name">{{ selectedName }}</h1>
+        <h2 class="stock_price">
+          <span class="price">$ {{ getStockDetail["05. price"] }}</span>
+          <span *ngIf="symbolIcon" class="stock_percent_down"
+            ><ion-icon name="arrow-down-outline"></ion-icon>
+            {{ getStockDetail["10. change percent"] }}</span
+          >
+          <span *ngIf="!symbolIcon" class="stock_percent_up"
+            ><ion-icon name="arrow-up-outline"></ion-icon>
+            {{ getStockDetail["10. change percent"] }}</span
+          >
+        </h2>
+
+        <ion-item fill="outline" class="input_item">
+          <ion-label position="floating">Date</ion-label>
+          <ion-input
+            type="date"
+            formControlName="tradeDate"
+            placeholder="DD/MM/YYYY"
+          ></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="input_item">
+          <ion-label position="floating">Buy Price</ion-label>
+          <ion-input
+            type="number"
+            formControlName="buyPrice"
+            placeholder="Buy Price"
+          ></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="input_item">
+          <ion-label position="floating">Sell Price</ion-label>
+          <ion-input
+            type="number"
+            formControlName="sellPrice"
+            placeholder="Sell Price"
+          ></ion-input>
+        </ion-item>
+      </form>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer>
+  <ion-toolbar *ngIf="slideIndex === 1" mode="md">
+    <ion-button (click)="saveClick()" class="commonSubmitBtn">
+      Save
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

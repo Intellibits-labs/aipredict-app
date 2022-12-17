@@ -1,0 +1,10 @@
+<ion-content>
+  <ion-card>
+    <ion-avatar>
+      <img [src]="userData?.picture" />
+    </ion-avatar>
+    <h4 class="commonSingleLine">{{ userData?.name }}</h4>
+    <p class="commonSingleLine">{{ userData?.email }}</p>
+    <a (click)="logout()">Logout</a>
+  </ion-card>
+</ion-content>

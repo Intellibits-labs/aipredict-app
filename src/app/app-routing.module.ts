@@ -8,9 +8,15 @@ const routes: Routes = [
       import('./pages/pages.module').then((m) => m.PagesPageModule),
   },
   {
+    path: 'splash',
+    loadChildren: () =>
+      import('./splash/splash.module').then((m) => m.SplashPageModule),
+  },
+
+  {
     path: '',
-    redirectTo: 'pages',
-    pathMatch: 'full',
+    loadChildren: () =>
+      import('./landing/landing.module').then((m) => m.LandingPageModule),
   },
 ];
 

@@ -22,6 +22,8 @@ export class CookieService {
   }
 
   public deleteCookie(cookieName: string) {
+    console.log(cookieName);
+
     this.setCookie({ name: cookieName, value: '', expireHours: -1 });
   }
 

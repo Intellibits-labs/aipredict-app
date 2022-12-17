@@ -1,0 +1,17 @@
+<div *ngIf="!imageurl" class="uploader" (click)="inputClick(csvFile)">
+  <h2>Choose Image Upload</h2>
+  <input
+    type="file"
+    #csvFile
+    accept="image/png, image/jpeg"
+    (change)="imageUpload($event)"
+  />
+</div>
+<div *ngIf="imageurl" class="uplaod-accepted">
+  <ion-icon
+    (click)="imageDelete()"
+    slot="icon-only"
+    name="close-outline"
+  ></ion-icon>
+  <img [src]="imageurl" alt="" />
+</div>
