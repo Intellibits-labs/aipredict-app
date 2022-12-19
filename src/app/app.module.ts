@@ -32,7 +32,7 @@ import { LogoutInterceptor } from './core/general/interceptor/logout.interceptor
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: Oauth2Interceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: LogoutInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: LogoutInterceptor, multi: true },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

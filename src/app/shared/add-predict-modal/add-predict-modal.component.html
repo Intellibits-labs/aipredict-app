@@ -58,12 +58,14 @@
         <p class="stock_symbol">{{ getStockDetail["01. symbol"] }}</p>
         <h1 class="stock_name">{{ selectedName }}</h1>
         <h2 class="stock_price">
-          <span class="price">$ {{ getStockDetail["05. price"] }}</span>
-          <span *ngIf="symbolIcon" class="stock_percent_down"
+          <span class="commonFamily price"
+            >${{ getStockDetail["05. price"] }}</span
+          >
+          <span *ngIf="symbolIcon" class="commonFamily stock_percent_down"
             ><ion-icon name="arrow-down-outline"></ion-icon>
             {{ getStockDetail["10. change percent"] }}</span
           >
-          <span *ngIf="!symbolIcon" class="stock_percent_up"
+          <span *ngIf="!symbolIcon" class="commonFamily stock_percent_up"
             ><ion-icon name="arrow-up-outline"></ion-icon>
             {{ getStockDetail["10. change percent"] }}</span
           >

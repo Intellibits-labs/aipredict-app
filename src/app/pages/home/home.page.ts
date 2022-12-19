@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpApi } from 'src/app/core/general/http/http-api';
+import { DataService } from 'src/app/core/general/service/data.service';
 import { CommunityModalComponent } from 'src/app/shared/community-modal/community-modal.component';
 import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.component';
 
@@ -32,17 +34,42 @@ export class HomePage implements OnInit {
       },
     },
   };
+  trendingAssets: any = [];
+  predictorArray: any = [];
+  constructor(
+    private modalController: ModalController,
+    private dataService: DataService
+  ) {}
 
-  constructor(private modalController: ModalController) {}
+  ngOnInit() {
+    this.getStock();
+    this.getPredictors();
+  }
 
-  ngOnInit() {}
-
+  getStock() {
+    this.dataService.getMethod(HttpApi.getStocks).subscribe({
+      next: (res) => {
+        console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+        this.trendingAssets = res.results;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+  getPredictors() {
+    this.dataService.getMethod(HttpApi.userPredictors).subscribe({
+      next: (res) => {
+        console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+        this.predictorArray = res.results;
+      },
+      error: (e) => console.error(e),
+    });
+  }
   async communityClick(item: any) {
     const modal = await this.modalController.create({
       cssClass: 'my-alert-class',
       component: CommunityModalComponent,
       mode: 'md',
-      componentProps: {},
+      componentProps: { predictor: item },
     });
     modal.onDidDismiss().then((data) => {
       if (data.role == 'success') {
@@ -56,7 +83,7 @@ export class HomePage implements OnInit {
       cssClass: 'my-alert-class',
       component: StockModalComponent,
       mode: 'md',
-      componentProps: {},
+      componentProps: { stockDetail: item },
     });
     modal.onDidDismiss().then((data) => {
       if (data.role == 'success') {

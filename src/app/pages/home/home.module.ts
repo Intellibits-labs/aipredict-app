@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
+import { StockperPipe } from 'src/app/core/general/pipes/stockper.pipe';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SharedModule } from 'src/app/shared/shared/shared.module';
     HomePageRoutingModule,
     SharedModule,
   ],
-  declarations: [HomePage],
+  declarations: [HomePage, StockperPipe],
 })
 export class HomePageModule {}

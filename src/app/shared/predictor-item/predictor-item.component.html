@@ -1,0 +1,23 @@
+<ion-item lines="none" class="predictor_item ion-hide-sm-up">
+  <ion-avatar>
+    <img [src]="predictor?.picture" />
+  </ion-avatar>
+  <ion-label>
+    <h2 class="commonTextLine">{{ predictor?.name }}</h2>
+    <p class="commonTextLine">{{ predictor?.email }}</p>
+    <!-- <p class="price_tag">
+      <span>
+        <span>
+          <span>Buyprice :</span>
+          <span class="price">$ {{ predictor?.buyPrice }}</span>
+        </span>
+        <span class="space"></span>
+        <span>
+          <span>Sellprice :</span>
+          <span class="price">$ {{ predictor?.sellPrice }}</span>
+        </span></span
+      >
+      <span>{{ predictor.status }}</span>
+    </p> -->
+  </ion-label>
+</ion-item>

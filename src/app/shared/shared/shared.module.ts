@@ -13,6 +13,8 @@ import { AddPredictModalComponent } from '../add-predict-modal/add-predict-modal
 import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
 import { PredictActionModalComponent } from '../predict-action-modal/predict-action-modal.component';
 import { StockModalComponent } from '../stock-modal/stock-modal.component';
+import { PredictorItemComponent } from '../predictor-item/predictor-item.component';
+
 // import { GoogleSigninButtonDirective } from 'src/app/core/directives/google-signin-button.directive';
 
 const components = [
@@ -24,6 +26,7 @@ const components = [
   ImageUploaderComponent,
   PredictActionModalComponent,
   StockModalComponent,
+  PredictorItemComponent,
 ];
 
 @NgModule({

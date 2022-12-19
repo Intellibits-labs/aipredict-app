@@ -29,8 +29,8 @@
         <td>{{item.stock.name}}</td>
         <td>{{item.stock.symbol}}</td>
         <td>{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
-        <td>$ {{item.buyPrice}}</td>
-        <td>$ {{item.sellPrice}}</td>
+        <td class="commonFamily">${{item.buyPrice}}</td>
+        <td class="commonFamily">${{item.sellPrice}}</td>
         <td>{{item.status}}</td>
         <td>
           <ion-button
@@ -69,12 +69,12 @@
         <span>
           <span>
             <span>Buyprice :</span>
-            <span class="price">$ {{item.buyPrice}}</span>
+            <span class="price commonFamily">${{item.buyPrice}}</span>
           </span>
           <span class="space"></span>
           <span>
             <span>Sellprice :</span>
-            <span class="price">$ {{item.sellPrice}}</span>
+            <span class="price commonFamily">${{item.sellPrice}}</span>
           </span></span
         >
         <span>{{item.status}}</span>

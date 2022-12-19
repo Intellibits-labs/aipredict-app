@@ -11,24 +11,31 @@
 <ion-content>
   <div>
     <p class="symbol_time">
-      <span class="stock_symbol"> TATACHEM.BSE</span>
-      <span class="time">Time : 09:00 to 17.40</span>
+      <span class="stock_symbol"> {{ stockDetail?.symbol }}</span>
+      <span class="time commonFamily"
+        >Time :{{ stockDetail?.marketOpen }} to
+        {{ stockDetail?.marketClose }}</span
+      >
     </p>
-    <h1 class="stock_name">TATA CHEMICALS LTD.</h1>
+    <h1 class="stock_name">{{ stockDetail?.name }}</h1>
     <h2 class="stock_price">
-      <span class="price">$ 2000.025</span>
-      <span *ngIf="symbolIcon" class="stock_percent_down"
-        ><ion-icon name="arrow-down-outline"></ion-icon>-252.058%
+      <span class="price"
+        >${{ stockDetail?.meta["Global Quote"]["05. price"] }}</span
+      >
+      <span *ngIf="symbolIcon" class="commonFamily stock_percent_down"
+        ><ion-icon name="arrow-down-outline"></ion-icon
+        >{{ stockDetail?.meta["Global Quote"]["10. change percent"] }}
       </span>
-      <span *ngIf="!symbolIcon" class="stock_percent_up"
-        ><ion-icon name="arrow-up-outline"></ion-icon>3250.254%
+      <span *ngIf="!symbolIcon" class="commonFamily stock_percent_up"
+        ><ion-icon name="arrow-up-outline"></ion-icon
+        >{{ stockDetail?.meta["Global Quote"]["10. change percent"] }}
       </span>
     </h2>
   </div>
 
   <ion-segment [value]="segmentValue" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="active">
-      <ion-label class="ion-text-capitalize">Active</ion-label>
+      <ion-label class="ion-text-capitalize">Users</ion-label>
     </ion-segment-button>
     <ion-segment-button value="past">
       <ion-label class="ion-text-capitalize">Past</ion-label>
@@ -36,45 +43,94 @@
   </ion-segment>
 
   <ng-container *ngIf="segmentValue == 'active'; else past">
-    <table class="active_table">
+    <ion-item
+      lines="none"
+      class="predictor_item ion-hide-sm-up"
+      *ngFor="let item of predictorArray"
+    >
+      <ion-label>
+        <h2 class="commonTextLine">{{ item.user.name }}</h2>
+        <p>{{ item.tradeDate | date : "dd/MM/YYYY" }}</p>
+        <p class="price_tag">
+          <span>
+            <span>
+              <span>Buyprice :</span>
+              <span class="price">$ {{ item?.buyPrice }}</span>
+            </span>
+            <span class="space"></span>
+            <span>
+              <span>Sellprice :</span>
+              <span class="price">$ {{ item?.sellPrice }}</span>
+            </span></span
+          >
+          <span>{{ item.status }}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <table class="active_table ion-hide-sm-down">
       <thead>
         <tr>
-          <th>Stock Name</th>
-          <th>Symbol</th>
+          <th>User Name</th>
           <th>Tradedate</th>
           <th>Buyprice</th>
           <th>Sellprice</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>TATA CHEMICALS LTD.</td>
-          <td>TATACHEM.BSE</td>
-          <td>17/12/2022</td>
-          <td>$ 500</td>
-          <td>$ 600</td>
+        <tr *ngFor="let item of predictorArray">
+          <td>{{ item.user.name }}</td>
+          <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
+          <td class="commonFamily">${{ item.buyPrice }}</td>
+          <td class="commonFamily">${{ item.sellPrice }}</td>
+          <td>{{ item.status }}</td>
         </tr>
       </tbody>
     </table>
   </ng-container>
   <ng-template #past>
-    <table class="active_table">
+    <ion-item
+      lines="none"
+      class="predictor_item ion-hide-sm-up"
+      *ngFor="let item of predictorArray"
+    >
+      <ion-label>
+        <h2 class="commonTextLine">{{ item.user.name }}</h2>
+        <p>{{ item.tradeDate | date : "dd/MM/YYYY" }}</p>
+        <p class="price_tag">
+          <span>
+            <span>
+              <span>Buyprice :</span>
+              <span class="price">$ {{ item?.buyPrice }}</span>
+            </span>
+            <span class="space"></span>
+            <span>
+              <span>Sellprice :</span>
+              <span class="price">$ {{ item?.sellPrice }}</span>
+            </span></span
+          >
+          <span>{{ item.status }}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+    <table class="active_table ion-hide-sm-down">
       <thead>
         <tr>
-          <th>Stock Name</th>
-          <th>Symbol</th>
+          <th>User Name</th>
           <th>Tradedate</th>
           <th>Buyprice</th>
           <th>Sellprice</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>TATA CHEMICALS LTD.</td>
-          <td>TATACHEM.BSE</td>
-          <td>17/12/2022</td>
-          <td>$ 500</td>
-          <td>$ 600</td>
+        <tr *ngFor="let item of predictorArray">
+          <td>{{ item.user.name }}</td>
+          <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
+          <td>${{ item.buyPrice }}</td>
+          <td>${{ item.sellPrice }}</td>
+          <td>{{ item.status }}</td>
         </tr>
       </tbody>
     </table>

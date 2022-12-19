@@ -14,23 +14,33 @@
   </div>
   <h2 class="sub_title">Trending Assets</h2>
   <ion-slides pager="false" [options]="assetsSlideOpts">
-    <ion-slide *ngFor="let item of [0,1,2]">
+    <ion-slide *ngFor="let item of trendingAssets">
       <ion-card class="trending_card" (click)="stockModal(item)">
         <div class="img_div">
-          <img src="assets/images/download.jpeg" alt="" />
+          <span>{{item.name[0]}}</span>
         </div>
         <div class="details">
           <p>
-            TAT.AMS
-            <ion-icon class="down-icon" name="caret-down-outline"></ion-icon>
-            2.5%
+            <span> {{item.symbol}}</span>
+            <ion-icon
+              *ngIf="item['meta']['Global Quote']['10. change percent'] | stockper ;else up"
+              class="down-icon"
+              name="arrow-down-outline"
+            ></ion-icon>
+            <ng-template #up>
+              <ion-icon class="up-icon" name="arrow-up-outline"></ion-icon>
+            </ng-template>
+
+            <span class="commonFamily">
+              {{item.meta['Global Quote']['10. change percent']}}</span
+            >
           </p>
-          <h3>$ 20,10,250</h3>
+          <h3>${{item.meta['Global Quote']['05. price']}}</h3>
         </div>
       </ion-card>
     </ion-slide>
   </ion-slides>
-  <h2 class="sub_title">Trending Creditors</h2>
+  <h2 class="sub_title">Trending Predictors</h2>
   <ion-grid class="ion-hide-sm-down">
     <ion-row>
       <ion-col
@@ -38,35 +48,23 @@
         sizeMd="4"
         sizeSm="6"
         sizeXs="6"
-        *ngFor="let item of [0,1,2,3,4,5,6]"
+        *ngFor="let item of predictorArray"
       >
         <ion-card class="Communities_card" (click)="communityClick(item)">
-          <div class="img_div">
-            <img src="assets/images/download (1).jpeg" alt="" />
-          </div>
+          <ion-avatar class="img_div">
+            <img [src]="item.picture" alt="" />
+          </ion-avatar>
 
-          <h3 class="name">Stock</h3>
-          <p class="amount">$ 4,21,350</p>
-          <ion-button class="follow_btn" shape="round"> Follow </ion-button>
+          <h3 class="name">{{item.name}}</h3>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-item
-    lines="none"
-    class="creditor_item ion-hide-sm-up"
-    *ngFor="let item of [0,1,2,3,4,5,6]"
-  >
-    <ion-avatar>
-      <img
-        [src]="'https://lh3.googleusercontent.com/a/AEdFTp7ozPiyicLoByBL18eKZHdLFeVuGfyNM8fxSgDg=s96-c'"
-      />
-    </ion-avatar>
-    <ion-label>
-      <h2 class="commonTextLine">Sedhu user</h2>
-      <p class="commonTextLine">sedhupathi.marvenics@gmail.com</p>
-      <p></p>
-    </ion-label>
-  </ion-item>
+  <predictor-item
+    class="ion-hide-sm-up"
+    (click)="communityClick(item)"
+    [predictor]="item"
+    *ngFor="let item of predictorArray"
+  ></predictor-item>
 </div>
 <!-- </ion-content> -->

@@ -36,6 +36,7 @@ ion-content {
       font-size: 24px;
       color: #000000;
       font-weight: 600;
+      font-family: "Courier New", Courier, monospace;
     }
     .stock_percent_down {
       background: #f3b3b3;
@@ -62,7 +63,29 @@ ion-content {
       }
     }
   }
+  .predictor_item {
+    --inner-padding-end: 0;
+    ion-label {
+      white-space: unset !important;
+      padding-left: 10px;
+    }
+  }
+  .price_tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    .space {
+      border-right: 2px solid #dddddd;
+      margin: 0 8px;
+    }
+    .price {
+      font-size: 18px;
+      color: #000000;
+      font-weight: 500;
+      font-family: "Courier New", Courier, monospace;
+    }
+  }
   .active_table {
     margin-top: 10px;
     width: 100%;
