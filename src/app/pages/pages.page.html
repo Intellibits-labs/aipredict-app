@@ -54,6 +54,16 @@
       class="home_btn"
       button
       lines="none"
+      [routerLink]="'/pages/search-result'"
+      routerLinkActive="selected"
+      routerDirection="root"
+    >
+      <ion-label>Search</ion-label>
+    </ion-item>
+    <ion-item
+      class="home_btn"
+      button
+      lines="none"
       *ngIf="userData?.role == 'predictor'"
       [routerLink]="'/pages/prediction'"
       routerLinkActive="selected"

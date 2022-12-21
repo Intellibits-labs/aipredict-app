@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://192.168.238.233:3008/v1/',
-  imageUrl: 'http://192.168.238.233:3008/',
+  baseUrl: 'http://192.168.1.22:3008/v1/',
+  imageUrl: 'http://192.168.1.22:3008/',
 
   backend: {
-    host: 'http://192.168.238.233:3008/v1',
+    host: 'http://192.168.1.22:3008/v1',
   },
   oauth: {
-    host: 'http://192.168.238.233:3008/v1/',
+    host: 'http://192.168.1.22:3008/v1/',
     client_id: '2',
     client_secret: 'tsN80QNwTawD3WZSX2uziOFI6HstTEs2bXBqsCyv',
     scope: '*',

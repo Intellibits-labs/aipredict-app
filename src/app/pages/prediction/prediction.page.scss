@@ -24,6 +24,8 @@ ion-toolbar {
   }
 }
 .predict_item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
   .ion_label {
     white-space: unset !important;
   }

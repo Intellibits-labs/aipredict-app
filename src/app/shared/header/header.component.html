@@ -10,6 +10,14 @@
         Home
       </button>
       <button
+        class="home_btn"
+        [routerLink]="'/pages/search-result'"
+        routerLinkActive="selected"
+        routerDirection="root"
+      >
+        Search
+      </button>
+      <button
         *ngIf="userData?.role == 'predictor'"
         class="home_btn"
         [routerLink]="'/pages/prediction'"

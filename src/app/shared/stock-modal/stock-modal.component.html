@@ -128,8 +128,8 @@
         <tr *ngFor="let item of predictorArray">
           <td>{{ item.user.name }}</td>
           <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
-          <td>${{ item.buyPrice }}</td>
-          <td>${{ item.sellPrice }}</td>
+          <td class="commonFamily">${{ item.buyPrice }}</td>
+          <td class="commonFamily">${{ item.sellPrice }}</td>
           <td>{{ item.status }}</td>
         </tr>
       </tbody>

@@ -30,4 +30,7 @@ export class HttpApi {
   // Stock
   static getStocks = 'stock';
   static singleStock = 'prediction/';
+
+  // Search
+  static getSearch = 'stock/searchstock/';
 }

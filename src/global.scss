@@ -158,6 +158,7 @@ a {
 @media (max-width: 576px) {
   .common_content {
     width: 100%;
+    padding: 10px 20px;
   }
   ion-header ion-toolbar {
     width: 100%;
@@ -165,4 +166,13 @@ a {
 }
 .commonFamily {
   font-family: "Courier New", Courier, monospace;
+}
+.nodata {
+  width: 100%;
+  text-align: center;
+  padding-top: 40px;
+
+  img {
+    width: 150px;
+  }
 }

@@ -1,14 +1,17 @@
-<!-- <app-header></app-header> -->
-
-<!-- <ion-content> -->
 <div class="common_content">
   <div class="search">
     <input
       type="text"
+      #search
+      (keyup.enter)="searchKey($event)"
       class="searchTerm"
-      placeholder="What are you looking for?"
+      placeholder="search stock"
     />
-    <ion-button type="submit" class="searchButton">
+    <ion-button
+      type="submit"
+      class="searchButton"
+      (click)="searchClick(search.value)"
+    >
       <ion-icon slot="icon-only" name="search-outline"></ion-icon>
     </ion-button>
   </div>
@@ -23,7 +26,7 @@
           <p>
             <span> {{item.symbol}}</span>
             <ion-icon
-              *ngIf="item['meta']['Global Quote']['10. change percent'] | stockper ;else up"
+              *ngIf="item['meta']?.['Global Quote']?.['10. change percent'] | stockper ;else up"
               class="down-icon"
               name="arrow-down-outline"
             ></ion-icon>
@@ -32,10 +35,10 @@
             </ng-template>
 
             <span class="commonFamily">
-              {{item.meta['Global Quote']['10. change percent']}}</span
+              {{item.meta?.['Global Quote']?.['10. change percent']}}</span
             >
           </p>
-          <h3>${{item.meta['Global Quote']['05. price']}}</h3>
+          <h3>${{item.meta?.['Global Quote']?.['05. price']}}</h3>
         </div>
       </ion-card>
     </ion-slide>
@@ -67,4 +70,3 @@
     *ngFor="let item of predictorArray"
   ></predictor-item>
 </div>
-<!-- </ion-content> -->

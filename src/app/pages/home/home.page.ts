@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
 import { CommunityModalComponent } from 'src/app/shared/community-modal/community-modal.component';
@@ -38,7 +38,8 @@ export class HomePage implements OnInit {
   predictorArray: any = [];
   constructor(
     private modalController: ModalController,
-    private dataService: DataService
+    private dataService: DataService,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -90,5 +91,14 @@ export class HomePage implements OnInit {
       }
     });
     await modal.present();
+  }
+  searchKey(ev: any) {
+    console.log(ev.target.value);
+    let searchV = ev.target.value;
+    this.navCtrl.navigateForward(['pages/search-result/' + searchV]);
+  }
+  searchClick(value: any) {
+    console.log(value);
+    this.navCtrl.navigateForward(['pages/search-result/' + value]);
   }
 }

@@ -25,6 +25,20 @@ const routes: Routes = [
             (m) => m.PredictionPageModule
           ),
       },
+      {
+        path: 'search-result',
+        loadChildren: () =>
+          import('./search-result/search-result.module').then(
+            (m) => m.SearchResultPageModule
+          ),
+      },
+      {
+        path: 'search-result/:search',
+        loadChildren: () =>
+          import('./search-result/search-result.module').then(
+            (m) => m.SearchResultPageModule
+          ),
+      },
     ],
   },
 ];
