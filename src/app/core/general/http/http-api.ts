@@ -18,6 +18,7 @@ export class HttpApi {
 
   //  googleLogin
   static googleLogin = 'auth/google';
+  static facebookLogin = 'auth/facebook';
 
   // Prediction
   static searchStock = 'stock/search/';

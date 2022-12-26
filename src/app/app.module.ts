@@ -37,18 +37,18 @@ import { LogoutInterceptor } from './core/general/interceptor/logout.interceptor
       provide: 'SocialAuthServiceConfig',
       useValue: {
         autoLogin: false,
+
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '468687185923-5melpr67h7a2vrnfsbjhac2mqcgv6odf.apps.googleusercontent.com'
+              '468687185923-5melpr67h7a2vrnfsbjhac2mqcgv6odf.apps.googleusercontent.com',
+              { oneTapEnabled: false }
             ),
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(
-              '624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com'
-            ),
+            provider: new FacebookLoginProvider('502993548596475'),
           },
         ],
         onError: (err: any) => {

@@ -12,11 +12,21 @@
 
 .home_btn.selected {
   border-left: 3px solid var(--ion-color-primary);
+  font-weight: 700;
+  color: var(--ion-color-primary);
 }
 .login {
-  color: #ffffff;
-  --background: var(--ion-color-primary);
+  color: var(--ion-color-primary);
+  --background: #ffffff;
   --padding-start: 10px;
   --padding-end: 10px;
   --border-radius: 4px;
+}
+ion-toolbar {
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  --padding-end: 10px;
+}
+ion-title {
+  color: #ffffff !important;
 }

@@ -26,7 +26,7 @@
           <p>
             <span> {{item.symbol}}</span>
             <ion-icon
-              *ngIf="item['meta']?.['Global Quote']?.['10. change percent'] | stockper ;else up"
+              *ngIf="item?.['meta'] && item.flag;else up"
               class="down-icon"
               name="arrow-down-outline"
             ></ion-icon>

@@ -8,7 +8,6 @@ import { SearchResultPageRoutingModule } from './search-result-routing.module';
 
 import { SearchResultPage } from './search-result.page';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
-import { StockperPipe } from 'src/app/core/general/pipes/stockper.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { StockperPipe } from 'src/app/core/general/pipes/stockper.pipe';
     SearchResultPageRoutingModule,
     SharedModule,
   ],
-  declarations: [SearchResultPage, StockperPipe],
+  declarations: [SearchResultPage],
 })
 export class SearchResultPageModule {}

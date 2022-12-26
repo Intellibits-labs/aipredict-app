@@ -51,7 +51,16 @@ export class HomePage implements OnInit {
     this.dataService.getMethod(HttpApi.getStocks).subscribe({
       next: (res) => {
         console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
-        this.trendingAssets = res.results;
+        res.results.map((x: any) => {
+          if (
+            x?.['meta']?.['Global Quote']?.['10. change percent'].includes('-')
+          ) {
+            x.flag = true;
+          } else {
+            x.flag = false;
+          }
+          this.trendingAssets.push(x);
+        });
       },
       error: (e) => console.error(e),
     });

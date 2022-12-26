@@ -1,29 +1,23 @@
 ion-content {
   --padding-start: 25px;
   --padding-end: 25px;
-  --padding-top: 25px;
+  --padding-top: 30px;
   --padding-bottom: 25px;
 
   .main-content {
     text-align: center;
 
     .logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      width: 130px;
       object-fit: cover;
     }
 
-    h2 {
-      font-weight: 600;
-      color: #000000;
-      font-size: 22px;
-    }
     .desc {
       margin-top: 0;
       color: gray;
       font-size: 14px;
       margin-bottom: 30px;
+      margin-top: 10px;
     }
 
     .login_button {
@@ -31,6 +25,15 @@ ion-content {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .fb_button {
+      width: 100%;
+      height: 40px;
+      margin: 0 auto;
+      margin-top: 20px;
+      --box-shadow: none;
+      text-transform: inherit;
     }
   }
 }

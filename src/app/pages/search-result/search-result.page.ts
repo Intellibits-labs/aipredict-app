@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
+import { LoaderService } from 'src/app/core/general/service/loader.service';
 import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.component';
 
 @Component({
@@ -39,7 +40,8 @@ export class SearchResultPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private modalController: ModalController,
-    private dataService: DataService
+    private dataService: DataService,
+    private loader: LoaderService
   ) {}
 
   ngOnInit() {
@@ -49,15 +51,34 @@ export class SearchResultPage implements OnInit {
     });
   }
   getSearch() {
-    this.dataService.getMethod(HttpApi.getSearch + this.searchValue).subscribe({
-      next: (res) => {
-        console.log(
-          '🚀 ~ file: search-result.page.ts:55 ~ SearchResultPage ~ this.dataService.getMethod ~ res',
-          res
-        );
-        this.trendingAssets = res.results;
-      },
-      error: (e) => console.error(e),
+    this.loader.presentLoading().then(() => {
+      this.dataService
+        .getMethod(HttpApi.getSearch + this.searchValue)
+        .subscribe({
+          next: (res) => {
+            console.log(
+              '🚀 ~ file: search-result.page.ts:55 ~ SearchResultPage ~ this.dataService.getMethod ~ res',
+              res
+            );
+            res.results.map((x: any) => {
+              if (
+                x?.['meta']?.['Global Quote']?.['10. change percent'].includes(
+                  '-'
+                )
+              ) {
+                x.flag = true;
+              } else {
+                x.flag = false;
+              }
+              this.trendingAssets.push(x);
+            });
+            this.loader.dismiss();
+          },
+          error: (e) => {
+            console.error(e.message);
+            this.loader.dismiss();
+          },
+        });
     });
   }
   searchKey(ev: any) {

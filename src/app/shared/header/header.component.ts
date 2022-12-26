@@ -95,8 +95,8 @@ export class HeaderComponent implements OnInit {
   }
   async loginClick() {
     const modal = await this.modalController.create({
-      cssClass: 'my-alert-class',
       component: LoginModalComponent,
+      cssClass: 'loginModal-class',
       mode: 'md',
       componentProps: {},
     });

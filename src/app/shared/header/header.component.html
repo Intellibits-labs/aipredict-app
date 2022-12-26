@@ -1,23 +1,26 @@
-<ion-header mode="md">
+<ion-header mode="md" class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="end" class="ion-hide-sm-down">
-      <button
+      <ion-button
+        fill="clear"
         class="home_btn"
         [routerLink]="'/pages/home'"
         routerLinkActive="selected"
         routerDirection="root"
       >
         Home
-      </button>
-      <button
+      </ion-button>
+      <ion-button
+        fill="clear"
         class="home_btn"
         [routerLink]="'/pages/search-result'"
         routerLinkActive="selected"
         routerDirection="root"
       >
         Search
-      </button>
-      <button
+      </ion-button>
+      <ion-button
+        fill="clear"
         *ngIf="userData?.role == 'predictor'"
         class="home_btn"
         [routerLink]="'/pages/prediction'"
@@ -25,7 +28,7 @@
         routerDirection="root"
       >
         Predictions
-      </button>
+      </ion-button>
       <ion-button
         *ngIf="!userData"
         (click)="loginClick()"
@@ -43,26 +46,15 @@
     </ion-buttons>
     <ion-buttons slot="end" class="ion-hide-sm-up">
       <ion-button (click)="menuOpen()" *ngIf="!isMenu">
-        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        <ion-icon
+          slot="icon-only"
+          class="ion_menu"
+          name="menu-outline"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>
-      <img
-        class="logo_img"
-        src="assets/images/indiapredict-logo (1).svg"
-        alt=""
-      />
+      <img class="logo_img" src="assets/images/INDIAPREDICT.png" alt="" />
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  <ion-item button lines="none">
-    <ion-label>Home</ion-label>
-  </ion-item>
-  <ion-item button lines="none">
-    <ion-label>Predictions</ion-label>
-  </ion-item>
-  <ion-item button lines="none">
-    <ion-label>Logout</ion-label>
-  </ion-item>
-</ion-content>
