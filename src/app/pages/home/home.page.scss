@@ -7,6 +7,7 @@
 }
 
 .searchTerm {
+  padding-left: 20px !important;
   width: 100%;
   border: 2px solid var(--ion-color-primary);
   border-right: none;
@@ -17,6 +18,7 @@
   color: #000000;
   width: 500px;
   height: 48px;
+  font-weight: 600;
 }
 
 .searchTerm:focus {
@@ -38,13 +40,33 @@
 ion-slide {
   cursor: pointer;
 }
+
+.trending_card:hover {
+  // p {
+  //   color: #00838d;
+  // }
+  // .go-corner {
+  //   transition: opactiy 0.3s linear;
+  //   opacity: 1;
+  // }
+  border: 1px solid #00838d;
+}
 .trending_card {
+  transition: 0.6s;
+  // transition: 0.5s;
   padding: 20px;
   display: flex;
   align-items: center;
   width: 100%;
   margin: 8px;
-  box-shadow: 0 0 5px 1px #ebe4e4;
+  box-shadow: 0 0 8px 2px #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid rgb(255, 255, 255);
+  // &:hover {
+  //   border: 1px solid #00838d;
+  //   box-shadow: 0px 0px 999px 999px rgba(255, 255, 255, 0.5);
+  //   z-index: 500;
+  // }
   .img_div {
     background: var(--ion-color-primary);
     border-radius: 50%;
@@ -62,6 +84,9 @@ ion-slide {
     padding-left: 10px;
     p {
       margin: 0;
+      display: flex;
+      align-items: center;
+      color: #313131;
       .down-icon {
         font-size: 16px;
         color: #b73f3f;
@@ -79,7 +104,8 @@ ion-slide {
       padding: 5px 0;
       font-size: 18px;
       font-weight: 600;
-      font-family: "Courier New", Courier, monospace;
+      // font-family: "Open Sans", sans-serif;
+      font-family: "Open Sans", sans-serif;
       text-align: left;
     }
   }

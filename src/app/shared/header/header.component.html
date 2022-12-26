@@ -21,7 +21,7 @@
       </ion-button>
       <ion-button
         fill="clear"
-        *ngIf="userData?.role == 'predictor'"
+        *ngIf="userData?.role === 'predictor'"
         class="home_btn"
         [routerLink]="'/pages/prediction'"
         routerLinkActive="selected"
@@ -36,13 +36,25 @@
       >
         login</ion-button
       >
-      <ion-button
-        (click)="logout($event)"
-        *ngIf="userData"
-        class="logout commonBackgroundImg"
-        [style.background]="'url(' + userData?.picture + ')'"
-      >
-      </ion-button>
+      <ng-container *ngIf="userData">
+        <ion-button
+          *ngIf="userData?.picture; else thumbPic"
+          (click)="logout($event)"
+          class="logout commonBackgroundImg"
+          [style.background]="'url(' + userData?.picture + ')'"
+        >
+        </ion-button>
+        <ng-template #thumbPic>
+          <ion-button
+            (click)="logout($event)"
+            class="logout commonBackgroundImg"
+            [style.background]="
+              'url(' + '../../assets/images/thumbnail.png' + ')'
+            "
+          >
+          </ion-button>
+        </ng-template>
+      </ng-container>
     </ion-buttons>
     <ion-buttons slot="end" class="ion-hide-sm-up">
       <ion-button (click)="menuOpen()" *ngIf="!isMenu">
