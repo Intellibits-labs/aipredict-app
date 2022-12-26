@@ -43,10 +43,12 @@ export class LoginModalComponent implements OnInit {
       this.user = user;
       console.log('🚀 ~ 37 ~ LoginModalComponent  ~ user', user);
       if (user) {
-        this.cookieService.setCookie({ name: 'idToken', value: user.idToken });
-        localStorage.setItem('googleUser', JSON.stringify(user));
-
         if (user.provider == 'GOOGLE') {
+          this.cookieService.setCookie({
+            name: 'idToken',
+            value: user.idToken,
+          });
+          localStorage.setItem('googleUser', JSON.stringify(user));
           this.dataService
             .postMethod(HttpApi.googleLogin, { idToken: user.idToken })
             .subscribe({
@@ -59,7 +61,8 @@ export class LoginModalComponent implements OnInit {
               error: (e) => console.log(e.message),
               complete: () => console.log('complete'),
             });
-        } else {
+        } else if (user.provider == 'FACEBOOK') {
+          localStorage.setItem('facebookUser', JSON.stringify(user));
           let userD = {
             name: user.name,
             idToken: user.authToken,

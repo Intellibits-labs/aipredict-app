@@ -48,7 +48,9 @@ import { LogoutInterceptor } from './core/general/interceptor/logout.interceptor
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('502993548596475'),
+            provider: new FacebookLoginProvider('502993548596475', {
+              scope: 'email',
+            }),
           },
         ],
         onError: (err: any) => {
