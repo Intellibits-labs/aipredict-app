@@ -14,7 +14,6 @@ export class HomePage implements OnInit {
   assetsSlideOpts = {
     initialSlide: 3,
     speed: 400,
-    // slidesPerView: 3,
     direction: 'horizontal',
     fill: 'column',
     spaceBetween: 15,

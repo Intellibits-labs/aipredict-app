@@ -7,6 +7,7 @@
 }
 
 .searchTerm {
+  padding-left: 20px !important;
   width: 100%;
   border: 2px solid var(--ion-color-primary);
   border-right: none;
@@ -17,6 +18,7 @@
   color: #000000;
   width: 500px;
   height: 48px;
+  font-weight: 600;
 }
 
 .searchTerm:focus {
@@ -30,21 +32,29 @@
   height: 48px;
   --box-shadow: none;
 }
+
 .sub_title {
   font-size: 22px;
   color: #000000;
   font-weight: 600;
 }
-ion-slide {
+.col_assets {
+  padding: 10px;
+}
+.trending_card:hover {
+  border: 1px solid var(--ion-color-primary);
   cursor: pointer;
 }
 .trending_card {
+  transition: 0.6s;
   padding: 20px;
   display: flex;
   align-items: center;
   width: 100%;
-  margin: 8px;
-  box-shadow: 0 0 5px 1px #ebe4e4;
+  margin: 0;
+  box-shadow: 0 0 8px 2px #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid rgb(255, 255, 255);
   .img_div {
     background: var(--ion-color-primary);
     border-radius: 50%;
@@ -79,7 +89,6 @@ ion-slide {
       padding: 5px 0;
       font-size: 18px;
       font-weight: 600;
-      // font-family: "Open Sans", sans-serif;
       font-family: "Open Sans", sans-serif;
       text-align: left;
     }

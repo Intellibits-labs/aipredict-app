@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonPopover, ModalController, PopoverController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
+import { LoaderService } from 'src/app/core/general/service/loader.service';
 import { AddPredictModalComponent } from 'src/app/shared/add-predict-modal/add-predict-modal.component';
 import { PredictActionModalComponent } from 'src/app/shared/predict-action-modal/predict-action-modal.component';
 
@@ -16,7 +17,8 @@ export class PredictionPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private loader: LoaderService
   ) {}
 
   ngOnInit() {
@@ -24,14 +26,20 @@ export class PredictionPage implements OnInit {
   }
 
   getPredictions() {
-    this.dataService.getMethod(HttpApi.getPrediction).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.predictions = res.results;
-      },
-      error: (error) => {
-        console.log(error);
-      },
+    this.loader.presentLoading().then(() => {
+      this.dataService
+        .getMethod(HttpApi.getPrediction + '?sortBy=createdAt:desc')
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            this.predictions = res.results;
+            this.loader.dismiss();
+          },
+          error: (error) => {
+            console.log(error);
+            this.loader.dismiss();
+          },
+        });
     });
   }
   async addpredict() {
@@ -43,6 +51,7 @@ export class PredictionPage implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       if (data.role == 'success') {
+        this.getPredictions();
       }
     });
     await modal.present();

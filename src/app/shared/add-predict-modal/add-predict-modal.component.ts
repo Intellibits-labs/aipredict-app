@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
+import { ToastService } from 'src/app/core/general/service/toast.service';
 
 @Component({
   selector: 'app-add-predict-modal',
@@ -29,10 +30,10 @@ export class AddPredictModalComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     private formBuilder: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    private toast: ToastService
   ) {
     this.predictForm = this.formBuilder.group({
-      // image: ['', [Validators.required]],
       stock: ['', [Validators.required]],
       tradeDate: ['', [Validators.required]],
       buyPrice: ['', [Validators.required]],
@@ -44,13 +45,6 @@ export class AddPredictModalComponent implements OnInit {
   dismiss() {
     this.modalController.dismiss();
   }
-  // changeImage(ev: any) {
-  //   if (ev && ev._id) {
-  //     this.predictForm.patchValue({ image: ev._id });
-  //   } else {
-  //     this.predictForm.patchValue({ image: '' });
-  //   }
-  // }
 
   slideChange(ev: any) {
     this.slider.getActiveIndex().then((x) => {
@@ -84,7 +78,6 @@ export class AddPredictModalComponent implements OnInit {
         if (this.getStockDetail['10. change percent'].includes('-')) {
           this.symbolIcon = true;
         }
-
         this.predictForm.patchValue({ stock: item['1. symbol'] });
         this.autoCompleteArray = [];
         this.slider.lockSwipes(false);
@@ -100,6 +93,7 @@ export class AddPredictModalComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log('🚀 :46 ~ AddPredictModalComponent ~ res', res);
+          this.toast.presentToast('Prediction Created Successfully');
           this.modalController.dismiss({}, 'success');
         },
         error: (e) => console.error(e),

@@ -1,49 +1,65 @@
-<div class="common_content">
-  <div class="search">
-    <input
-      [(ngModel)]="searchValue"
-      type="text"
-      #search
-      (keyup.enter)="searchKey($event)"
-      class="searchTerm"
-      placeholder="search stock"
-    />
-    <ion-button type="submit" class="searchButton" (click)="searchClick()">
-      <ion-icon slot="icon-only" name="search-outline"></ion-icon>
-    </ion-button>
-  </div>
-  <ng-container *ngIf="trendingAssets.length">
-    <h2 class="sub_title">Search Assets</h2>
-    <ion-slides pager="false" [options]="assetsSlideOpts">
-      <ion-slide *ngFor="let item of trendingAssets">
-        <ion-card class="trending_card" (click)="stockModal(item)">
-          <div class="img_div">
-            <span>{{item.name[0]}}</span>
-          </div>
-          <div class="details">
-            <p>
-              <span> {{item.symbol}}</span>
-              <ion-icon
-                *ngIf="item?.['meta'] && item.flag;else up"
-                class="down-icon"
-                name="arrow-down-outline"
-              ></ion-icon>
-              <ng-template #up>
-                <ion-icon class="up-icon" name="arrow-up-outline"></ion-icon>
-              </ng-template>
+<app-header></app-header>
+<ion-content>
+  <div class="common_content">
+    <div class="search">
+      <input
+        [(ngModel)]="searchValue"
+        type="text"
+        #search
+        (keyup.enter)="searchKey($event)"
+        class="searchTerm"
+        placeholder="Search stocks..."
+      />
+      <ion-button type="submit" class="searchButton" (click)="searchClick()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <ng-container *ngIf="trendingAssets.length">
+      <h2 class="sub_title">Search Assets</h2>
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col
+            class="col_assets"
+            sizeLg="4"
+            sizeMd="6"
+            sizeSm="6"
+            sizeXs="12"
+            *ngFor="let item of trendingAssets"
+          >
+            <ion-card class="trending_card" (click)="stockModal(item)">
+              <div class="img_div">
+                <span>{{item.name[0]}}</span>
+              </div>
+              <div class="details">
+                <p>
+                  <span> {{item.symbol}}</span>
+                  <ion-icon
+                    *ngIf="item?.['meta'] && item.flag;else up"
+                    class="down-icon"
+                    name="arrow-down-outline"
+                  ></ion-icon>
+                  <ng-template #up>
+                    <ion-icon
+                      class="up-icon"
+                      name="arrow-up-outline"
+                    ></ion-icon>
+                  </ng-template>
 
-              <span class="commonFamily">
-                {{item.meta?.['Global Quote']?.['10. change percent']}}</span
-              >
-            </p>
-            <h3>${{item.meta?.['Global Quote']?.['05. price']}}</h3>
-          </div>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </ng-container>
-  <div class="nodata" *ngIf="!trendingAssets.length">
-    <img src="assets/images/no_data.svg" alt="" />
-    <h5>No data found</h5>
+                  <span class="commonFamily">
+                    {{item.meta?.['Global Quote']?.['10. change
+                    percent']}}</span
+                  >
+                </p>
+                <h3>${{item.meta?.['Global Quote']?.['05. price']}}</h3>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+    <div class="nodata" *ngIf="!trendingAssets.length">
+      <img src="assets/images/no_data.svg" alt="" />
+      <h5>No data found</h5>
+    </div>
   </div>
-</div>
+</ion-content>

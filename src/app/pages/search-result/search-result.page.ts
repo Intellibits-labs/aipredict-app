@@ -12,29 +12,6 @@ import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.comp
   styleUrls: ['./search-result.page.scss'],
 })
 export class SearchResultPage implements OnInit {
-  assetsSlideOpts = {
-    initialSlide: 3,
-    speed: 400,
-    // slidesPerView: 3,
-    direction: 'horizontal',
-    fill: 'column',
-    spaceBetween: 15,
-    effect: 'cards',
-    breakpoints: {
-      576: {
-        slidesPerView: 1,
-        spaceBetween: 30,
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 30,
-      },
-      769: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-    },
-  };
   trendingAssets: any = [];
   searchValue: any;
   constructor(

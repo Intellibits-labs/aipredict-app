@@ -39,6 +39,11 @@ const routes: Routes = [
             (m) => m.SearchResultPageModule
           ),
       },
+      {
+        path: 'stocks',
+        loadChildren: () =>
+          import('./stocks/stocks.module').then((m) => m.StocksPageModule),
+      },
     ],
   },
 ];
