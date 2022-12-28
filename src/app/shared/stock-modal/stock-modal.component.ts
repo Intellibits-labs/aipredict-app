@@ -13,6 +13,7 @@ export class StockModalComponent implements OnInit {
   segmentValue: any = 'active';
   @Input() stockDetail: any;
   predictorArray: any = [];
+  responseArray: any = [];
   constructor(
     private modalController: ModalController,
     private dataService: DataService
@@ -21,20 +22,20 @@ export class StockModalComponent implements OnInit {
   ngOnInit() {
     console.log(this.stockDetail);
 
-    if (
-      this.stockDetail?.meta['Global Quote']['10. change percent'].includes('-')
-    ) {
-      this.symbolIcon = true;
-    }
+    // if (
+    //   this.stockDetail?.meta['Global Quote']['10. change percent'].includes('-')
+    // ) {
+    //   this.symbolIcon = true;
+    // }
     this.getData();
   }
   getData() {
     this.dataService
-      .getMethod(HttpApi.singleStock + this.stockDetail.id)
+      .getMethod(HttpApi.predictionStock + this.stockDetail.id)
       .subscribe({
         next: (res) => {
           console.log('🚀 ~35 ~ StockModalComponent ~ ~ res', res);
-          this.predictorArray = res;
+          this.responseArray = res;
         },
         error: (e) => console.error(e),
       });
@@ -45,5 +46,14 @@ export class StockModalComponent implements OnInit {
   segmentChanged(ev: any) {
     console.log(ev);
     this.segmentValue = ev.detail.value;
+    if (this.segmentValue == 'active') {
+      this.predictorArray = this.responseArray.filter(
+        (x: any) => x.status == 'PENDING'
+      );
+    } else if (this.segmentValue == 'past') {
+      this.predictorArray = this.responseArray.filter(
+        (x: any) => x.status == 'COMPLETED' || x.status == 'FAILED'
+      );
+    }
   }
 }

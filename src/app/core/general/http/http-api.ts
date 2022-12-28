@@ -24,13 +24,14 @@ export class HttpApi {
   static searchStock = 'stock/search/';
   static getStock = 'stock/quote/';
   static predictionNew = 'prediction/new';
-  static getPrediction = 'prediction';
+  static getPredictionMy = 'prediction/my';
   static userPredictors = 'users/predictors';
   static singlePredictor = 'prediction/user/';
+  static getPrediction = 'prediction';
 
   // Stock
   static getStocks = 'stock';
-  static singleStock = 'prediction/';
+  static predictionStock = 'prediction/stock/';
 
   // Search
   static getSearch = 'stock/searchstock/';

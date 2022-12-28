@@ -6,7 +6,6 @@ import { FooterComponent } from '../footer/footer.component';
 import { GeneralModule } from 'src/app/core/general/general.module';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
-import { CommunityModalComponent } from '../community-modal/community-modal.component';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
 import { RouterModule } from '@angular/router';
 import { AddPredictModalComponent } from '../add-predict-modal/add-predict-modal.component';
@@ -15,13 +14,14 @@ import { PredictActionModalComponent } from '../predict-action-modal/predict-act
 import { StockModalComponent } from '../stock-modal/stock-modal.component';
 import { PredictorItemComponent } from '../predictor-item/predictor-item.component';
 import { StockCardComponent } from '../stock-card/stock-card.component';
+import { LatestModalComponent } from '../latest-modal/latest-modal.component';
+import { PredictorModalComponent } from '../predictor-modal/predictor-modal.component';
 
 // import { GoogleSigninButtonDirective } from 'src/app/core/directives/google-signin-button.directive';
 
 const components = [
   HeaderComponent,
   FooterComponent,
-  CommunityModalComponent,
   LogoutModalComponent,
   AddPredictModalComponent,
   ImageUploaderComponent,
@@ -29,6 +29,8 @@ const components = [
   StockModalComponent,
   PredictorItemComponent,
   StockCardComponent,
+  LatestModalComponent,
+  PredictorModalComponent,
 ];
 
 @NgModule({

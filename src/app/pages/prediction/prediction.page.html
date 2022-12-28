@@ -1,8 +1,8 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <ion-content>
   <div class="common_content">
     <ion-toolbar mode="md">
-      <ion-title class="prediction_title">Prediction</ion-title>
+      <ion-title class="prediction_title">Predictions</ion-title>
       <ion-buttons slot="end">
         <ion-button class="common_add" (click)="addpredict()">
           <ion-icon slot="start" name="add"></ion-icon>
@@ -20,6 +20,8 @@
           <th>Buyprice</th>
           <th>Sellprice</th>
           <th>Status</th>
+          <th>ROI</th>
+
           <th>Actions</th>
         </tr>
       </thead>
@@ -28,9 +30,10 @@
           <td>{{item.stock.name}}</td>
           <td>{{item.stock.symbol}}</td>
           <td class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
-          <td class="commonFamily">${{item.buyPrice}}</td>
-          <td class="commonFamily">${{item.sellPrice}}</td>
+          <td class="commonFamily">₹{{item.buyPrice}}</td>
+          <td class="commonFamily">₹{{item.sellPrice}}</td>
           <td>{{item.status}}</td>
+          <td>{{item['ROI'] | number}}</td>
           <td>
             <ion-button
               class="morebtn"
@@ -68,12 +71,12 @@
           <span>
             <span>
               <span>Buyprice :</span>
-              <span class="price commonFamily">${{item.buyPrice}}</span>
+              <span class="price commonFamily">₹{{item.buyPrice}}</span>
             </span>
             <span class="space"></span>
             <span>
               <span>Sellprice :</span>
-              <span class="price commonFamily">${{item.sellPrice}}</span>
+              <span class="price commonFamily">₹{{item.sellPrice}}</span>
             </span></span
           >
           <span>{{item.status}}</span>

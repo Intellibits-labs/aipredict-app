@@ -31,36 +31,29 @@
         <h5>No data found</h5>
       </div>
       <ng-container *ngIf="autoCompleteArray.length">
-        <ion-item
-          class="selectStocks"
-          ion-button
-          lines="none"
-          mode="md"
+        <ion-card
+          class="list-card"
           *ngFor="let item of autoCompleteArray"
           (click)="selectStock(item)"
         >
-          <ion-label>
-            <h2 class="list_tag">
-              <span>{{ item["1. symbol"] }}</span>
-              <span>{{ item["3. type"] }}</span>
-            </h2>
-            <h3>{{ item["2. name"] }}</h3>
-          </ion-label>
-        </ion-item>
+          <p class="symbol_type">
+            <span>{{ item["1. symbol"] }}</span>
+            <span>{{ item["3. type"] }}</span>
+          </p>
+          <h3 class="name commonTextLine">{{ item["2. name"] }}</h3>
+        </ion-card>
       </ng-container>
     </ion-slide>
     <ion-slide class="form_slide">
       <form [formGroup]="predictForm" *ngIf="getStockDetail">
-        <!-- <image-uploader
-          [imageurl]="imageUrl"
-          (inputModelChange)="changeImage($event)"
-          [(inputModel)]="imageData"
-        ></image-uploader> -->
         <p class="stock_symbol">{{ getStockDetail["01. symbol"] }}</p>
-        <h1 class="stock_name">{{ selectedName }}</h1>
+        <div>
+          <h1 class="stock_name">{{ selectedName }}</h1>
+        </div>
+
         <h2 class="stock_price">
           <span class="commonFamily price"
-            >${{ getStockDetail["05. price"] }}</span
+            >₹{{ getStockDetail["05. price"] }}</span
           >
           <span *ngIf="symbolIcon" class="commonFamily stock_percent_down"
             ><ion-icon name="arrow-down-outline"></ion-icon>
@@ -71,7 +64,14 @@
             {{ getStockDetail["10. change percent"] }}</span
           >
         </h2>
-
+        <ion-item fill="outline" class="input_item" disabled="true">
+          <ion-label position="floating">Current Price</ion-label>
+          <ion-input
+            type="number"
+            formControlName="currentPrice"
+            placeholder="Current Price"
+          ></ion-input>
+        </ion-item>
         <ion-item fill="outline" class="input_item">
           <ion-label position="floating">Date</ion-label>
           <ion-input
@@ -96,13 +96,25 @@
             placeholder="Sell Price"
           ></ion-input>
         </ion-item>
+        <ion-item fill="outline" class="input_item">
+          <ion-label position="floating">Note</ion-label>
+          <ion-textarea
+            rows="2"
+            placeholder="Notes"
+            formControlName="note"
+          ></ion-textarea>
+        </ion-item>
       </form>
     </ion-slide>
   </ion-slides>
 </ion-content>
 <ion-footer>
   <ion-toolbar *ngIf="slideIndex === 1" mode="md">
-    <ion-button (click)="saveClick()" class="commonSubmitBtn">
+    <ion-button
+      (click)="saveClick()"
+      class="commonSubmitBtn"
+      [disabled]="!predictForm.valid"
+    >
       Save
     </ion-button>
   </ion-toolbar>

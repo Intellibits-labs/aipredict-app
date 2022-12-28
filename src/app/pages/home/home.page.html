@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <ion-content>
   <div class="common_content">
     <div class="search">
@@ -17,6 +17,50 @@
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
     </div>
+    <h2 class="sub_title">Latest Predictions</h2>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ng-container *ngFor="let item of predictionArray;let i = index">
+          <ion-col
+            *ngIf="i < 6"
+            class="col_assets"
+            sizeLg="4"
+            sizeMd="6"
+            sizeSm="6"
+            sizeXs="12"
+          >
+            <!-- (click)="latestModal(item)" -->
+            <ion-card class="latest_card">
+              <ion-avatar>
+                <img [src]="item.user.picture" alt="" />
+              </ion-avatar>
+
+              <div class="latest_detail">
+                <p class="symbol_status">
+                  <span>{{item.user.name}}</span>
+                </p>
+                <p class="symbol_status">
+                  <span> {{ item.stock?.symbol }}</span>
+                  <span> {{ item?.status }}</span>
+                </p>
+                <h3 class="commonTitle-16 commonTextLine">
+                  {{ item.stock.name }}
+                </h3>
+                <p class="symbol_status commonFamily">
+                  <span>{{item.tradeDate | date:'dd/MM/yyyy'}}</span>
+                  <span>ROI : {{item?.['ROI'] | number}}</span>
+                </p>
+                <p class="commonTitle-15 symbol_status commonFamily">
+                  <span>BuyPrice : ₹{{item.buyPrice}}</span>
+                  <span>SellPrice : ₹{{item.sellPrice}}</span>
+                </p>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+
     <h2 class="sub_title">Trending Assets</h2>
     <ion-grid class="ion-no-padding">
       <ion-row>

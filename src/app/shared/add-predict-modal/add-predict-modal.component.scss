@@ -1,15 +1,19 @@
 ion-content {
   --padding-start: 20px;
-  --padding-end: 20px;
-  --padding-top: 20px;
+  --padding-end: 5px;
+  --padding-top: 10px;
   --padding-bottom: 20px;
 
   .input_item {
     margin-bottom: 20px;
     margin-top: 20px;
+    ion-input {
+      font-family: "Open Sans", sans-serif;
+    }
   }
   .form_slide {
     display: block !important;
+    padding-right: 15px;
   }
 
   .list_tag {
@@ -98,6 +102,33 @@ ion-footer {
     }
   }
 }
-.selectStocks {
+
+.list-card {
+  display: block;
+  padding: 12px;
+  box-shadow: 0 0 8px 1px #e7e7e7;
+  border: 1px solid #ffffff;
+
+  .symbol_type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: gray;
+  }
+  .name {
+    margin: 0;
+    font-size: 16px;
+    color: #000000;
+    text-align: left;
+  }
+}
+.list-card:hover {
   cursor: pointer;
+  box-shadow: 0 0 8px 1px #c9c4c4;
+  border: 1px solid var(--ion-color-primary);
+}
+.listdiv {
+  padding: 0 10px;
 }

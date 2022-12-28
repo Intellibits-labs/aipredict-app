@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar mode="md" color="primary">
+    <ion-title>Predictor details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card class="profile_card">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="3">
+          <ion-avatar>
+            <img [src]="predictor?.picture" />
+          </ion-avatar>
+        </ion-col>
+        <ion-col size="9">
+          <h2 class="name">{{ predictor?.name }}</h2>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-segment [value]="segmentValue" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="active">
+      <ion-label class="ion-text-capitalize">Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="past">
+      <ion-label class="ion-text-capitalize">Past</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ng-container *ngIf="segmentValue == 'active'; else past">
+    <ion-item
+      lines="none"
+      class="predictor_item ion-hide-sm-up"
+      *ngFor="let item of predictorArray"
+    >
+      <ion-label>
+        <p>{{ item.stock.symbol }}</p>
+        <h2 class="commonTextLine">{{ item.stock.name }}</h2>
+        <p>{{ item.tradeDate | date : "dd/MM/YYYY" }}</p>
+        <p class="price_tag">
+          <span>
+            <span>
+              <span>Buyprice :</span>
+              <span class="price">₹ {{ item?.buyPrice }}</span>
+            </span>
+            <span class="space"></span>
+            <span>
+              <span>Sellprice :</span>
+              <span class="price">₹ {{ item?.sellPrice }}</span>
+            </span></span
+          >
+          <span>{{ item.status }}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <table class="active_table ion-hide-sm-down">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Tradedate</th>
+          <th>Buyprice</th>
+          <th>Sellprice</th>
+          <th>Status</th>
+          <th>ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of predictorArray">
+          <td>{{ item.stock.symbol }}</td>
+          <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
+          <td class="commonFamily">₹{{ item.buyPrice }}</td>
+          <td class="commonFamily">₹{{ item.sellPrice }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item["ROI"] | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-template #past>
+    <ion-item
+      lines="none"
+      class="predictor_item ion-hide-sm-up"
+      *ngFor="let item of predictorArray"
+    >
+      <ion-label>
+        <p>{{ item.stock.symbol }}</p>
+        <h2 class="commonTextLine">{{ item.stock.name }}</h2>
+        <p>{{ item.tradeDate | date : "dd/MM/YYYY" }}</p>
+        <p class="price_tag">
+          <span>
+            <span>
+              <span>Buyprice :</span>
+              <span class="price">₹ {{ item?.buyPrice }}</span>
+            </span>
+            <span class="space"></span>
+            <span>
+              <span>Sellprice :</span>
+              <span class="price">₹ {{ item?.sellPrice }}</span>
+            </span></span
+          >
+          <span>{{ item.status }}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+    <table class="active_table ion-hide-sm-down">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Tradedate</th>
+          <th>Buyprice</th>
+          <th>Sellprice</th>
+          <th>Status</th>
+          <th>ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of predictorArray">
+          <td>{{ item.stock.symbol }}</td>
+          <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
+          <td class="commonFamily">₹{{ item.buyPrice }}</td>
+          <td class="commonFamily">₹{{ item.sellPrice }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item["ROI"] | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</ion-content>

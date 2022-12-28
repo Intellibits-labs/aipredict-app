@@ -28,7 +28,7 @@ export class PredictionPage implements OnInit {
   getPredictions() {
     this.loader.presentLoading().then(() => {
       this.dataService
-        .getMethod(HttpApi.getPrediction + '?sortBy=createdAt:desc')
+        .getMethod(HttpApi.getPredictionMy + '?sortBy=createdAt:desc')
         .subscribe({
           next: (res) => {
             console.log(res);

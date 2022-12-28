@@ -5,20 +5,20 @@
   <div class="details">
     <p>
       <span> {{ stockItem.symbol }}</span>
-      <ion-icon
+      <!-- <ion-icon
         *ngIf="stockItem?.['meta'] && stockItem.flag;else up"
         class="down-icon"
         name="arrow-down-outline"
       ></ion-icon>
       <ng-template #up>
         <ion-icon class="up-icon" name="arrow-up-outline"></ion-icon>
-      </ng-template>
+      </ng-template> -->
 
       <!-- <span class="commonFamily">
         {{stockItem.meta?.['Global Quote']?.['10. change percent']}}</span
       > -->
     </p>
-    <!-- <h3>${{stockItem.meta?.['Global Quote']?.['05. price']}}</h3> -->
+    <!-- <h3>₹{{stockItem.meta?.['Global Quote']?.['05. price']}}</h3> -->
     <h3 class="commonTitle-16 commonTextLine">{{ stockItem.name }}</h3>
   </div>
 </ion-card>

@@ -1,10 +1,92 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Landing</ion-title>
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-title>
+      <a href="#">
+        <img class="logo_img" src="assets/images/INDIAPREDICT.png" alt="" />
+      </a>
+    </ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="goToApp()"> Go to App </ion-button>
+      <ion-button class="login" (click)="goToApp()"> Go to App </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <section
+    class="top_section"
+    style="
+      background: url('assets/images/lading-home.jpg') no-repeat center;
+      background-size: 100% 100vh;
+    "
+  >
+    <h1>Unlock the potential of the stock market with our expert insights</h1>
+  </section>
+  <section class="intro_section">
+    <ion-grid>
+      <ion-row>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6">
+          <div>
+            <h1>Introduction to indiapredict</h1>
+            <p>
+              Welcome to India Predict! India Predict is a platform where users
+              can find free, expert-backed stock predictions to help them make
+              informed investment decisions. Our team of experienced financial
+              analysts and market experts regularly publish their predictions on
+              a range of stocks, providing valuable insights and analysis to
+              help users succeed in the stock market. Whether you're a beginner
+              looking to get started in the stock market, or an experienced
+              investor seeking new opportunities, our website is a valuable
+              resource for finding reliable and accurate stock predictions.
+              Start exploring our predictions today and take the first step
+              towards achieving your investment goals.
+            </p>
+          </div>
+        </ion-col>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6">
+          <div class="intro_img">
+            <img src="assets/images/undraw_predictive.svg" alt="" />
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+  <section class="profile_section">
+    <ion-grid>
+      <ion-row>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+          <ion-card>
+            <h2>Profiles:</h2>
+            <p>
+              The app could include profiles for the stock experts, including
+              their credentials, expertise, and track record of predictions.
+              This would allow users to easily see the qualifications and
+              experience of the experts posting predictions.
+            </p>
+          </ion-card>
+        </ion-col>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+          <ion-card>
+            <h2>Predictions:</h2>
+            <p>
+              The app could allow experts to post their stock predictions, along
+              with insights and analysis to explain their reasoning. Users could
+              browse the predictions and use them to inform their own investment
+              decisions.
+            </p>
+          </ion-card>
+        </ion-col>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+          <ion-card>
+            <h2>Ratings & Feedback:</h2>
+            <p>
+              The app could allow users to rate and review the predictions of
+              the experts, providing feedback on the accuracy and usefulness of
+              the predictions. This could help to build credibility and trust
+              for the experts and the app.
+            </p>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>

@@ -2,7 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
-import { CommunityModalComponent } from 'src/app/shared/community-modal/community-modal.component';
+import { LatestModalComponent } from 'src/app/shared/latest-modal/latest-modal.component';
+import { PredictorModalComponent } from 'src/app/shared/predictor-modal/predictor-modal.component';
 import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.component';
 
 @Component({
@@ -35,6 +36,7 @@ export class HomePage implements OnInit {
   };
   trendingAssets: any = [];
   predictorArray: any = [];
+  predictionArray: any = [];
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -44,39 +46,57 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.getStock();
     this.getPredictors();
+    this.getPredictions();
   }
 
   getStock() {
-    this.dataService.getMethod(HttpApi.getStocks).subscribe({
-      next: (res) => {
-        console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
-        res.results.map((x: any) => {
-          if (
-            x?.['meta']?.['Global Quote']?.['10. change percent'].includes('-')
-          ) {
-            x.flag = true;
-          } else {
-            x.flag = false;
-          }
-          this.trendingAssets.push(x);
-        });
-      },
-      error: (e) => console.error(e),
-    });
+    this.dataService
+      .getMethod(HttpApi.getStocks + '?sortBy=createdAt:desc')
+      .subscribe({
+        next: (res) => {
+          console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+          res.results.map((x: any) => {
+            if (
+              x?.['meta']?.['Global Quote']?.['10. change percent'].includes(
+                '-'
+              )
+            ) {
+              x.flag = true;
+            } else {
+              x.flag = false;
+            }
+            this.trendingAssets.push(x);
+          });
+        },
+        error: (e) => console.error(e),
+      });
   }
   getPredictors() {
-    this.dataService.getMethod(HttpApi.userPredictors).subscribe({
-      next: (res) => {
-        console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
-        this.predictorArray = res.results;
-      },
-      error: (e) => console.error(e),
-    });
+    this.dataService
+      .getMethod(HttpApi.userPredictors + '?sortBy=createdAt:desc')
+      .subscribe({
+        next: (res) => {
+          console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+          this.predictorArray = res.results;
+        },
+        error: (e) => console.error(e),
+      });
+  }
+  getPredictions() {
+    this.dataService
+      .getMethod(HttpApi.getPrediction + '?sortBy=createdAt:desc')
+      .subscribe({
+        next: (res) => {
+          console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+          this.predictionArray = res.results;
+        },
+        error: (e) => console.error(e),
+      });
   }
   async communityClick(item: any) {
     const modal = await this.modalController.create({
       cssClass: 'my-alert-class',
-      component: CommunityModalComponent,
+      component: PredictorModalComponent,
       mode: 'md',
       componentProps: { predictor: item },
     });
@@ -108,5 +128,19 @@ export class HomePage implements OnInit {
   searchClick(value: any) {
     console.log(value);
     this.navCtrl.navigateForward(['pages/search-result/' + value]);
+  }
+
+  async latestModal(item: any) {
+    const modal = await this.modalController.create({
+      cssClass: 'my-alert-class',
+      component: LatestModalComponent,
+      mode: 'md',
+      componentProps: { latestItem: item },
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
   }
 }
