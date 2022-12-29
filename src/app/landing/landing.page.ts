@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent, MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-landing',
@@ -7,11 +7,21 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
-  constructor(private navCtrl: NavController) {}
+  @ViewChild(IonContent) content!: IonContent;
+  constructor(
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
+  ) {}
 
   ngOnInit() {}
 
   goToApp() {
     this.navCtrl.navigateForward(['/splash']);
+  }
+  menuOpen() {
+    this.menuCtrl.toggle();
+  }
+  scrollToTop() {
+    this.content.scrollToTop(500);
   }
 }

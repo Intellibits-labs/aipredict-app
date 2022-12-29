@@ -13,7 +13,11 @@ import { PredictActionModalComponent } from 'src/app/shared/predict-action-modal
 })
 export class PredictionPage implements OnInit {
   @ViewChild('popover') popover!: IonPopover;
-  predictions: any = [];
+  predictionArray: any = [];
+
+  page = 1;
+
+  totalPages = 0;
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -25,46 +29,67 @@ export class PredictionPage implements OnInit {
     this.getPredictions();
   }
 
-  getPredictions() {
+  getPredictions(page = '1', ev: any = null) {
     this.loader.presentLoading().then(() => {
       this.dataService
-        .getMethod(HttpApi.getPredictionMy + '?sortBy=createdAt:desc')
+        .getMethod(
+          HttpApi.getPrediction + '?sortBy=createdAt:desc&limit=15&page=' + page
+        )
         .subscribe({
           next: (res) => {
-            console.log(res);
-            this.predictions = res.results;
+            console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+            this.totalPages = res.totalPages;
+            this.page = res.page;
+            this.predictionArray.push(...res.results);
             this.loader.dismiss();
+            if (ev) {
+              ev.target.complete();
+              if (res.totalPages == res.page) {
+                ev.target.disabled = true;
+              }
+            }
           },
-          error: (error) => {
-            console.log(error);
+          error: (e) => {
+            console.error(e);
             this.loader.dismiss();
           },
         });
     });
   }
-  async addpredict() {
-    const modal = await this.modalController.create({
-      cssClass: 'my-alert-class',
-      component: AddPredictModalComponent,
-      mode: 'md',
-      componentProps: {},
-    });
-    modal.onDidDismiss().then((data) => {
-      if (data.role == 'success') {
-        this.getPredictions();
-      }
-    });
-    await modal.present();
+
+  loadData(ev: any) {
+    console.log(ev);
+    this.page++;
+    this.getPredictions(this.page.toString(), ev);
   }
-  async actionClick(ev: any, item: any) {
-    const popover = await this.popoverController.create({
-      component: PredictActionModalComponent,
-      event: ev,
-      componentProps: { predictData: item },
+  doRefresh(event: any) {
+    this.predictionArray = [];
+    console.log('Begin async operation');
+    this.getPredictions('1', event);
+  }
+
+  searchKey(ev: any) {
+    console.log(ev.target.value);
+    let searchV = ev.target.value;
+    this.searchClick(searchV);
+  }
+  searchClick(value: any) {
+    console.log(value);
+    this.predictionArray = [];
+    this.loader.presentLoading().then(() => {
+      this.dataService.getMethod(HttpApi.searchPredction + value).subscribe({
+        next: (res) => {
+          console.log('🚀 ~ 55 ~ SearchResultPage ~ res', res);
+          this.totalPages = res.totalPages;
+          this.page = res.page;
+          this.predictionArray = res.results;
+          this.loader.dismiss();
+        },
+        error: (e) => {
+          console.error(e.message);
+          this.loader.dismiss();
+        },
+      });
     });
-
-    await popover.present();
-
-    const { role } = await popover.onDidDismiss();
   }
 }

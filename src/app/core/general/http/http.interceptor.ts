@@ -93,15 +93,9 @@ export class AppInterceptor implements HttpInterceptor {
           this.navCtrl.navigateRoot(['/']);
         }
         break;
-      case 503: // Service Unavailable
-        break;
-      case 503: // Internal Server Error
-        break;
-      case 400: // Internal Server Error
-        // console.log(errorResponse);
-        return throwError(errorResponse.error);
-        break;
+
       default: // Other Error
+        return throwError(errorResponse.error);
     }
 
     let customError = new HttpError();

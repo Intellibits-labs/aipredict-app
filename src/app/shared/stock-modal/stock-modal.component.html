@@ -45,7 +45,7 @@
   <ng-container *ngIf="segmentValue === 'active'; else past">
     <ion-item
       lines="none"
-      class="predictor_item ion-hide-sm-up"
+      class="predictor_item ion-hide-md-up"
       *ngFor="let item of predictorArray"
     >
       <ion-label>
@@ -68,7 +68,7 @@
       </ion-label>
     </ion-item>
 
-    <table class="active_table ion-hide-sm-down">
+    <table class="active_table ion-hide-md-down">
       <thead>
         <tr>
           <th>User Name</th>
@@ -96,7 +96,7 @@
   <ng-template #past>
     <ion-item
       lines="none"
-      class="predictor_item ion-hide-sm-up"
+      class="predictor_item ion-hide-md-up"
       *ngFor="let item of predictorArray"
     >
       <ion-label>
@@ -118,7 +118,7 @@
         </p>
       </ion-label>
     </ion-item>
-    <table class="active_table ion-hide-sm-down">
+    <table class="active_table ion-hide-md-down">
       <thead>
         <tr>
           <th>User Name</th>

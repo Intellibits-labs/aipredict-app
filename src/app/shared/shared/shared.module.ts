@@ -16,6 +16,7 @@ import { PredictorItemComponent } from '../predictor-item/predictor-item.compone
 import { StockCardComponent } from '../stock-card/stock-card.component';
 import { LatestModalComponent } from '../latest-modal/latest-modal.component';
 import { PredictorModalComponent } from '../predictor-modal/predictor-modal.component';
+import { LatestCardComponent } from '../latest-card/latest-card.component';
 
 // import { GoogleSigninButtonDirective } from 'src/app/core/directives/google-signin-button.directive';
 
@@ -31,6 +32,7 @@ const components = [
   StockCardComponent,
   LatestModalComponent,
   PredictorModalComponent,
+  LatestCardComponent,
 ];
 
 @NgModule({

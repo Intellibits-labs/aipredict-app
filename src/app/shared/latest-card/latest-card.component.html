@@ -1,0 +1,38 @@
+<ion-card class="latest_card">
+  <ion-avatar>
+    <img [src]="latestItem.user.picture" alt="" />
+  </ion-avatar>
+
+  <div class="latest_detail">
+    <p class="symbol_status">
+      <span>{{ latestItem.user.name }}</span>
+      <span>{{ latestItem.type }}</span>
+    </p>
+    <p class="symbol_status">
+      <span> {{ latestItem.stock?.symbol }}</span>
+      <ion-chip color="warning" *ngIf="latestItem?.status == 'PENDING'">
+        <ion-icon name="radio-button-on-outline"></ion-icon>
+        <ion-label>Pending</ion-label>
+      </ion-chip>
+      <ion-chip color="success" *ngIf="latestItem?.status == 'COMPLETED'">
+        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-label>Completed</ion-label>
+      </ion-chip>
+      <ion-chip color="danger" *ngIf="latestItem?.status == 'FAILED'">
+        <ion-icon name="close-circle-outline"></ion-icon>
+        <ion-label>Failed</ion-label>
+      </ion-chip>
+    </p>
+    <h3 class="commonTitle-16 commonTextLine">
+      {{ latestItem.stock.name }}
+    </h3>
+    <p class="symbol_status commonFamily">
+      <span>{{ latestItem.tradeDate | date : "dd/MM/yyyy" }}</span>
+      <span>ROI : {{latestItem?.['ROI'] | number}}</span>
+    </p>
+    <p class="commonTitle-15 symbol_status commonFamily">
+      <span>BuyPrice : ₹{{ latestItem.buyPrice }}</span>
+      <span>SellPrice : ₹{{ latestItem.sellPrice }}</span>
+    </p>
+  </div>
+</ion-card>

@@ -4,6 +4,18 @@ ion-content {
   --padding-top: 10px;
   --padding-bottom: 20px;
 
+  .type {
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+  .radio_group {
+    display: flex;
+    ion-item {
+      --padding-start: 0;
+    }
+  }
+
   .input_item {
     margin-bottom: 20px;
     margin-top: 20px;

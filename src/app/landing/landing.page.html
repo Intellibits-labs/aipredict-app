@@ -1,29 +1,67 @@
-<ion-header mode="md" class="ion-no-border">
+<ion-header mode="md" class="ion-no-border" id="landing">
   <ion-toolbar mode="md">
     <ion-title>
       <a href="#">
         <img class="logo_img" src="assets/images/INDIAPREDICT.png" alt="" />
       </a>
     </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" class="ion-hide-md-down">
+      <ion-button fill="clear" class="home_btn" href="#home"> Home </ion-button>
+      <ion-button fill="clear" class="home_btn" href="#about">
+        About
+      </ion-button>
+      <ion-button fill="clear" class="home_btn" href="#features">
+        Features
+      </ion-button>
       <ion-button class="login" (click)="goToApp()"> Go to App </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" class="ion-hide-md-up">
+      <ion-button (click)="menuOpen()">
+        <ion-icon
+          slot="icon-only"
+          class="ion_menu"
+          name="menu-outline"
+        ></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="content" id="landing">
   <section
+    id="home"
     class="top_section"
     style="
-      background: url('assets/images/lading-home.jpg') no-repeat center;
+      background: url('assets/images/Stock Chart.svg') no-repeat center;
       background-size: 100% 100vh;
     "
   >
-    <h1>Unlock the potential of the stock market with our expert insights</h1>
+    <ion-grid class="ion_grid">
+      <ion-row class="ion_row height">
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6">
+          <h1>
+            Unlock the potential of the stock market with our expert insights
+          </h1>
+          <ion-button
+            class="get_startbtn ion-text-capitalize"
+            (click)="goToApp()"
+          >
+            Get started
+          </ion-button>
+        </ion-col>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6">
+          <img
+            class="top_img"
+            src="assets/images/Holding the arrow-cuate.svg"
+            alt=""
+          />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </section>
-  <section class="intro_section">
-    <ion-grid>
-      <ion-row>
+  <section id="about" class="intro_section">
+    <ion-grid class="ion_grid">
+      <ion-row class="ion_row height">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6">
           <div>
             <h1>Introduction to indiapredict</h1>
@@ -50,12 +88,17 @@
       </ion-row>
     </ion-grid>
   </section>
-  <section class="profile_section">
-    <ion-grid>
-      <ion-row>
+  <section id="features" class="profile_section">
+    <h1 class="commonTitle feature">Features</h1>
+    <ion-grid class="ion_grid">
+      <ion-row class="ion_row">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
           <ion-card>
-            <h2>Profiles:</h2>
+            <ion-thumbnail>
+              <img src="assets/images/user.png" />
+            </ion-thumbnail>
+
+            <h2 class="label">Profiles</h2>
             <p>
               The app could include profiles for the stock experts, including
               their credentials, expertise, and track record of predictions.
@@ -64,9 +107,18 @@
             </p>
           </ion-card>
         </ion-col>
-        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+        <ion-col
+          sizeXs="12"
+          sizeSm="12"
+          sizeMd="4"
+          sizeLg="4"
+          class="middle_col"
+        >
           <ion-card>
-            <h2>Predictions:</h2>
+            <ion-thumbnail>
+              <img src="assets/images/predictive-chart.png" />
+            </ion-thumbnail>
+            <h2 class="label">Predictions</h2>
             <p>
               The app could allow experts to post their stock predictions, along
               with insights and analysis to explain their reasoning. Users could
@@ -77,7 +129,11 @@
         </ion-col>
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
           <ion-card>
-            <h2>Ratings & Feedback:</h2>
+            <ion-thumbnail>
+              <img src="assets/images/rate.png" />
+            </ion-thumbnail>
+
+            <h2 class="label">Ratings & Feedback</h2>
             <p>
               The app could allow users to rate and review the predictions of
               the experts, providing feedback on the accuracy and usefulness of
@@ -89,4 +145,101 @@
       </ion-row>
     </ion-grid>
   </section>
+  <section class="footer_section">
+    <ion-grid>
+      <ion-row>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+          <a href="#">
+            <img class="logo_img" src="assets/images/INDIAPREDICT.png" alt="" />
+          </a>
+          <h4 class="footer_title">Follow us on:</h4>
+          <div class="follow_icons">
+            <a class="icons" href=""
+              ><ion-icon name="logo-facebook"></ion-icon
+            ></a>
+            <a class="icons insta" href=""
+              ><ion-icon name="logo-instagram"></ion-icon
+            ></a>
+            <a class="icons" href=""
+              ><ion-icon name="logo-twitter"></ion-icon
+            ></a>
+          </div>
+        </ion-col>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+          <h4 class="footer_title">Links:</h4>
+          <ul class="linksul">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+          </ul>
+        </ion-col>
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+          <h4 class="footer_title">Contact us:</h4>
+          <p class="contacts">
+            NAAS Complex,<br />
+            Behind Water Authority,<br />
+            C V Junction, Ponnani PO,<br />
+            Kerala 679 577.
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <p class="designed">
+      © 2022 indiapredict - All Rights Reserved Designed and Developed by
+      <a href="">Marvenics</a>
+    </p>
+  </section>
+  <ion-button class="scroll-top" (click)="scrollToTop()">
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </ion-button>
 </ion-content>
+<ion-menu contentId="landing" side="end">
+  <ion-header class="ion-no-border">
+    <ion-toolbar mode="md" color="primary">
+      <ion-buttons slot="start">
+        <ion-button (click)="menuOpen()">
+          <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title> Menu </ion-title>
+      <ion-buttons slot="end" class="ion-hide-md-up">
+        <ion-button (click)="goToApp()" class="login ion-text-capitalize">
+          Go to app</ion-button
+        >
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item
+      class="home_btn"
+      button
+      lines="none"
+      href="#home"
+      routerLinkActive="selected"
+      routerDirection="root"
+    >
+      <ion-label>Home</ion-label>
+    </ion-item>
+    <ion-item
+      class="home_btn"
+      button
+      lines="none"
+      href="#about"
+      routerLinkActive="selected"
+      routerDirection="root"
+    >
+      <ion-label>About</ion-label>
+    </ion-item>
+    <ion-item
+      class="home_btn"
+      button
+      lines="none"
+      href="#features"
+      routerLinkActive="selected"
+      routerDirection="root"
+    >
+      <ion-label>Features</ion-label>
+    </ion-item>
+  </ion-content>
+</ion-menu>

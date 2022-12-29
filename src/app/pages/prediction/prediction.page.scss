@@ -1,82 +1,41 @@
-ion-toolbar {
-  --padding-start: 0;
-  .prediction_title {
-    color: #000000 !important;
+ion-content {
+  --padding-bottom: 20px;
+  .col_assets {
+    padding: 10px;
   }
-}
-.normal_table {
-  width: 100%;
-  border: 1px solid #dddddd;
-  border-bottom: none;
-  thead tr {
-    height: 50px;
-    text-align: left;
-    border-bottom: 1px solid #dddddd;
-    th {
-      padding-left: 8px;
-      font-size: 18px;
-    }
-  }
-  tbody tr {
-    height: 48px;
-    border-bottom: 1px solid #dddddd;
-    td {
-      padding-left: 8px;
-      font-size: 16px;
-    }
-  }
-}
-.predict_item {
-  --padding-start: 0;
-  --inner-padding-end: 0;
-  .ion_label {
-    white-space: unset !important;
-  }
-  .symbol_status {
+
+  .search {
+    width: 100%;
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
   }
-  .stock_name {
-    margin: 0 !important;
-  }
-  .price_tag {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .space {
-    border-right: 2px solid #dddddd;
-    margin: 0 8px;
-  }
-  .price {
-    font-size: 18px;
+
+  .searchTerm {
+    padding-left: 20px !important;
+    width: 100%;
+    border: 2px solid var(--ion-color-primary);
+    border-right: none;
+    padding: 5px;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
     color: #000000;
-    font-weight: 500;
+    width: 500px;
+    height: 48px;
+    font-weight: 600;
   }
-  .morebtn {
+
+  .searchTerm:focus {
+    color: #000000;
+  }
+
+  .searchButton {
+    color: #fff;
+    --border-radius: 0 5px 5px 0;
     margin: 0;
-    width: 46px;
-    height: 46px;
-    --border-radius: 50%;
+    height: 48px;
+    --box-shadow: none;
   }
-}
-@media (min-width: 750px) {
-  .normal_table {
-    display: inline-table;
-  }
-  .predict_item {
-    display: none;
-  }
-}
-@media (max-width: 649px) {
-  .normal_table {
-    display: none;
-  }
-  .predict_item {
-    display: block;
-  }
-}
-.common_content ion-title {
-  padding: 0;
 }

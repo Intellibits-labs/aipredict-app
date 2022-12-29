@@ -26,36 +26,11 @@
             class="col_assets"
             sizeLg="4"
             sizeMd="6"
-            sizeSm="6"
+            sizeSm="12"
             sizeXs="12"
           >
             <!-- (click)="latestModal(item)" -->
-            <ion-card class="latest_card">
-              <ion-avatar>
-                <img [src]="item.user.picture" alt="" />
-              </ion-avatar>
-
-              <div class="latest_detail">
-                <p class="symbol_status">
-                  <span>{{item.user.name}}</span>
-                </p>
-                <p class="symbol_status">
-                  <span> {{ item.stock?.symbol }}</span>
-                  <span> {{ item?.status }}</span>
-                </p>
-                <h3 class="commonTitle-16 commonTextLine">
-                  {{ item.stock.name }}
-                </h3>
-                <p class="symbol_status commonFamily">
-                  <span>{{item.tradeDate | date:'dd/MM/yyyy'}}</span>
-                  <span>ROI : {{item?.['ROI'] | number}}</span>
-                </p>
-                <p class="commonTitle-15 symbol_status commonFamily">
-                  <span>BuyPrice : ₹{{item.buyPrice}}</span>
-                  <span>SellPrice : ₹{{item.sellPrice}}</span>
-                </p>
-              </div>
-            </ion-card>
+            <latest-card [latestItem]="item"></latest-card>
           </ion-col>
         </ng-container>
       </ion-row>
@@ -70,7 +45,7 @@
             class="col_assets"
             sizeLg="4"
             sizeMd="6"
-            sizeSm="6"
+            sizeSm="12"
             sizeXs="12"
           >
             <stock-card
@@ -91,28 +66,32 @@
     </ion-slide>
   </ion-slides> -->
     <h2 class="sub_title">Trending Predictors</h2>
-    <ion-grid class="ion-no-padding ion-hide-sm-down">
+    <ion-grid class="ion-no-padding ion-hide-md-down">
       <ion-row>
         <ion-col
           class="col_assets"
           sizeLg="4"
           sizeMd="6"
-          sizeSm="6"
+          sizeSm="12"
           sizeXs="12"
           *ngFor="let item of predictorArray"
         >
-          <ion-card class="Communities_card" (click)="communityClick(item)">
+          <ion-card class="Predictors_card" (click)="communityClick(item)">
             <ion-avatar class="img_div">
               <img [src]="item.picture" alt="" />
             </ion-avatar>
-
-            <h3 class="name">{{item.name}}</h3>
+            <div class="Predict">
+              <h3 class="commonTitle-16">{{item.name}}</h3>
+              <p class="symbol_status">
+                <span>ROI : {{item?.['ROI'] / item?.predCount || 0}}</span>
+              </p>
+            </div>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
     <predictor-item
-      class="ion-hide-sm-up"
+      class="ion-hide-md-up"
       (click)="communityClick(item)"
       [predictor]="item"
       *ngFor="let item of predictorArray"

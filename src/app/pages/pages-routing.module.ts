@@ -44,6 +44,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./stocks/stocks.module').then((m) => m.StocksPageModule),
       },
+      {
+        path: 'myprediction',
+        loadChildren: () =>
+          import('./myprediction/myprediction.module').then(
+            (m) => m.MypredictionPageModule
+          ),
+      },
     ],
   },
 ];

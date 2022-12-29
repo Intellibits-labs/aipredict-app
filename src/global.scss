@@ -142,7 +142,7 @@ a {
   margin: 0;
   text-transform: capitalize;
 }
-@media (min-width: 575px) {
+@media (min-width: 768px) {
   .common_content {
     max-width: 1500px;
     min-width: 575px;
@@ -156,7 +156,7 @@ a {
     margin: 0 auto !important;
   }
 }
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .common_content {
     width: 100%;
     padding: 10px 20px;

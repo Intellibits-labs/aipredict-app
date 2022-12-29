@@ -1,87 +1,53 @@
-<!-- <app-header></app-header> -->
 <ion-content>
   <div class="common_content">
-    <ion-toolbar mode="md">
-      <ion-title class="prediction_title">Predictions</ion-title>
-      <ion-buttons slot="end">
-        <ion-button class="common_add" (click)="addpredict()">
-          <ion-icon slot="start" name="add"></ion-icon>
-          New Prediction
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-
-    <table class="normal_table ion-hide-sm-down">
-      <thead>
-        <tr>
-          <th>Stock</th>
-          <th>Symbol</th>
-          <th>Trade Date</th>
-          <th>Buyprice</th>
-          <th>Sellprice</th>
-          <th>Status</th>
-          <th>ROI</th>
-
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of predictions">
-          <td>{{item.stock.name}}</td>
-          <td>{{item.stock.symbol}}</td>
-          <td class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
-          <td class="commonFamily">₹{{item.buyPrice}}</td>
-          <td class="commonFamily">₹{{item.sellPrice}}</td>
-          <td>{{item.status}}</td>
-          <td>{{item['ROI'] | number}}</td>
-          <td>
-            <ion-button
-              class="morebtn"
-              (click)="actionClick($event,item)"
-              fill="clear"
-            >
-              <ion-icon
-                slot="icon-only"
-                name="ellipsis-vertical-outline"
-              ></ion-icon>
-            </ion-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <ion-item *ngFor="let item of predictions" class="predict_item">
-      <ion-label class="ion_label">
-        <p class="symbol_status">
-          <span> {{item.stock.symbol}}</span>
-          <ion-button
-            (click)="actionClick($event,item)"
-            class="morebtn"
-            fill="clear"
+    <div class="search">
+      <input
+        type="text"
+        #search
+        (keyup.enter)="searchKey($event)"
+        class="searchTerm"
+        placeholder="Search prediction..."
+      />
+      <ion-button
+        type="submit"
+        class="searchButton"
+        (click)="searchClick(search.value)"
+      >
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+      ></ion-refresher-content>
+    </ion-refresher>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ng-container *ngFor="let item of predictionArray;let i = index">
+          <ion-col
+            class="col_assets"
+            sizeLg="4"
+            sizeMd="6"
+            sizeSm="12"
+            sizeXs="12"
           >
-            <ion-icon
-              slot="icon-only"
-              name="ellipsis-vertical-outline"
-            ></ion-icon>
-          </ion-button>
-        </p>
-        <h2 class="stock_name commonTextLine">{{item.stock.name}}</h2>
-        <p class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</p>
-        <p class="price_tag">
-          <span>
-            <span>
-              <span>Buyprice :</span>
-              <span class="price commonFamily">₹{{item.buyPrice}}</span>
-            </span>
-            <span class="space"></span>
-            <span>
-              <span>Sellprice :</span>
-              <span class="price commonFamily">₹{{item.sellPrice}}</span>
-            </span></span
-          >
-          <span>{{item.status}}</span>
-        </p>
-      </ion-label>
-    </ion-item>
+            <!-- (click)="latestModal(item)" -->
+            <latest-card [latestItem]="item"></latest-card>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+    <ion-infinite-scroll
+      threshold="100px"
+      (ionInfinite)="loadData($event)"
+      *ngIf="totalPages > page"
+    >
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data..."
+      >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 </ion-content>

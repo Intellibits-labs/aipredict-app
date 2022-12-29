@@ -47,6 +47,7 @@ export class AddPredictModalComponent implements OnInit {
         [Validators.required, this.comparePriceService.greaterThan('buyPrice')],
       ],
       currentPrice: ['', [Validators.required]],
+      type: ['', [Validators.required]],
       note: '',
     });
   }
@@ -111,6 +112,7 @@ export class AddPredictModalComponent implements OnInit {
           error: (e) => {
             console.error(e);
             this.loader.dismiss();
+            this.toast.presentToast(e.message);
           },
         });
     });
@@ -124,7 +126,16 @@ export class AddPredictModalComponent implements OnInit {
           this.toast.presentToast('Prediction Created Successfully');
           this.modalController.dismiss({}, 'success');
         },
-        error: (e) => console.error(e),
+        error: (e) => {
+          console.log(e);
+          console.log(e.message);
+          this.toast.presentToast(e.message);
+        },
       });
+  }
+
+  OriginalPriceChange(ev: any) {
+    console.log(ev);
+    this.predictForm.patchValue({ sellPrice: +ev.detail.target.value });
   }
 }

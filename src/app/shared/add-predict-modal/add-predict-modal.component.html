@@ -64,6 +64,23 @@
             {{ getStockDetail["10. change percent"] }}</span
           >
         </h2>
+        <h4 class="type">Type</h4>
+        <ion-radio-group
+          value="INTRADAY"
+          class="radio_group"
+          formControlName="type"
+        >
+          <ion-item mode="md" lines="none">
+            <ion-label>Intraday</ion-label>
+            <ion-radio slot="start" value="INTRADAY"></ion-radio>
+          </ion-item>
+
+          <ion-item mode="md" lines="none">
+            <ion-label>Delivery</ion-label>
+            <ion-radio slot="start" value="DELIVERY"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
         <ion-item fill="outline" class="input_item" disabled="true">
           <ion-label position="floating">Current Price</ion-label>
           <ion-input
@@ -84,6 +101,7 @@
           <ion-label position="floating">Buy Price</ion-label>
           <ion-input
             type="number"
+            (ionBlur)="OriginalPriceChange($event)"
             formControlName="buyPrice"
             placeholder="Buy Price"
           ></ion-input>
