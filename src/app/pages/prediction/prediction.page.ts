@@ -4,6 +4,7 @@ import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
 import { LoaderService } from 'src/app/core/general/service/loader.service';
 import { AddPredictModalComponent } from 'src/app/shared/add-predict-modal/add-predict-modal.component';
+import { LatestModalComponent } from 'src/app/shared/latest-modal/latest-modal.component';
 import { PredictActionModalComponent } from 'src/app/shared/predict-action-modal/predict-action-modal.component';
 
 @Component({
@@ -91,5 +92,19 @@ export class PredictionPage implements OnInit {
         },
       });
     });
+  }
+
+  async latestModal(item: any) {
+    const modal = await this.modalController.create({
+      cssClass: 'my-alert-class',
+      component: LatestModalComponent,
+      mode: 'md',
+      componentProps: { latestItem: item },
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
   }
 }

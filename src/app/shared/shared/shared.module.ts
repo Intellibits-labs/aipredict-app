@@ -12,7 +12,6 @@ import { AddPredictModalComponent } from '../add-predict-modal/add-predict-modal
 import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
 import { PredictActionModalComponent } from '../predict-action-modal/predict-action-modal.component';
 import { StockModalComponent } from '../stock-modal/stock-modal.component';
-import { PredictorItemComponent } from '../predictor-item/predictor-item.component';
 import { StockCardComponent } from '../stock-card/stock-card.component';
 import { LatestModalComponent } from '../latest-modal/latest-modal.component';
 import { PredictorModalComponent } from '../predictor-modal/predictor-modal.component';
@@ -28,7 +27,6 @@ const components = [
   ImageUploaderComponent,
   PredictActionModalComponent,
   StockModalComponent,
-  PredictorItemComponent,
   StockCardComponent,
   LatestModalComponent,
   PredictorModalComponent,

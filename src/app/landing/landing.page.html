@@ -27,7 +27,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content" id="landing">
+<ion-content
+  [scrollEvents]="true"
+  class="content"
+  (ionScroll)="logScrolling($event)"
+  id="landing"
+>
   <section
     id="home"
     class="top_section"
@@ -60,7 +65,7 @@
     </ion-grid>
   </section>
   <section id="about" class="intro_section">
-    <ion-grid class="ion_grid">
+    <ion-grid class="ion_grid ion-no-padding">
       <ion-row class="ion_row height">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6">
           <div>
@@ -90,7 +95,7 @@
   </section>
   <section id="features" class="profile_section">
     <h1 class="commonTitle feature">Features</h1>
-    <ion-grid class="ion_grid">
+    <ion-grid class="ion_grid ion-no-padding">
       <ion-row class="ion_row">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
           <ion-card>
@@ -146,7 +151,7 @@
     </ion-grid>
   </section>
   <section class="footer_section">
-    <ion-grid>
+    <ion-grid class="ion_grid ion-no-padding">
       <ion-row>
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
           <a href="#">
@@ -185,7 +190,7 @@
       <a href="">Marvenics</a>
     </p>
   </section>
-  <ion-button class="scroll-top" (click)="scrollToTop()">
+  <ion-button *ngIf="isShown" class="scroll-top" (click)="scrollToTop()">
     <ion-icon name="chevron-up-outline"></ion-icon>
   </ion-button>
 </ion-content>

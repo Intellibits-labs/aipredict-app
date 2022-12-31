@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonPopover, ModalController, PopoverController } from '@ionic/angular';
+import {
+  AlertController,
+  IonPopover,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
 import { LoaderService } from 'src/app/core/general/service/loader.service';
@@ -18,7 +23,8 @@ export class MypredictionPage implements OnInit {
     private modalController: ModalController,
     private dataService: DataService,
     private popoverController: PopoverController,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -36,18 +42,18 @@ export class MypredictionPage implements OnInit {
             this.loader.dismiss();
           },
           error: (error) => {
-            console.log(error);
+            console.log(error.message);
             this.loader.dismiss();
           },
         });
     });
   }
-  async addpredict() {
+  async addpredict(idEdit = false, item: any = {}) {
     const modal = await this.modalController.create({
       cssClass: 'my-alert-class',
       component: AddPredictModalComponent,
       mode: 'md',
-      componentProps: {},
+      componentProps: { isData: item, isEdit: idEdit },
     });
     modal.onDidDismiss().then((data) => {
       if (data.role == 'success') {
@@ -62,9 +68,52 @@ export class MypredictionPage implements OnInit {
       event: ev,
       componentProps: { predictData: item },
     });
-
+    popover.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+        console.log(data.data);
+        if (data.data == 'Edit') {
+          this.addpredict(true, item);
+        } else if (data.data == 'Archive') {
+        } else if (data.data == 'Delete') {
+          this.deleteAlert(item);
+        }
+      }
+    });
     await popover.present();
+  }
 
-    const { role } = await popover.onDidDismiss();
+  async deleteAlert(item: any) {
+    const alert = await this.alertController.create({
+      header: 'Alert!',
+      message: 'Do you want to Delete!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {},
+        },
+        {
+          text: 'YES',
+          role: 'confirm',
+          handler: () => {
+            this.dataService
+              .getMethod(HttpApi.deletePrediction + item.id)
+              .subscribe({
+                next: (res) => {
+                  console.log(res);
+                  this.getPredictions();
+                  this.loader.dismiss();
+                },
+                error: (error) => {
+                  console.log(error.message);
+                  this.loader.dismiss();
+                },
+              });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

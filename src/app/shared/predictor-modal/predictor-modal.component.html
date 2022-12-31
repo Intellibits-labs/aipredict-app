@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar mode="md" color="primary">
-    <ion-title>Predictor details</ion-title>
+    <ion-title>Predictor detail</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -9,20 +9,22 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card class="profile_card">
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-col size="3">
-          <ion-avatar>
-            <img [src]="predictor?.picture" />
-          </ion-avatar>
-        </ion-col>
-        <ion-col size="9">
-          <h2 class="name">{{ predictor?.name }}</h2>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+  <div>
+    <ion-item mode="md" lines="none" class="predictor_user">
+      <ion-avatar>
+        <img [src]="predictor?.picture" />
+      </ion-avatar>
+      <ion-label class="modal_label">
+        <h2 class="commonTitle-16">{{ predictor?.name }}</h2>
+        <p class="commonFlex commonDesc">
+          <span
+            >Expected ROI :
+            {{predictor?.['ROI']/predictor?.predCount || 0 }}</span
+          >
+        </p>
+      </ion-label>
+    </ion-item>
+  </div>
   <ion-segment [value]="segmentValue" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="active">
       <ion-label class="ion-text-capitalize">Active</ion-label>
@@ -32,31 +34,38 @@
     </ion-segment-button>
   </ion-segment>
   <ng-container *ngIf="segmentValue == 'active'; else past">
-    <ion-item
-      lines="none"
+    <div
       class="predictor_item ion-hide-md-up"
       *ngFor="let item of predictorArray"
     >
-      <ion-label>
-        <p>{{ item.stock.symbol }}</p>
-        <h2 class="commonTextLine">{{ item.stock.name }}</h2>
-        <p>{{ item.tradeDate | date : "dd/MM/YYYY" }}</p>
-        <p class="price_tag">
-          <span>
-            <span>
-              <span>Buyprice :</span>
-              <span class="price">₹ {{ item?.buyPrice }}</span>
-            </span>
-            <span class="space"></span>
-            <span>
-              <span>Sellprice :</span>
-              <span class="price">₹ {{ item?.sellPrice }}</span>
-            </span></span
-          >
-          <span>{{ item.status }}</span>
-        </p>
-      </ion-label>
-    </ion-item>
+      <h2 class="commonTitle-16 commonTextLine">{{ item.stock.name }}</h2>
+      <p class="commonFlex commonDesc">
+        <span class="commonFamily"
+          >Expected ROI : {{item?.['ROI'] | number}}</span
+        >
+        <span>{{ item?.type }}</span>
+      </p>
+      <p class="commonFlex commonDesc">
+        <span class="commonFamily">
+          {{ item.tradeDate | date : "dd/MM/YYYY" }}</span
+        >
+        <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+          <ion-icon name="radio-button-on-outline"></ion-icon>
+          <ion-label>Active</ion-label>
+        </ion-chip>
+        <ion-chip
+          color="danger"
+          *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+        >
+          <ion-icon name="close-circle-outline"></ion-icon>
+          <ion-label>Closed</ion-label>
+        </ion-chip>
+      </p>
+      <p class="commonFlex commonTitle-15">
+        <span class="commonFamily">Buyprice : ₹ {{ item?.buyPrice }}</span>
+        <span class="commonFamily">Sellprice : ₹ {{ item?.sellPrice }}</span>
+      </p>
+    </div>
 
     <table class="active_table ion-hide-md-down">
       <thead>
@@ -65,8 +74,9 @@
           <th>Tradedate</th>
           <th>Buyprice</th>
           <th>Sellprice</th>
+          <th>Type</th>
+          <th>Expected ROI</th>
           <th>Status</th>
-          <th>ROI</th>
         </tr>
       </thead>
       <tbody>
@@ -75,38 +85,62 @@
           <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
           <td class="commonFamily">₹{{ item.buyPrice }}</td>
           <td class="commonFamily">₹{{ item.sellPrice }}</td>
-          <td>{{ item.status }}</td>
-          <td>{{ item["ROI"] | number }}</td>
+          <td>{{ item?.type }}</td>
+          <td class="commonFamily">{{ item["ROI"] | number }}</td>
+          <td>
+            <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+              <ion-icon name="radio-button-on-outline"></ion-icon>
+              <ion-label>Active</ion-label>
+            </ion-chip>
+            <ion-chip
+              color="danger"
+              *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+            >
+              <ion-icon name="close-circle-outline"></ion-icon>
+              <ion-label>Closed</ion-label>
+            </ion-chip>
+          </td>
         </tr>
       </tbody>
     </table>
+    <div class="common_nodata" *ngIf="!predictorArray.length">
+      <img src="assets/images/no_data.svg" alt="" />
+      <h5>No active found</h5>
+    </div>
   </ng-container>
   <ng-template #past>
-    <ion-item
-      lines="none"
+    <div
       class="predictor_item ion-hide-md-up"
       *ngFor="let item of predictorArray"
     >
-      <ion-label>
-        <p>{{ item.stock.symbol }}</p>
-        <h2 class="commonTextLine">{{ item.stock.name }}</h2>
-        <p>{{ item.tradeDate | date : "dd/MM/YYYY" }}</p>
-        <p class="price_tag">
-          <span>
-            <span>
-              <span>Buyprice :</span>
-              <span class="price">₹ {{ item?.buyPrice }}</span>
-            </span>
-            <span class="space"></span>
-            <span>
-              <span>Sellprice :</span>
-              <span class="price">₹ {{ item?.sellPrice }}</span>
-            </span></span
-          >
-          <span>{{ item.status }}</span>
-        </p>
-      </ion-label>
-    </ion-item>
+      <h2 class="commonTitle-16 commonTextLine">{{ item.stock.name }}</h2>
+      <p class="commonFlex commonDesc">
+        <span class="commonFamily"
+          >Expected ROI : {{item?.['ROI'] | number}}</span
+        >
+        <span>{{ item?.type }}</span>
+      </p>
+      <p class="commonFlex commonDesc">
+        <span class="commonFamily">
+          {{ item.tradeDate | date : "dd/MM/YYYY" }}</span
+        >
+        <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+          <ion-icon name="radio-button-on-outline"></ion-icon>
+          <ion-label>Active</ion-label>
+        </ion-chip>
+        <ion-chip
+          color="danger"
+          *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+        >
+          <ion-icon name="close-circle-outline"></ion-icon>
+          <ion-label>Closed</ion-label>
+        </ion-chip>
+      </p>
+      <p class="commonFlex commonTitle-15">
+        <span class="commonFamily">Buyprice : ₹ {{ item?.buyPrice }}</span>
+        <span class="commonFamily">Sellprice : ₹ {{ item?.sellPrice }}</span>
+      </p>
+    </div>
     <table class="active_table ion-hide-md-down">
       <thead>
         <tr>
@@ -114,8 +148,9 @@
           <th>Tradedate</th>
           <th>Buyprice</th>
           <th>Sellprice</th>
+          <th>Type</th>
+          <th>Expected ROI</th>
           <th>Status</th>
-          <th>ROI</th>
         </tr>
       </thead>
       <tbody>
@@ -124,10 +159,28 @@
           <td>{{ item.tradeDate | date : "dd/MM/YYYY" }}</td>
           <td class="commonFamily">₹{{ item.buyPrice }}</td>
           <td class="commonFamily">₹{{ item.sellPrice }}</td>
-          <td>{{ item.status }}</td>
-          <td>{{ item["ROI"] | number }}</td>
+          <td>{{ item?.type }}</td>
+          <td class="commonFamily">{{ item["ROI"] | number }}</td>
+          <td>
+            <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+              <ion-icon name="radio-button-on-outline"></ion-icon>
+              <ion-label>Active</ion-label>
+            </ion-chip>
+            <ion-chip
+              color="danger"
+              *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+            >
+              <ion-icon name="close-circle-outline"></ion-icon>
+              <ion-label>Closed</ion-label>
+            </ion-chip>
+          </td>
         </tr>
       </tbody>
     </table>
+
+    <div class="common_nodata" *ngIf="!predictorArray.length">
+      <img src="assets/images/no_data.svg" alt="" />
+      <h5>No past found</h5>
+    </div>
   </ng-template>
 </ion-content>

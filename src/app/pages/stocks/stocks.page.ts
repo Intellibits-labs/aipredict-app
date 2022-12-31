@@ -59,7 +59,7 @@ export class StocksPage implements OnInit {
 
   async stockModal(item: any) {
     const modal = await this.modalController.create({
-      cssClass: 'my-alert-class',
+      cssClass: 'predictor_stock_modal',
       component: StockModalComponent,
       mode: 'md',
       componentProps: { stockDetail: item },

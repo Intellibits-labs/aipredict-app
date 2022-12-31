@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpApi } from 'src/app/core/general/http/http-api';
+import { DataService } from 'src/app/core/general/service/data.service';
 
 @Component({
   selector: 'app-latest-modal',
@@ -8,6 +10,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class LatestModalComponent implements OnInit {
   @Input() latestItem: any;
+
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {

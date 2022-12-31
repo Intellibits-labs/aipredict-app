@@ -29,6 +29,8 @@ export class HttpApi {
   static singlePredictor = 'prediction/user/';
   static getPrediction = 'prediction';
   static searchPredction = 'prediction/search/';
+  static updatePredction = 'prediction/update/';
+  static deletePrediction = 'prediction/delete/';
 
   // Stock
   static getStocks = 'stock';

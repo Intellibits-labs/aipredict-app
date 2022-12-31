@@ -32,8 +32,11 @@
             sizeSm="12"
             sizeXs="12"
           >
-            <!-- (click)="latestModal(item)" -->
-            <latest-card [latestItem]="item"></latest-card>
+            <!--  -->
+            <latest-card
+              [latestItem]="item"
+              (click)="latestModal(item)"
+            ></latest-card>
           </ion-col>
         </ng-container>
       </ion-row>

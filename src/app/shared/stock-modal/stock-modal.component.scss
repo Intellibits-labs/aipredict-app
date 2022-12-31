@@ -2,30 +2,7 @@ ion-content {
   --padding-start: 20px;
   --padding-end: 20px;
   --padding-top: 20px;
-  .symbol_time {
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-    .time {
-      font-size: 13px;
-      color: #000000;
-    }
-  }
-  .stock_symbol {
-    text-align: left;
-    font-size: 13px;
-    margin-top: 0;
-    color: gray;
-    margin-bottom: 10px;
-  }
-  .stock_name {
-    font-size: 22px;
-    margin-top: 0;
-    color: #000000;
-    text-align: left;
-  }
   .stock_price {
     margin-top: 0;
     text-align: left;
@@ -38,31 +15,27 @@ ion-content {
       font-weight: 600;
       font-family: "Open Sans", sans-serif;
     }
-    .stock_percent_down {
-      background: #ffe2e2;
+    .percentageStyle {
       padding: 0 10px;
       border-radius: 8px;
-      color: #b73f3f;
       margin-left: 10px;
       font-size: 16px;
       display: inline-flex;
       align-items: center;
       font-weight: 700;
+      font-family: "Open Sans", sans-serif;
+    }
+    .down {
+      background: #ffe2e2;
+      color: #b73f3f;
       ion-icon {
         color: #b73f3f;
         font-size: 16px;
       }
     }
-    .stock_percent_up {
+    .up {
       background: #cff9cf;
-      padding: 0 10px;
-      border-radius: 8px;
       color: #238923;
-      margin-left: 10px;
-      font-size: 16px;
-      display: inline-flex;
-      align-items: center;
-      font-weight: 700;
       ion-icon {
         color: #238923;
         font-size: 16px;
@@ -70,27 +43,16 @@ ion-content {
     }
   }
   .predictor_item {
-    --inner-padding-end: 0;
-    ion-label {
-      white-space: unset !important;
-      padding-left: 10px;
+    display: block;
+    padding: 5px 0;
+    border-bottom: 1px solid #dddddd;
+
+    h2 {
+      padding-bottom: 5px;
     }
   }
-  .price_tag {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .space {
-      border-right: 2px solid #dddddd;
-      margin: 0 8px;
-    }
-    .price {
-      font-size: 18px;
-      color: #000000;
-      font-weight: 500;
-      font-family: "Open Sans", sans-serif;
-    }
+  ion-chip {
+    margin: 0;
   }
   .active_table {
     margin-top: 10px;

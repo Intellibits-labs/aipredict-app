@@ -1,8 +1,12 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
+import { AuthService } from 'src/app/core/general/service/auth.service';
+import { CookieService } from 'src/app/core/general/service/cookie.service';
 import { DataService } from 'src/app/core/general/service/data.service';
 import { LatestModalComponent } from 'src/app/shared/latest-modal/latest-modal.component';
+import { LoginModalComponent } from 'src/app/shared/login-modal/login-modal.component';
 import { PredictorModalComponent } from 'src/app/shared/predictor-modal/predictor-modal.component';
 import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.component';
 
@@ -37,13 +41,18 @@ export class HomePage implements OnInit {
   trendingAssets: any = [];
   predictorArray: any = [];
   predictionArray: any = [];
+  userData: any;
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private cookieService: CookieService,
+    private readonly _authService: SocialAuthService
   ) {}
 
   ngOnInit() {
+    this.getUserData();
     this.getStock();
     this.getPredictors();
     this.getPredictions();
@@ -95,7 +104,7 @@ export class HomePage implements OnInit {
   }
   async communityClick(item: any) {
     const modal = await this.modalController.create({
-      cssClass: 'my-alert-class',
+      cssClass: 'predictor_stock_modal',
       component: PredictorModalComponent,
       mode: 'md',
       componentProps: { predictor: item },
@@ -109,7 +118,7 @@ export class HomePage implements OnInit {
 
   async stockModal(item: any) {
     const modal = await this.modalController.create({
-      cssClass: 'my-alert-class',
+      cssClass: 'predictor_stock_modal',
       component: StockModalComponent,
       mode: 'md',
       componentProps: { stockDetail: item },
@@ -132,7 +141,7 @@ export class HomePage implements OnInit {
 
   async latestModal(item: any) {
     const modal = await this.modalController.create({
-      cssClass: 'my-alert-class',
+      cssClass: '',
       component: LatestModalComponent,
       mode: 'md',
       componentProps: { latestItem: item },
@@ -142,5 +151,57 @@ export class HomePage implements OnInit {
       }
     });
     await modal.present();
+  }
+
+  async loginClick() {
+    const modal = await this.modalController.create({
+      component: LoginModalComponent,
+      cssClass: 'loginModal-class',
+      mode: 'md',
+      componentProps: {},
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
+  }
+  getUserData() {
+    this.authService.getUser().subscribe({
+      next: (res) => {
+        this.userData = res;
+        console.log(
+          '🚀 ~ file: header.component.ts:48 ~  ~ userData',
+          this.userData
+        );
+        if (!this.userData) {
+          this.cookieService.deleteCookie('idToken');
+          this._authService.authState.subscribe((user: any) => {
+            this.userData = user;
+            console.log('🚀 ~ 37 ~ LoginModalComponent  ~ user', user);
+            if (user) {
+              this.cookieService.setCookie({
+                name: 'idToken',
+                value: user.idToken,
+              });
+              localStorage.setItem('googleUser', JSON.stringify(user));
+              this.dataService
+                .postMethod(HttpApi.googleLogin, { idToken: user.idToken })
+                .subscribe({
+                  next: (res) => {
+                    console.log(res);
+                    localStorage.setItem('user', JSON.stringify(res.user));
+                    localStorage.setItem('session', JSON.stringify(res.tokens));
+                    this.authService.setUser(res.user);
+                  },
+                  error: (e) => console.log(e.message),
+                  complete: () => console.log('complete'),
+                });
+              // this.modalController.dismiss();
+            }
+          });
+        }
+      },
+    });
   }
 }

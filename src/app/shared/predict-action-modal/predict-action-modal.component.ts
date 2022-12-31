@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-predict-action-modal',
@@ -7,7 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PredictActionModalComponent implements OnInit {
   @Input() predictData: any;
-  constructor() {}
+  constructor(private popoverController: PopoverController) {}
 
   ngOnInit() {}
+
+  onClick(item: any) {
+    this.popoverController.dismiss(item, 'success');
+  }
 }

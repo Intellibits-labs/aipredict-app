@@ -67,32 +67,37 @@ ion-content {
       color: #000000;
       font-weight: 600;
     }
-    .stock_percent_down {
-      background: #f3b3b3;
-      padding: 10px;
+
+    .percentageStyle {
+      padding: 3px 10px;
       border-radius: 8px;
-      color: #b73f3f;
       margin-left: 10px;
       font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+      font-family: "Open Sans", sans-serif;
+    }
+    .down {
+      background: #ffe2e2;
+      color: #b73f3f;
       ion-icon {
         color: #b73f3f;
         font-size: 16px;
+        margin-right: 5px;
       }
     }
-    .stock_percent_up {
-      background: #a4e3a4;
-      padding: 10px;
-      border-radius: 8px;
+    .up {
+      background: #cff9cf;
       color: #238923;
-      margin-left: 10px;
-      font-size: 16px;
       ion-icon {
         color: #238923;
         font-size: 16px;
+        margin-right: 5px;
       }
     }
   }
-  .nodata {
+  .common_nodata {
     width: 100%;
     text-align: center;
     padding-top: 40px;

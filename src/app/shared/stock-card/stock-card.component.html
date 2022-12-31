@@ -3,7 +3,7 @@
     <span>{{ stockItem.name[0] }}</span>
   </div>
   <div class="details">
-    <p>
+    <p class="commonFlex commonDesc">
       <span> {{ stockItem.symbol }}</span>
       <!-- <ion-icon
         *ngIf="stockItem?.['meta'] && stockItem.flag;else up"
@@ -19,6 +19,6 @@
       > -->
     </p>
     <!-- <h3>₹{{stockItem.meta?.['Global Quote']?.['05. price']}}</h3> -->
-    <h3 class="commonTitle-16 commonTextLine">{{ stockItem.name }}</h3>
+    <h3 class="commonMediumTitle commonTextLine">{{ stockItem.name }}</h3>
   </div>
 </ion-card>

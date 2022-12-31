@@ -1,6 +1,16 @@
 <!-- <app-header></app-header> -->
 <ion-content>
   <div class="common_content">
+    <ion-card class="login_alertcard" *ngIf="!userData">
+      <img src="assets/images/login.png" alt="" />
+      <div>
+        <p>You must log in in order to view the active predictions.</p>
+        <ion-button class="loginClick" (click)="loginClick()">
+          Login
+        </ion-button>
+      </div>
+    </ion-card>
+
     <div class="search">
       <input
         type="text"
@@ -29,8 +39,10 @@
             sizeSm="12"
             sizeXs="12"
           >
-            <!-- (click)="latestModal(item)" -->
-            <latest-card [latestItem]="item"></latest-card>
+            <latest-card
+              [latestItem]="item"
+              (click)="latestModal(item)"
+            ></latest-card>
           </ion-col>
         </ng-container>
       </ion-row>
@@ -65,8 +77,8 @@
           ></stock-card>
     </ion-slide>
   </ion-slides> -->
-    <h2 class="sub_title">Trending Predictors</h2>
-    <ion-grid class="ion-no-padding ion-hide-md-down">
+    <h2 class="sub_title">Predictor Leader Board</h2>
+    <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col
           class="col_assets"
@@ -81,20 +93,16 @@
               <img [src]="item.picture" alt="" />
             </ion-avatar>
             <div class="Predict">
-              <h3 class="commonTitle-16">{{item.name}}</h3>
-              <p class="symbol_status">
-                <span>ROI : {{item?.['ROI'] / item?.predCount || 0}}</span>
+              <h3 class="commonTitle-16 commonTextLine">{{item.name}}</h3>
+              <p class="commonFlex commonDesc">
+                <span
+                  >Expected ROI : {{item?.['ROI'] / item?.predCount || 0}}</span
+                >
               </p>
             </div>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <predictor-item
-      class="ion-hide-md-up"
-      (click)="communityClick(item)"
-      [predictor]="item"
-      *ngFor="let item of predictorArray"
-    ></predictor-item>
   </div>
 </ion-content>

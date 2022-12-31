@@ -54,7 +54,7 @@ ion-title {
 }
 .commonMediumTitle {
   font-style: normal;
-  font-weight: 800;
+  font-weight: 600;
   font-size: 18px;
   line-height: 23px;
   color: #000000;
@@ -89,10 +89,11 @@ ion-title {
 .commonDesc {
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
-  color: #b9c1cc;
+  font-size: 14px;
+  color: gray;
   margin: 0;
   padding: 0;
+  padding-bottom: 5px;
   text-transform: capitalize;
 }
 .commonSubmitBtn {
@@ -167,10 +168,9 @@ a {
   }
 }
 .commonFamily {
-  // font-family: "Open Sans", sans-serif;
   font-family: "Open Sans", sans-serif;
 }
-.nodata {
+.common_nodata {
   width: 100%;
   text-align: center;
   padding-top: 40px;
@@ -183,4 +183,13 @@ a {
   --width: 300px;
   --height: 250px;
   --border-radius: 12px;
+}
+
+.predictor_stock_modal {
+  --width: 750px;
+}
+.commonFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

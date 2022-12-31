@@ -3,53 +3,22 @@ ion-content {
   --padding-end: 20px;
   --padding-top: 20px;
   --padding-bottom: 20px;
-  .profile_card {
-    margin: 0;
-    padding: 20px;
-    box-shadow: 0 0 5px 1px #ebe4e4;
 
-    ion-thumbnail {
-      width: 80px;
-      height: 80px;
-      --border-radius: 8px;
-    }
-
-    .name {
-      margin-top: 0;
-      font-size: 16px;
-      color: #000000;
-      font-weight: 600;
-    }
-    .work {
-      margin-top: 0;
-      font-size: 14px;
-      color: gray;
-    }
-  }
-  .predictor_item {
-    --inner-padding-end: 0;
-    ion-label {
-      white-space: unset !important;
+  .predictor_user {
+    --padding-start: 0;
+    .modal_label {
       padding-left: 10px;
     }
   }
-  .price_tag {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .space {
-      border-right: 2px solid #dddddd;
-      margin: 0 8px;
-    }
-    .price {
-      font-size: 18px;
-      color: #000000;
-      font-weight: 500;
-      // font-family: "Open Sans", sans-serif;
-      font-family: "Open Sans", sans-serif;
-    }
+  ion-chip {
+    margin: 0;
   }
+  .predictor_item {
+    display: block;
+    padding: 5px 0;
+    border-bottom: 1px solid #dddddd;
+  }
+
   .active_table {
     margin-top: 10px;
     width: 100%;

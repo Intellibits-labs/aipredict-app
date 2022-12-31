@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { NavController, PopoverController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/general/service/auth.service';
 
 @Component({
@@ -11,7 +11,8 @@ export class LogoutModalComponent implements OnInit {
   @Input() userData: any;
   constructor(
     private authService: AuthService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -19,5 +20,6 @@ export class LogoutModalComponent implements OnInit {
   }
   logout() {
     this.popoverController.dismiss({}, 'success');
+    this.navCtrl.navigateRoot(['splash']);
   }
 }

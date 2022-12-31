@@ -26,57 +26,23 @@ ion-toolbar {
     }
   }
 }
+ion-chip {
+  margin: 0;
+}
 .predict_item {
-  --padding-start: 0;
-  --inner-padding-end: 0;
-  .ion_label {
-    white-space: unset !important;
-  }
-  .symbol_status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .stock_name {
-    margin: 0 !important;
-  }
-  .price_tag {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .space {
-    border-right: 2px solid #dddddd;
-    margin: 0 8px;
-  }
-  .price {
-    font-size: 18px;
-    color: #000000;
-    font-weight: 500;
-  }
+  padding: 5px 0;
+  border-bottom: 1px solid #dddddd;
+
   .morebtn {
     margin: 0;
-    width: 46px;
-    height: 46px;
+    width: 35px;
+    height: 35px;
     --border-radius: 50%;
+    --padding-start: 5px;
+    --padding-end: 5px;
   }
 }
-@media (min-width: 768px) {
-  .normal_table {
-    display: inline-table;
-  }
-  .predict_item {
-    display: none;
-  }
-}
-@media (max-width: 768px) {
-  .normal_table {
-    display: none;
-  }
-  .predict_item {
-    display: block;
-  }
-}
+
 .common_content ion-title {
   padding: 0;
 }

@@ -1,36 +1,53 @@
 <ion-card class="latest_card">
-  <ion-avatar>
+  <div class="userId">
+    <ion-avatar>
+      <img [src]="latestItem.user.picture" alt="" />
+    </ion-avatar>
+    <div>
+      <!-- <p class="commonDesc">{{ latestItem?.user?.provider }}</p> -->
+      <h3 class="commonTitle-15">{{ latestItem.user.name }}</h3>
+    </div>
+  </div>
+  <!-- <ion-avatar>
     <img [src]="latestItem.user.picture" alt="" />
-  </ion-avatar>
+  </ion-avatar> -->
 
   <div class="latest_detail">
-    <p class="symbol_status">
+    <!-- <p class="commonFlex commonDesc">
       <span>{{ latestItem.user.name }}</span>
       <span>{{ latestItem.type }}</span>
-    </p>
-    <p class="symbol_status">
+    </p> -->
+    <p class="commonFlex commonDesc">
       <span> {{ latestItem.stock?.symbol }}</span>
-      <ion-chip color="warning" *ngIf="latestItem?.status == 'PENDING'">
+      <ion-chip color="success" *ngIf="latestItem?.status == 'PENDING'">
         <ion-icon name="radio-button-on-outline"></ion-icon>
-        <ion-label>Pending</ion-label>
+        <ion-label>Active</ion-label>
       </ion-chip>
-      <ion-chip color="success" *ngIf="latestItem?.status == 'COMPLETED'">
-        <ion-icon name="checkmark-outline"></ion-icon>
-        <ion-label>Completed</ion-label>
-      </ion-chip>
-      <ion-chip color="danger" *ngIf="latestItem?.status == 'FAILED'">
+
+      <ion-chip
+        color="danger"
+        *ngIf="
+          latestItem?.status == 'FAILED' || latestItem?.status == 'COMPLETED'
+        "
+      >
         <ion-icon name="close-circle-outline"></ion-icon>
-        <ion-label>Failed</ion-label>
+        <ion-label>Closed</ion-label>
       </ion-chip>
     </p>
     <h3 class="commonTitle-16 commonTextLine">
-      {{ latestItem.stock.name }}
+      {{ latestItem?.stock.name }}
     </h3>
-    <p class="symbol_status commonFamily">
-      <span>{{ latestItem.tradeDate | date : "dd/MM/yyyy" }}</span>
-      <span>ROI : {{latestItem?.['ROI'] | number}}</span>
+    <p class="commonFlex commonDesc commonFamily">
+      <span>CreatedAt : {{ latestItem?.tradeDate | date : "dd/MM/yyyy" }}</span>
+      <span>tradeDate :{{ latestItem?.createdAt | date : "dd/MM/yyyy" }}</span>
     </p>
-    <p class="commonTitle-15 symbol_status commonFamily">
+    <p class="commonFlex commonDesc">
+      <span class="commonFamily"
+        >Expected ROI : {{latestItem?.['ROI'] | number}}</span
+      >
+      <span>{{ latestItem.type }}</span>
+    </p>
+    <p class="commonTitle-15 commonFlex commonFamily">
       <span>BuyPrice : ₹{{ latestItem.buyPrice }}</span>
       <span>SellPrice : ₹{{ latestItem.sellPrice }}</span>
     </p>

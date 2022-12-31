@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { DataService } from 'src/app/core/general/service/data.service';
+import { LoaderService } from 'src/app/core/general/service/loader.service';
 
 @Component({
   selector: 'app-stock-modal',
@@ -16,7 +17,8 @@ export class StockModalComponent implements OnInit {
   responseArray: any = [];
   constructor(
     private modalController: ModalController,
-    private dataService: DataService
+    private dataService: DataService,
+    private loader: LoaderService
   ) {}
 
   ngOnInit() {
@@ -46,14 +48,18 @@ export class StockModalComponent implements OnInit {
   segmentChanged(ev: any) {
     console.log(ev);
     this.segmentValue = ev.detail.value;
-    if (this.segmentValue == 'active') {
-      this.predictorArray = this.responseArray.filter(
-        (x: any) => x.status == 'PENDING'
-      );
-    } else if (this.segmentValue == 'past') {
-      this.predictorArray = this.responseArray.filter(
-        (x: any) => x.status == 'COMPLETED' || x.status == 'FAILED'
-      );
-    }
+    this.loader.presentLoading().then(() => {
+      if (this.segmentValue == 'active') {
+        this.predictorArray = this.responseArray.filter(
+          (x: any) => x.status == 'PENDING'
+        );
+        this.loader.dismiss();
+      } else if (this.segmentValue == 'past') {
+        this.predictorArray = this.responseArray.filter(
+          (x: any) => x.status == 'COMPLETED' || x.status == 'FAILED'
+        );
+        this.loader.dismiss();
+      }
+    });
   }
 }

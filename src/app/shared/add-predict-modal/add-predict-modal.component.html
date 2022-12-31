@@ -1,6 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="md" color="primary">
-    <ion-title>Add New Prediction</ion-title>
+    <ion-title>{{
+      !isEdit ? "Add New Prediction" : "Update Prediction"
+    }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -26,7 +28,7 @@
         (ionChange)="search($event)"
         [debounce]="1000"
       ></ion-searchbar>
-      <div class="nodata" *ngIf="!autoCompleteArray.length">
+      <div class="common_nodata" *ngIf="!autoCompleteArray.length">
         <img src="assets/images/no_data.svg" alt="" />
         <h5>No data found</h5>
       </div>
@@ -45,23 +47,23 @@
       </ng-container>
     </ion-slide>
     <ion-slide class="form_slide">
-      <form [formGroup]="predictForm" *ngIf="getStockDetail">
-        <p class="stock_symbol">{{ getStockDetail["01. symbol"] }}</p>
+      <form [formGroup]="predictForm">
+        <p class="stock_symbol">{{ getStockDetail?.["01. symbol"] }}</p>
         <div>
           <h1 class="stock_name">{{ selectedName }}</h1>
         </div>
 
         <h2 class="stock_price">
           <span class="commonFamily price"
-            >₹{{ getStockDetail["05. price"] }}</span
+            >₹{{ getStockDetail?.["05. price"] }}</span
           >
-          <span *ngIf="symbolIcon" class="commonFamily stock_percent_down"
+          <span *ngIf="symbolIcon" class="percentageStyle down"
             ><ion-icon name="arrow-down-outline"></ion-icon>
-            {{ getStockDetail["10. change percent"] }}</span
+            {{ getStockDetail?.["10. change percent"] }}</span
           >
-          <span *ngIf="!symbolIcon" class="commonFamily stock_percent_up"
+          <span *ngIf="!symbolIcon" class="percentageStyle up"
             ><ion-icon name="arrow-up-outline"></ion-icon>
-            {{ getStockDetail["10. change percent"] }}</span
+            {{ getStockDetail?.["10. change percent"] }}</span
           >
         </h2>
         <h4 class="type">Type</h4>
@@ -129,11 +131,20 @@
 <ion-footer>
   <ion-toolbar *ngIf="slideIndex === 1" mode="md">
     <ion-button
+      *ngIf="!isEdit"
       (click)="saveClick()"
       class="commonSubmitBtn"
       [disabled]="!predictForm.valid"
     >
       Save
+    </ion-button>
+    <ion-button
+      *ngIf="isEdit"
+      (click)="updateClick()"
+      class="commonSubmitBtn"
+      [disabled]="!predictForm.valid"
+    >
+      Update
     </ion-button>
   </ion-toolbar>
 </ion-footer>

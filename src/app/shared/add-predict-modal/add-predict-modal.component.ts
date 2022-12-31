@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { HttpApi } from 'src/app/core/general/http/http-api';
@@ -14,6 +14,8 @@ import { ToastService } from 'src/app/core/general/service/toast.service';
 })
 export class AddPredictModalComponent implements OnInit {
   @ViewChild('slider') slider!: IonSlides;
+  @Input() isData: any;
+  @Input() isEdit: any;
   slideOpts = {
     initialSlide: 0,
     speed: 400,
@@ -53,6 +55,29 @@ export class AddPredictModalComponent implements OnInit {
   }
 
   ngOnInit() {}
+  ionViewDidEnter() {
+    if (this.isData && this.isEdit) {
+      console.log(this.isData);
+      let data = {
+        stock: this.isData?.stock?.id,
+        tradeDate: this.isData?.tradeDate,
+        buyPrice: this.isData?.buyPrice,
+        sellPrice: this.isData?.sellPrice,
+        currentPrice: this.isData?.currentPrice,
+        type: this.isData?.type,
+        note: this.isData?.note,
+      };
+      this.selectStock(this.isData?.stock?.symbol);
+      this.selectedName = this.isData?.stock?.name;
+      this.predictForm.patchValue(data);
+      this.slider.lockSwipes(false);
+      this.slider.slideNext();
+      this.slider.lockSwipes(true);
+
+      this.slideOpts.allowTouchMove.valueOf();
+      console.log(this.predictForm.value);
+    }
+  }
   dismiss() {
     this.modalController.dismiss();
   }
@@ -87,34 +112,44 @@ export class AddPredictModalComponent implements OnInit {
     }
   }
   selectStock(item: any) {
-    this.selectedName = item['2. name'];
+    console.log('first working');
+
+    this.selectedName = item?.['2. name'];
+
     this.loader.presentLoading().then(() => {
-      this.dataService
-        .getMethod(HttpApi.getStock + item['1. symbol'])
-        .subscribe({
-          next: (res) => {
-            console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
-            this.getStockDetail = res['Global Quote'];
-            if (this.getStockDetail['10. change percent'].includes('-')) {
-              this.symbolIcon = true;
-            }
+      let url;
+      if (item['1. symbol']) {
+        url = item['1. symbol'];
+      } else {
+        url = item;
+      }
+      this.dataService.getMethod(HttpApi.getStock + url).subscribe({
+        next: (res) => {
+          console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
+          this.getStockDetail = res['Global Quote'];
+          if (this.getStockDetail['10. change percent'].includes('-')) {
+            this.symbolIcon = true;
+          }
+          if (!this.isEdit) {
             this.predictForm.patchValue({
               stock: item['1. symbol'],
               buyPrice: this.getStockDetail['05. price'],
               currentPrice: this.getStockDetail['05. price'],
             });
-            this.autoCompleteArray = [];
-            this.slider.lockSwipes(false);
-            this.slider.slideNext();
-            this.slider.lockSwipes(true);
-            this.loader.dismiss();
-          },
-          error: (e) => {
-            console.error(e);
-            this.loader.dismiss();
-            this.toast.presentToast(e.message);
-          },
-        });
+          }
+
+          this.autoCompleteArray = [];
+          this.slider.lockSwipes(false);
+          this.slider.slideNext();
+          this.slider.lockSwipes(true);
+          this.loader.dismiss();
+        },
+        error: (e) => {
+          console.error(e);
+          this.loader.dismiss();
+          this.toast.presentToast(e.message);
+        },
+      });
     });
   }
   saveClick() {
@@ -133,7 +168,25 @@ export class AddPredictModalComponent implements OnInit {
         },
       });
   }
-
+  updateClick() {
+    this.dataService
+      .postMethod(
+        HttpApi.updatePredction + this.isData.id,
+        this.predictForm.value
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('🚀 :46 ~ AddPredictModalComponent ~ res', res);
+          this.toast.presentToast('Prediction Created Successfully');
+          this.modalController.dismiss({}, 'success');
+        },
+        error: (e) => {
+          console.log(e);
+          console.log(e.message);
+          this.toast.presentToast(e.message);
+        },
+      });
+  }
   OriginalPriceChange(ev: any) {
     console.log(ev);
     this.predictForm.patchValue({ sellPrice: +ev.detail.target.value });

@@ -4,7 +4,7 @@
     <ion-toolbar mode="md">
       <ion-title class="prediction_title">My Predictions</ion-title>
       <ion-buttons slot="end">
-        <ion-button class="common_add" (click)="addpredict()">
+        <ion-button class="common_add" (click)="addpredict(false)">
           <ion-icon slot="start" name="add"></ion-icon>
           New Prediction
         </ion-button>
@@ -19,8 +19,10 @@
           <th>Trade Date</th>
           <th>Buyprice</th>
           <th>Sellprice</th>
+          <th>Type</th>
+          <th>Expected ROI</th>
+
           <th>Status</th>
-          <th>ROI</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -31,10 +33,25 @@
           <td class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
           <td class="commonFamily">₹{{item.buyPrice}}</td>
           <td class="commonFamily">₹{{item.sellPrice}}</td>
-          <td>{{item.status}}</td>
+          <td class="commonFamily">{{item.type}}</td>
           <td class="commonFamily">{{item['ROI'] | number}}</td>
+
+          <td>
+            <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+              <ion-icon name="radio-button-on-outline"></ion-icon>
+              <ion-label>Active</ion-label>
+            </ion-chip>
+            <ion-chip
+              color="danger"
+              *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+            >
+              <ion-icon name="close-circle-outline"></ion-icon>
+              <ion-label>Closed</ion-label>
+            </ion-chip>
+          </td>
           <td>
             <ion-button
+              *ngIf="item.status =='PENDING'"
               class="morebtn"
               (click)="actionClick($event,item)"
               fill="clear"
@@ -48,39 +65,44 @@
         </tr>
       </tbody>
     </table>
-
-    <ion-item *ngFor="let item of predictions" class="predict_item">
-      <ion-label class="ion_label">
-        <p class="symbol_status">
-          <span> {{item.stock.symbol}}</span>
-          <ion-button
-            (click)="actionClick($event,item)"
-            class="morebtn"
-            fill="clear"
-          >
-            <ion-icon
-              slot="icon-only"
-              name="ellipsis-vertical-outline"
-            ></ion-icon>
-          </ion-button>
-        </p>
-        <h2 class="stock_name commonTextLine">{{item.stock.name}}</h2>
-        <p class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</p>
-        <p class="price_tag">
-          <span>
-            <span>
-              <span>Buyprice :</span>
-              <span class="price commonFamily">₹{{item.buyPrice}}</span>
-            </span>
-            <span class="space"></span>
-            <span>
-              <span>Sellprice :</span>
-              <span class="price commonFamily">₹{{item.sellPrice}}</span>
-            </span></span
-          >
-          <span>{{item.status}}</span>
-        </p>
-      </ion-label>
-    </ion-item>
+    <div *ngFor="let item of predictions" class="predict_item ion-hide-md-up">
+      <p class="commonFlex commonDesc">
+        <span> {{item.stock.symbol}}</span>
+        <ion-button
+          *ngIf="item.status =='PENDING'"
+          (click)="actionClick($event,item)"
+          class="morebtn"
+          fill="clear"
+        >
+          <ion-icon
+            slot="icon-only"
+            name="ellipsis-vertical-outline"
+          ></ion-icon>
+        </ion-button>
+      </p>
+      <h2 class="commonTitle-16 commonTextLine">{{item.stock.name}}</h2>
+      <p class="commonFlex commonFamily commonDesc">
+        <span>{{item.tradeDate | date:'dd/MM/YYYY'}}</span>
+        <span>{{item.type}}</span>
+      </p>
+      <p class="commonFlex commonFamily commonDesc">
+        <span>Expected ROI : {{item?.['ROI'] | number}}</span>
+        <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+          <ion-icon name="radio-button-on-outline"></ion-icon>
+          <ion-label>Active</ion-label>
+        </ion-chip>
+        <ion-chip
+          color="danger"
+          *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+        >
+          <ion-icon name="close-circle-outline"></ion-icon>
+          <ion-label>Closed</ion-label>
+        </ion-chip>
+      </p>
+      <p class="commonFlex commonFamily commonTitle-15">
+        <span>Buyprice : ₹{{item.buyPrice}}</span>
+        <span>Sellprice : ₹{{item.sellPrice}}</span>
+      </p>
+    </div>
   </div>
 </ion-content>
