@@ -1,10 +1,10 @@
 <!-- <app-header></app-header> -->
 <ion-content>
   <div class="common_content">
-    <ion-card class="login_alertcard" *ngIf="!userData">
+    <ion-card class="login_alertcard" *ngIf="!userData && !loginCard">
       <img src="assets/images/login.png" alt="" />
       <div>
-        <p>You must log in in order to view the active predictions.</p>
+        <p>You must login in order to view the active predictions.</p>
         <ion-button class="loginClick" (click)="loginClick()">
           Login
         </ion-button>
@@ -17,7 +17,7 @@
         #search
         (keyup.enter)="searchKey($event)"
         class="searchTerm"
-        placeholder="Search stocks..."
+        placeholder="Search stocks, users..."
       />
       <ion-button
         type="submit"
@@ -95,8 +95,9 @@
             <div class="Predict">
               <h3 class="commonTitle-16 commonTextLine">{{item.name}}</h3>
               <p class="commonFlex commonDesc">
-                <span
-                  >Expected ROI : {{item?.['ROI'] / item?.predCount || 0}}</span
+                <span class="commonFamily"
+                  >Expected ROI : {{(item?.['ROI'] / item?.predCount) | number
+                  }}</span
                 >
               </p>
             </div>

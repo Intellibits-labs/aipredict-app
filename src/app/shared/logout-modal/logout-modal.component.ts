@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavController, PopoverController } from '@ionic/angular';
+import {
+  ModalController,
+  NavController,
+  PopoverController,
+} from '@ionic/angular';
 import { AuthService } from 'src/app/core/general/service/auth.service';
+import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 
 @Component({
   selector: 'app-logout-modal',
@@ -12,7 +17,8 @@ export class LogoutModalComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private popoverController: PopoverController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -21,5 +27,20 @@ export class LogoutModalComponent implements OnInit {
   logout() {
     this.popoverController.dismiss({}, 'success');
     this.navCtrl.navigateRoot(['splash']);
+  }
+
+  async profileModal() {
+    this.popoverController.dismiss();
+    const modal = await this.modalController.create({
+      component: ProfileEditComponent,
+      cssClass: '',
+      mode: 'md',
+      componentProps: { userData: this.userData },
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
   }
 }

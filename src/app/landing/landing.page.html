@@ -6,11 +6,13 @@
       </a>
     </ion-title>
     <ion-buttons slot="end" class="ion-hide-md-down">
-      <ion-button fill="clear" class="home_btn" href="#home"> Home </ion-button>
-      <ion-button fill="clear" class="home_btn" href="#about">
+      <ion-button fill="clear" class="home_btn" (click)="idClick('home')">
+        Home
+      </ion-button>
+      <ion-button fill="clear" class="home_btn" (click)="idClick('about')">
         About
       </ion-button>
-      <ion-button fill="clear" class="home_btn" href="#features">
+      <ion-button fill="clear" class="home_btn" (click)="idClick('features')">
         Features
       </ion-button>
       <ion-button class="login" (click)="goToApp()"> Go to App </ion-button>
@@ -102,7 +104,6 @@
             <ion-thumbnail>
               <img src="assets/images/user.png" />
             </ion-thumbnail>
-
             <h2 class="label">Profiles</h2>
             <p>
               The app could include profiles for the stock experts, including
@@ -137,7 +138,6 @@
             <ion-thumbnail>
               <img src="assets/images/rate.png" />
             </ion-thumbnail>
-
             <h2 class="label">Ratings & Feedback</h2>
             <p>
               The app could allow users to rate and review the predictions of
@@ -173,9 +173,9 @@
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
           <h4 class="footer_title">Links:</h4>
           <ul class="linksul">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#features">Features</a></li>
+            <li><a (click)="idClick('home')">Home</a></li>
+            <li><a (click)="idClick('about')">About</a></li>
+            <li><a (click)="idClick('features')">Features</a></li>
           </ul>
         </ion-col>
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
@@ -215,7 +215,7 @@
       class="home_btn"
       button
       lines="none"
-      href="#home"
+      (click)="idClick('home')"
       routerLinkActive="selected"
       routerDirection="root"
     >
@@ -225,7 +225,7 @@
       class="home_btn"
       button
       lines="none"
-      href="#about"
+      (click)="idClick('about')"
       routerLinkActive="selected"
       routerDirection="root"
     >
@@ -235,7 +235,7 @@
       class="home_btn"
       button
       lines="none"
-      href="#features"
+      (click)="idClick('features')"
       routerLinkActive="selected"
       routerDirection="root"
     >

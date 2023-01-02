@@ -8,14 +8,14 @@
         #search
         (keyup.enter)="searchKey($event)"
         class="searchTerm"
-        placeholder="Search stocks..."
+        placeholder="Search stocks, users..."
       />
       <ion-button type="submit" class="searchButton" (click)="searchClick()">
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
     </div>
-    <ng-container *ngIf="trendingAssets.length">
-      <h2 class="sub_title">Search Assets</h2>
+    <ng-container *ngIf="stocksArray.length || usersArray.length">
+      <h2 *ngIf="stocksArray.length" class="sub_title">Search Assets</h2>
       <ion-grid class="ion-no-padding">
         <ion-row>
           <ion-col
@@ -24,7 +24,7 @@
             sizeMd="6"
             sizeSm="12"
             sizeXs="12"
-            *ngFor="let item of trendingAssets"
+            *ngFor="let item of stocksArray"
           >
             <stock-card
               [stockItem]="item"
@@ -33,8 +33,41 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+      <h2 *ngIf="usersArray.length" class="sub_title">
+        Predictor Leader Board
+      </h2>
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col
+            class="col_assets"
+            sizeLg="4"
+            sizeMd="6"
+            sizeSm="12"
+            sizeXs="12"
+            *ngFor="let item of usersArray"
+          >
+            <ion-card class="Predictors_card" (click)="userClick(item)">
+              <ion-avatar class="img_div">
+                <img [src]="item.picture" alt="" />
+              </ion-avatar>
+              <div class="Predict">
+                <h3 class="commonTitle-16 commonTextLine">{{item.name}}</h3>
+                <p class="commonFlex commonDesc">
+                  <span class="commonFamily"
+                    >Expected ROI : {{(item?.['ROI'] / item?.predCount) | number
+                    }}</span
+                  >
+                </p>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ng-container>
-    <div class="common_nodata" *ngIf="!trendingAssets.length">
+    <div
+      class="common_nodata"
+      *ngIf="!stocksArray.length && !usersArray.length"
+    >
       <img src="assets/images/no_data.svg" alt="" />
       <h5>No data found</h5>
     </div>

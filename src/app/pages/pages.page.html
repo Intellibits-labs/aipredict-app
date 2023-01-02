@@ -29,17 +29,26 @@
         >
           login</ion-button
         >
-        <ion-button
+        <!-- <ion-button
           (click)="logout($event)"
           *ngIf="userData"
           class="logout commonBackgroundImg"
           [style.background]="'url(' + userData?.picture + ')'"
         >
-        </ion-button>
+        </ion-button> -->
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
+    <ion-item mode="md" lines="none" class="profileimg">
+      <ion-avatar>
+        <img [src]=" userData?.picture" />
+      </ion-avatar>
+      <ion-label>
+        <h2 class="commonTitle-16">{{userData?.name}}</h2>
+        <p class="commonDesc">{{userData?.email}}</p>
+      </ion-label>
+    </ion-item>
     <ion-item
       class="home_btn"
       button
@@ -91,6 +100,12 @@
       routerDirection="root"
     >
       <ion-label>My Predictions</ion-label>
+    </ion-item>
+    <ion-item class="home_btn" button lines="none" (click)="profileModal()">
+      <ion-label>Edit Profile</ion-label>
+    </ion-item>
+    <ion-item class="home_btn" button lines="none" (click)="logout()">
+      <ion-label>Logout</ion-label>
     </ion-item>
   </ion-content>
 </ion-menu>

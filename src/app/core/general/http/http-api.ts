@@ -15,6 +15,7 @@ export class HttpApi {
   static userLogout = 'auth/logout';
   static verifyOtp = 'user/verifyotp';
   static refreshToken = 'auth/refresh-tokens';
+  static userUpdate = 'users/update';
 
   //  googleLogin
   static googleLogin = 'auth/google';

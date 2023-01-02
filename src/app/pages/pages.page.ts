@@ -11,6 +11,7 @@ import { CookieService } from '../core/general/service/cookie.service';
 import { DataService } from '../core/general/service/data.service';
 import { LoginModalComponent } from '../shared/login-modal/login-modal.component';
 import { LogoutModalComponent } from '../shared/logout-modal/logout-modal.component';
+import { ProfileEditComponent } from '../shared/profile-edit/profile-edit.component';
 
 @Component({
   selector: 'app-pages',
@@ -58,22 +59,21 @@ export class PagesPage implements OnInit {
       },
     });
   }
-  async logout(ev: any) {
-    const popover = await this.popoverController.create({
-      component: LogoutModalComponent,
-      cssClass: 'my-custom-class',
-      componentProps: { userData: this.userData },
-      translucent: true,
-      event: ev,
-    });
-    await popover.present();
-
-    const { role } = await popover.onDidDismiss();
-    if (role == 'success') {
-      this.authService.logoutUser();
-    }
-    console.log('onDidDismiss resolved with role', role);
-  }
+  // async logout(ev: any) {
+  //   const popover = await this.popoverController.create({
+  //     component: LogoutModalComponent,
+  //     cssClass: 'my-custom-class',
+  //     componentProps: { userData: this.userData },
+  //     translucent: true,
+  //     event: ev,
+  //   });
+  //   await popover.present();
+  //   const { role } = await popover.onDidDismiss();
+  //   if (role == 'success') {
+  //     this.authService.logoutUser();
+  //   }
+  //   console.log('onDidDismiss resolved with role', role);
+  // }
   async loginClick() {
     const modal = await this.modalController.create({
       cssClass: 'my-alert-class',
@@ -86,5 +86,23 @@ export class PagesPage implements OnInit {
       }
     });
     await modal.present();
+  }
+
+  async profileModal() {
+    this.popoverController.dismiss();
+    const modal = await this.modalController.create({
+      component: ProfileEditComponent,
+      cssClass: '',
+      mode: 'md',
+      componentProps: { userData: this.userData },
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
+  }
+  logout() {
+    this.authService.logoutUser();
   }
 }

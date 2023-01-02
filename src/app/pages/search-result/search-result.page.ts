@@ -12,7 +12,8 @@ import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.comp
   styleUrls: ['./search-result.page.scss'],
 })
 export class SearchResultPage implements OnInit {
-  trendingAssets: any = [];
+  stocksArray: any = [];
+  usersArray: any = [];
   searchValue: any;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -24,7 +25,9 @@ export class SearchResultPage implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((x: any) => {
       this.searchValue = x.search;
-      this.getSearch();
+      if (this.searchValue) {
+        this.getSearch();
+      }
     });
   }
   getSearch() {
@@ -33,11 +36,8 @@ export class SearchResultPage implements OnInit {
         .getMethod(HttpApi.getSearch + this.searchValue)
         .subscribe({
           next: (res) => {
-            console.log(
-              '🚀 ~ file: search-result.page.ts:55 ~ SearchResultPage ~ this.dataService.getMethod ~ res',
-              res
-            );
-            res.results.map((x: any) => {
+            console.log('🚀 ~ 55 ~ SearchResultPage ~ ~ res', res);
+            res.stocks.results.map((x: any) => {
               if (
                 x?.['meta']?.['Global Quote']?.['10. change percent'].includes(
                   '-'
@@ -47,8 +47,9 @@ export class SearchResultPage implements OnInit {
               } else {
                 x.flag = false;
               }
-              this.trendingAssets.push(x);
+              this.stocksArray.push(x);
             });
+            this.usersArray = res.users.results;
             this.loader.dismiss();
           },
           error: (e) => {
@@ -59,10 +60,16 @@ export class SearchResultPage implements OnInit {
     });
   }
   searchKey(ev: any) {
-    this.getSearch();
+    if (this.searchValue) {
+      this.stocksArray = [];
+      this.getSearch();
+    }
   }
   searchClick() {
-    this.getSearch();
+    if (this.searchValue) {
+      this.stocksArray = [];
+      this.getSearch();
+    }
   }
   async stockModal(item: any) {
     const modal = await this.modalController.create({
@@ -77,4 +84,5 @@ export class SearchResultPage implements OnInit {
     });
     await modal.present();
   }
+  userClick(item: any) {}
 }

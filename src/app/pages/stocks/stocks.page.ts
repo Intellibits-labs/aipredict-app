@@ -73,11 +73,15 @@ export class StocksPage implements OnInit {
   searchKey(ev: any) {
     console.log(ev.target.value);
     let searchV = ev.target.value;
-    this.navCtrl.navigateForward(['pages/search-result/' + searchV]);
+    if (searchV) {
+      this.navCtrl.navigateForward(['pages/search-result/' + searchV]);
+    }
   }
   searchClick(value: any) {
     console.log(value);
-    this.navCtrl.navigateForward(['pages/search-result/' + value]);
+    if (value) {
+      this.navCtrl.navigateForward(['pages/search-result/' + value]);
+    }
   }
 
   loadData(ev: any) {

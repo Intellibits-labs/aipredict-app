@@ -42,6 +42,7 @@ export class HomePage implements OnInit {
   predictorArray: any = [];
   predictionArray: any = [];
   userData: any;
+  loginCard: boolean = false;
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -49,15 +50,18 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private cookieService: CookieService,
     private readonly _authService: SocialAuthService
-  ) {}
+  ) {
+    this.loginCard = this.authService.isLogged();
+  }
 
   ngOnInit() {
-    this.getUserData();
     this.getStock();
     this.getPredictors();
     this.getPredictions();
   }
-
+  ionViewDidEnter() {
+    this.getUserData();
+  }
   getStock() {
     this.dataService
       .getMethod(HttpApi.getStocks + '?sortBy=createdAt:desc')
@@ -132,11 +136,15 @@ export class HomePage implements OnInit {
   searchKey(ev: any) {
     console.log(ev.target.value);
     let searchV = ev.target.value;
-    this.navCtrl.navigateForward(['pages/search-result/' + searchV]);
+    if (searchV) {
+      this.navCtrl.navigateForward(['pages/search-result/' + searchV]);
+    }
   }
   searchClick(value: any) {
     console.log(value);
-    this.navCtrl.navigateForward(['pages/search-result/' + value]);
+    if (value) {
+      this.navCtrl.navigateForward(['pages/search-result/' + value]);
+    }
   }
 
   async latestModal(item: any) {

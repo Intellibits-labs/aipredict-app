@@ -72,26 +72,30 @@ export class PredictionPage implements OnInit {
   searchKey(ev: any) {
     console.log(ev.target.value);
     let searchV = ev.target.value;
-    this.searchClick(searchV);
+    if (searchV) {
+      this.searchClick(searchV);
+    }
   }
   searchClick(value: any) {
     console.log(value);
     this.predictionArray = [];
-    this.loader.presentLoading().then(() => {
-      this.dataService.getMethod(HttpApi.searchPredction + value).subscribe({
-        next: (res) => {
-          console.log('🚀 ~ 55 ~ SearchResultPage ~ res', res);
-          this.totalPages = res.totalPages;
-          this.page = res.page;
-          this.predictionArray = res.results;
-          this.loader.dismiss();
-        },
-        error: (e) => {
-          console.error(e.message);
-          this.loader.dismiss();
-        },
+    if (value) {
+      this.loader.presentLoading().then(() => {
+        this.dataService.getMethod(HttpApi.searchPredction + value).subscribe({
+          next: (res) => {
+            console.log('🚀 ~ 55 ~ SearchResultPage ~ res', res);
+            this.totalPages = res.totalPages;
+            this.page = res.page;
+            this.predictionArray = res.results;
+            this.loader.dismiss();
+          },
+          error: (e) => {
+            console.error(e.message);
+            this.loader.dismiss();
+          },
+        });
       });
-    });
+    }
   }
 
   async latestModal(item: any) {

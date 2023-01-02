@@ -1,0 +1,26 @@
+ion-content {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+
+  .profileimg {
+    text-align: center;
+    img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+  }
+  ion-item {
+    margin-bottom: 20px;
+  }
+}
+ion-footer {
+  ion-toolbar {
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --padding-bottom: 20px;
+  }
+}

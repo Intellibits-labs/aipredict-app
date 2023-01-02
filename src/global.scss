@@ -193,3 +193,6 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+.profile-edit-modal::part(content) {
+  --width: 300px;
+}

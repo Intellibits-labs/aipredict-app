@@ -95,6 +95,8 @@
           <ion-label position="floating">Date</ion-label>
           <ion-input
             type="date"
+            displayFormat="DD/MM/YYYY"
+            [min]="currentDate"
             formControlName="tradeDate"
             placeholder="DD/MM/YYYY"
           ></ion-input>

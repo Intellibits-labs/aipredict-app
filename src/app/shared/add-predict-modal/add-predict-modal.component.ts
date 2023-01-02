@@ -1,6 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { IonSlides, ModalController } from '@ionic/angular';
+import * as moment from 'moment';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { CompareSellingPriceService } from 'src/app/core/general/service/compare-selling-price.service';
 import { DataService } from 'src/app/core/general/service/data.service';
@@ -32,6 +38,8 @@ export class AddPredictModalComponent implements OnInit {
   getStockDetail: any;
   selectedName: any = {};
   symbolIcon: boolean = false;
+
+  currentDate = moment().format('YYYY-MM-DD');
   constructor(
     private modalController: ModalController,
     private formBuilder: FormBuilder,
@@ -40,9 +48,14 @@ export class AddPredictModalComponent implements OnInit {
     private loader: LoaderService,
     private comparePriceService: CompareSellingPriceService
   ) {
+    console.log(this.currentDate);
+
     this.predictForm = this.formBuilder.group({
       stock: ['', [Validators.required]],
-      tradeDate: ['', [Validators.required]],
+      tradeDate: [
+        '',
+        [Validators.required, Validators.minLength(10), this.dateValidator],
+      ],
       buyPrice: ['', [Validators.required]],
       sellPrice: [
         '',
@@ -53,14 +66,23 @@ export class AddPredictModalComponent implements OnInit {
       note: '',
     });
   }
-
+  dateValidator(control: FormControl): { [s: string]: boolean } {
+    if (control.value) {
+      const date = moment(control.value);
+      const today = moment();
+      if (date.isBefore(today)) {
+        return { invalidDate: true };
+      }
+    }
+    return null;
+  }
   ngOnInit() {}
   ionViewDidEnter() {
     if (this.isData && this.isEdit) {
       console.log(this.isData);
       let data = {
         stock: this.isData?.stock?.id,
-        tradeDate: this.isData?.tradeDate,
+        tradeDate: moment(this.isData?.tradeDate).format('YYYY-MM-DD'),
         buyPrice: this.isData?.buyPrice,
         sellPrice: this.isData?.sellPrice,
         currentPrice: this.isData?.currentPrice,
@@ -74,7 +96,6 @@ export class AddPredictModalComponent implements OnInit {
       this.slider.slideNext();
       this.slider.lockSwipes(true);
 
-      this.slideOpts.allowTouchMove.valueOf();
       console.log(this.predictForm.value);
     }
   }

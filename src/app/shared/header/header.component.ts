@@ -122,7 +122,7 @@ export class HeaderComponent implements OnInit {
     // this.authService.logoutUser();
     const popover = await this.popoverController.create({
       component: LogoutModalComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'profile-edit-modal',
       componentProps: { userData: this.userData },
       translucent: true,
       event: ev,

@@ -11,7 +11,8 @@ export class LandingPage implements OnInit {
 
   public isShown: boolean = true;
   public showButton = false;
-  public contentData = [];
+  public contentData: any = [];
+
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController
@@ -19,7 +20,14 @@ export class LandingPage implements OnInit {
 
   ngOnInit() {}
 
-  goToApp() {
+  idClick(element: any) {
+    console.log(element);
+
+    document
+      .getElementById(element)
+      .scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  goToApp(): void {
     this.navCtrl.navigateForward(['/splash']);
   }
   menuOpen() {
