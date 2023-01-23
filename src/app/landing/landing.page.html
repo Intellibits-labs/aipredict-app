@@ -186,13 +186,24 @@
     </ion-grid>
 
     <p class="designed">
-      © 2022 indiapredict - All Rights Reserved Designed and Developed by
-      <a href="">Marvenics</a>
+      <span>Copyright (c) indiapredict.com, all rights reserved worldwide</span>
+      <span>
+        © 2023 indiapredict - All Rights Reserved Designed and Developed by
+        <a href="">Marvenics</a></span
+      >
     </p>
   </section>
-  <ion-button *ngIf="isShown" class="scroll-top" (click)="scrollToTop()">
-    <ion-icon name="chevron-up-outline"></ion-icon>
-  </ion-button>
+  <ion-fab
+    *ngIf="isShown"
+    class="scroll-top"
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+  >
+    <ion-fab-button (click)="scrollToTop()">
+      <ion-icon name="chevron-up"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 <ion-menu contentId="landing" side="end">
   <ion-header class="ion-no-border">

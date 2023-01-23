@@ -5,6 +5,7 @@ import { HttpApi } from 'src/app/core/general/http/http-api';
 import { AuthService } from 'src/app/core/general/service/auth.service';
 import { CookieService } from 'src/app/core/general/service/cookie.service';
 import { DataService } from 'src/app/core/general/service/data.service';
+import { ContactModalComponent } from 'src/app/shared/contact-modal/contact-modal.component';
 import { LatestModalComponent } from 'src/app/shared/latest-modal/latest-modal.component';
 import { LoginModalComponent } from 'src/app/shared/login-modal/login-modal.component';
 import { PredictorModalComponent } from 'src/app/shared/predictor-modal/predictor-modal.component';
@@ -55,7 +56,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.getStock();
+    // this.getStock();
     this.getPredictors();
     this.getPredictions();
   }
@@ -211,5 +212,19 @@ export class HomePage implements OnInit {
         }
       },
     });
+  }
+
+  async contactClick() {
+    const modal = await this.modalController.create({
+      component: ContactModalComponent,
+      cssClass: 'contactModal',
+      mode: 'md',
+      componentProps: {},
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
   }
 }

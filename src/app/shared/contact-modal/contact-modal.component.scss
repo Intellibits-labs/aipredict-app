@@ -1,0 +1,28 @@
+ion-content {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+
+  .help {
+    text-align: center;
+    padding-bottom: 10px;
+    img {
+      width: 65px;
+    }
+  }
+  p {
+    margin-top: 0;
+    font-size: 18px;
+  }
+
+  .mail {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    span {
+      font-size: 16px;
+    }
+  }
+}

@@ -113,11 +113,7 @@ export class AuthService {
       .pipe(
         map(
           (response: any) => {
-            let temp = {
-              token: response.token,
-              refresh_token: response.refreshToken,
-            };
-            localStorage.setItem('token', JSON.stringify(response));
+            localStorage.setItem('session', JSON.stringify(response));
 
             return response;
           },

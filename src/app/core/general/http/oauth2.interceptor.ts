@@ -86,7 +86,7 @@ export class Oauth2Interceptor implements HttpInterceptor {
       return this.authService.loginWithRefreshToken().pipe(
         switchMap((result) => {
           console.log(
-            '🚀 ~ file: oauth2.interceptor.ts ~ line 83 ~ Oauth2Interceptor ~ switchMap ~ result',
+            '🚀 ~ line 83 ~ Oauth2Interceptor ~ switchMap ~ result',
             result
           );
           if (result) {
@@ -98,7 +98,7 @@ export class Oauth2Interceptor implements HttpInterceptor {
         }),
         catchError((error) => {
           console.log(
-            '🚀 ~ file: oauth2.interceptor.ts ~ line 91 ~ Oauth2Interceptor ~ catchError ~ error',
+            '🚀  ~ line 91 ~ Oauth2Interceptor ~ catchError ~ error',
             error
           );
           this.authService.logout();

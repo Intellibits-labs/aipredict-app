@@ -1,5 +1,5 @@
 ion-content {
-  --padding-bottom: 20px;
+  --padding-bottom: 70px;
   --padding-start: 0;
   --padding-end: 0;
 
@@ -28,6 +28,10 @@ ion-content {
       --box-shadow: none;
       text-transform: capitalize;
     }
+  }
+  ion-fab {
+    right: 20px;
+    bottom: 20px;
   }
 }
 .search {
@@ -120,6 +124,10 @@ ion-content {
     font-size: 18px;
     color: #000000;
     font-weight: 600;
+  }
+
+  .col_assets {
+    padding: 10px 0;
   }
   ion-content {
     .login_alertcard {

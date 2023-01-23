@@ -1,5 +1,10 @@
 <!-- <app-header></app-header> -->
 <ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="contactClick()">
+      <ion-icon name="help"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <div class="common_content">
     <ion-card class="login_alertcard" *ngIf="!userData && !loginCard">
       <img src="assets/images/login.png" alt="" />
@@ -48,7 +53,7 @@
       </ion-row>
     </ion-grid>
 
-    <h2 class="sub_title">Trending Assets</h2>
+    <!-- <h2 class="sub_title">Trending Assets</h2>
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ng-container *ngFor="let item of trendingAssets;let i =index">
@@ -67,7 +72,7 @@
           </ion-col>
         </ng-container>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
 
     <!-- <ion-slides pager="false" [options]="assetsSlideOpts">
     <ion-slide *ngFor="let item of trendingAssets">

@@ -60,10 +60,6 @@ export class AppInterceptor implements HttpInterceptor {
   }
   // Helpers and Casuistics
   private isAuthenticationRequired(apiUrl: any): boolean {
-    // console.log(
-    //   '🚀 ~ file: oauth2.interceptor.ts ~ line 60 ~ Oauth2Interceptor ~ isAuthenticationRequired ~ apiUrl',
-    //   apiUrl
-    // );
     // const blockedApiList = [HttpApi.oauthLogin, "assets/i18n"];
     return apiUrl.includes('assets/i18n', 'www.alphavantage.co') ? false : true;
   }
@@ -89,8 +85,10 @@ export class AppInterceptor implements HttpInterceptor {
         if (errorResponse.url.includes('login')) {
           return throwError(errorResponse.error);
         } else {
-          this.authService.logout();
-          this.navCtrl.navigateRoot(['/']);
+          return throwError(errorResponse);
+
+          // this.authService.logout();
+          // this.navCtrl.navigateRoot(['/']);
         }
         break;
 

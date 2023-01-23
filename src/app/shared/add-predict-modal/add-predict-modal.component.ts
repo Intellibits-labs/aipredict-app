@@ -1,11 +1,16 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { IonSlides, ModalController } from '@ionic/angular';
+import {
+  AlertController,
+  IonSearchbar,
+  IonSlides,
+  ModalController,
+} from '@ionic/angular';
 import * as moment from 'moment';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { CompareSellingPriceService } from 'src/app/core/general/service/compare-selling-price.service';
@@ -20,6 +25,9 @@ import { ToastService } from 'src/app/core/general/service/toast.service';
 })
 export class AddPredictModalComponent implements OnInit {
   @ViewChild('slider') slider!: IonSlides;
+  @ViewChild('searchbar', { static: false, read: IonSearchbar })
+  searchbar: IonSearchbar;
+
   @Input() isData: any;
   @Input() isEdit: any;
   slideOpts = {
@@ -39,17 +47,16 @@ export class AddPredictModalComponent implements OnInit {
   selectedName: any = {};
   symbolIcon: boolean = false;
 
-  currentDate = moment().format('YYYY-MM-DD');
+  selectedType: any = 'INTRADAY';
   constructor(
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private dataService: DataService,
     private toast: ToastService,
     private loader: LoaderService,
-    private comparePriceService: CompareSellingPriceService
+    private comparePriceService: CompareSellingPriceService,
+    private alertController: AlertController
   ) {
-    console.log(this.currentDate);
-
     this.predictForm = this.formBuilder.group({
       stock: ['', [Validators.required]],
       tradeDate: [
@@ -61,8 +68,9 @@ export class AddPredictModalComponent implements OnInit {
         '',
         [Validators.required, this.comparePriceService.greaterThan('buyPrice')],
       ],
+      stopLoss: ['', [Validators.required]],
       currentPrice: ['', [Validators.required]],
-      type: ['', [Validators.required]],
+      type: ['INTRADAY', [Validators.required]],
       note: '',
     });
   }
@@ -78,6 +86,7 @@ export class AddPredictModalComponent implements OnInit {
   }
   ngOnInit() {}
   ionViewDidEnter() {
+    this.searchbar?.setFocus();
     if (this.isData && this.isEdit) {
       console.log(this.isData);
       let data = {
@@ -117,26 +126,32 @@ export class AddPredictModalComponent implements OnInit {
   search(ev: any) {
     let searchValue = ev.target.value;
     if (searchValue) {
-      this.dataService.getMethod(HttpApi.searchStock + searchValue).subscribe({
-        next: (res) => {
-          console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
-          // this.autoCompleteArray = res?.bestMatches;
-          res?.bestMatches.forEach((element: any) => {
-            if (element['8. currency'] == 'INR') {
-              this.autoCompleteArray.push(element);
-            }
+      this.loader.presentLoading().then(() => {
+        this.dataService
+          .getMethod(HttpApi.searchStock + searchValue)
+          .subscribe({
+            next: (res) => {
+              console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
+              // this.autoCompleteArray = res?.bestMatches;
+              res?.bestMatches.forEach((element: any) => {
+                if (element['8. currency'] == 'INR') {
+                  this.autoCompleteArray.push(element);
+                }
+              });
+              this.loader.dismiss();
+              console.log('INR ', this.autoCompleteArray);
+            },
+            error: (e) => {
+              console.error(e);
+              this.loader.dismiss();
+            },
           });
-          console.log('INR ', this.autoCompleteArray);
-        },
-        error: (e) => console.error(e),
       });
     }
   }
   selectStock(item: any) {
     console.log('first working');
-
     this.selectedName = item?.['2. name'];
-
     this.loader.presentLoading().then(() => {
       let url;
       if (item['1. symbol']) {
@@ -156,9 +171,10 @@ export class AddPredictModalComponent implements OnInit {
               stock: item['1. symbol'],
               buyPrice: this.getStockDetail['05. price'],
               currentPrice: this.getStockDetail['05. price'],
+              stopLoss: this.getStockDetail['05. price'] / 2,
             });
           }
-
+          this.typeChange();
           this.autoCompleteArray = [];
           this.slider.lockSwipes(false);
           this.slider.slideNext();
@@ -173,7 +189,7 @@ export class AddPredictModalComponent implements OnInit {
       });
     });
   }
-  saveClick() {
+  onSaveClick() {
     this.dataService
       .postMethod(HttpApi.predictionNew, this.predictForm.value)
       .subscribe({
@@ -211,5 +227,50 @@ export class AddPredictModalComponent implements OnInit {
   OriginalPriceChange(ev: any) {
     console.log(ev);
     this.predictForm.patchValue({ sellPrice: +ev.detail.target.value });
+  }
+  async saveClick() {
+    const alert = await this.alertController.create({
+      header: 'Alert!',
+      message: 'Are you sure you want to post this prediction?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {},
+        },
+        {
+          text: 'YES',
+          role: 'confirm',
+          handler: () => {
+            this.onSaveClick();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  typeChange(ev: any = {}) {
+    console.log(this.selectedType);
+    if (ev?.detail?.value) {
+      this.selectedType = ev?.detail?.value;
+    }
+    if (this.selectedType == 'INTRADAY') {
+      if (moment().isBefore(moment().set({ hour: 15, minutes: 45 }))) {
+        this.predictForm.patchValue({
+          tradeDate: moment().format('DD/MM/yyyy'),
+        });
+      } else {
+        this.predictForm.patchValue({
+          tradeDate: moment().add(1, 'day').format('DD/MM/yyyy'),
+        });
+      }
+      console.log(this.predictForm.value.tradeDate);
+    } else if (this.selectedType == 'DELIVERY') {
+      let now = moment().add(1, 'months').format('DD/MM/yyyy');
+      console.log(now);
+      this.predictForm.patchValue({ tradeDate: now });
+    }
   }
 }

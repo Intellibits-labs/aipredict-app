@@ -17,8 +17,9 @@
           <th>Stock</th>
           <th>Symbol</th>
           <th>Trade Date</th>
-          <th>Buyprice</th>
-          <th>Sellprice</th>
+          <th>Buy Price</th>
+          <th>Sell Price</th>
+          <th>Stop Loss</th>
           <th>Type</th>
           <th>Expected ROI</th>
 
@@ -33,9 +34,9 @@
           <td class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
           <td class="commonFamily">₹{{item.buyPrice}}</td>
           <td class="commonFamily">₹{{item.sellPrice}}</td>
+          <td class="commonFamily">₹{{item.stopLoss || 0}}</td>
           <td class="commonFamily">{{item.type}}</td>
           <td class="commonFamily">{{item['ROI'] | number}}</td>
-
           <td>
             <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
               <ion-icon name="radio-button-on-outline"></ion-icon>

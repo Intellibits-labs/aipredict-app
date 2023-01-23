@@ -20,6 +20,7 @@
   >
     <ion-slide class="form_slide">
       <ion-searchbar
+        #searchbar
         class="custom"
         mode="md"
         placeholder="Search Stock"
@@ -68,7 +69,7 @@
         </h2>
         <h4 class="type">Type</h4>
         <ion-radio-group
-          value="INTRADAY"
+          (ionChange)="typeChange($event)"
           class="radio_group"
           formControlName="type"
         >
@@ -91,12 +92,10 @@
             placeholder="Current Price"
           ></ion-input>
         </ion-item>
-        <ion-item fill="outline" class="input_item">
+        <ion-item fill="outline" class="input_item" disabled="true">
           <ion-label position="floating">Date</ion-label>
           <ion-input
-            type="date"
-            displayFormat="DD/MM/YYYY"
-            [min]="currentDate"
+            type="text"
             formControlName="tradeDate"
             placeholder="DD/MM/YYYY"
           ></ion-input>
@@ -116,6 +115,15 @@
             type="number"
             formControlName="sellPrice"
             placeholder="Sell Price"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item fill="outline" class="input_item">
+          <ion-label position="floating">Stock loss</ion-label>
+          <ion-input
+            type="number"
+            formControlName="stopLoss"
+            placeholder="Stock loss"
           ></ion-input>
         </ion-item>
         <ion-item fill="outline" class="input_item">

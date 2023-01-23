@@ -77,8 +77,9 @@
         <tr>
           <th>User Name</th>
           <th>Tradedate</th>
-          <th>Buyprice</th>
-          <th>Sellprice</th>
+          <th>Buy Price</th>
+          <th>Sell Price</th>
+          <th>Stop Loss</th>
           <th>Type</th>
           <th>Expected ROI</th>
           <th>Status</th>
@@ -92,6 +93,7 @@
           </td>
           <td class="commonFamily">₹{{ item.buyPrice }}</td>
           <td class="commonFamily">₹{{ item.sellPrice }}</td>
+          <td class="commonFamily">₹{{ item.stopLoss || 0 }}</td>
           <td>{{ item.type }}</td>
           <td class="commonFamily">{{ item["ROI"] | number }}</td>
 
@@ -154,8 +156,9 @@
         <tr>
           <th>User Name</th>
           <th>Tradedate</th>
-          <th>Buyprice</th>
-          <th>Sellprice</th>
+          <th>Buy Price</th>
+          <th>Sell Price</th>
+          <th>Stop Loss</th>
           <th>Type</th>
           <th>Expected ROI</th>
           <th>Status</th>
@@ -169,6 +172,7 @@
           </td>
           <td class="commonFamily">₹{{ item.buyPrice }}</td>
           <td class="commonFamily">₹{{ item.sellPrice }}</td>
+          <td class="commonFamily">₹{{ item.stopLoss || 0 }}</td>
           <td>{{ item.type }}</td>
           <td class="commonFamily">{{ item["ROI"] | number }}</td>
           <td>

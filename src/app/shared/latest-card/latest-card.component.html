@@ -42,14 +42,25 @@
       <span>tradeDate :{{ latestItem?.createdAt | date : "dd/MM/yyyy" }}</span>
     </p>
     <p class="commonFlex commonDesc">
-      <span class="commonFamily"
-        >Expected ROI : {{latestItem?.['ROI'] | number}}</span
-      >
+      <span class="commonFamily">
+        <span
+          *ngIf="
+            latestItem?.status == 'FAILED' || latestItem?.status == 'COMPLETED'
+          "
+          >Actual ROI :</span
+        >
+        <span *ngIf="latestItem?.status == 'PENDING'">Expected ROI : </span>
+
+        <span>{{latestItem?.['ROI'] | number}}</span>
+      </span>
       <span>{{ latestItem.type }}</span>
     </p>
     <p class="commonTitle-15 commonFlex commonFamily">
-      <span>BuyPrice : ₹{{ latestItem.buyPrice }}</span>
-      <span>SellPrice : ₹{{ latestItem.sellPrice }}</span>
+      <span>Buy Price : ₹{{ latestItem.buyPrice }}</span>
+      <span>Sell Price : ₹{{ latestItem.sellPrice }}</span>
+    </p>
+    <p class="commonTitle-15 commonFlex commonFamily">
+      <span>Stop Loss : ₹{{ latestItem.stopLoss || 0 }}</span>
     </p>
   </div>
 </ion-card>

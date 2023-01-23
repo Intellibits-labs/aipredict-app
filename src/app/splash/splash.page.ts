@@ -16,28 +16,7 @@ export class SplashPage implements OnInit {
   ngOnInit() {}
   ionViewWillEnter() {
     setTimeout(() => {
-      let gUser: any = localStorage.getItem('user');
-      let tokenExpires = JSON.parse(gUser);
-      if (tokenExpires?.refresh?.expires) {
-        let expiredate = new Date(tokenExpires?.refresh?.expires);
-        console.log(
-          '🚀 ~ file: splash.page.ts ~ line 20 ~ SplashPage ~ setTimeout ~ expiredate',
-          expiredate
-        );
-        let now = new Date();
-
-        if (expiredate > now) {
-          this.navCtrl.navigateRoot('/pages');
-        } else {
-          // localStorage.clear();
-          this.navCtrl.navigateRoot('/pages');
-          // this.loginClick();
-        }
-      } else {
-        localStorage.clear();
-        this.navCtrl.navigateRoot('/pages');
-        // this.loginClick();
-      }
+      this.navCtrl.navigateRoot('/pages');
     }, 2000);
   }
 

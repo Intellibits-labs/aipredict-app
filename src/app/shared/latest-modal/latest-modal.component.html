@@ -46,8 +46,11 @@
       <span>Expected ROI :{{latestItem?.['ROI']|number}}</span>
     </p>
     <p class="commonTitle-15 commonFlex commonFamily">
-      <span>BuyPrice : ₹{{ latestItem.buyPrice }}</span>
-      <span>SellPrice : ₹{{ latestItem.sellPrice }}</span>
+      <span>Buy Price : ₹{{ latestItem.buyPrice }}</span>
+      <span>Sell Price : ₹{{ latestItem.sellPrice }}</span>
+    </p>
+    <p class="commonTitle-15 commonFlex commonFamily">
+      <span>Stop Loss : ₹{{ latestItem.stopLoss || 0 }}</span>
     </p>
   </div>
 </ion-content>

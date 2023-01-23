@@ -186,7 +186,7 @@ a {
 }
 
 .predictor_stock_modal {
-  --width: 750px;
+  --width: 850px;
 }
 .commonFlex {
   display: flex;
@@ -195,4 +195,9 @@ a {
 }
 .profile-edit-modal::part(content) {
   --width: 300px;
+}
+.contactModal::part(content) {
+  --width: 300px;
+  --height: 250px;
+  --border-radius: 12px;
 }
