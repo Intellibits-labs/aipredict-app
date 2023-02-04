@@ -18,6 +18,7 @@ import { LoginModalComponent } from './shared/login-modal/login-modal.component'
 import { AppInterceptor } from './core/general/http/http.interceptor';
 import { Oauth2Interceptor } from './core/general/http/oauth2.interceptor';
 import { LogoutInterceptor } from './core/general/interceptor/logout.interceptor';
+// import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [AppComponent, LoginModalComponent],
@@ -27,6 +28,7 @@ import { LogoutInterceptor } from './core/general/interceptor/logout.interceptor
     IonicModule.forRoot(),
     AppRoutingModule,
     SocialLoginModule,
+    // NgxPaginationModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

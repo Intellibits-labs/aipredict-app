@@ -18,6 +18,7 @@ import { PredictorModalComponent } from '../predictor-modal/predictor-modal.comp
 import { LatestCardComponent } from '../latest-card/latest-card.component';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 import { ContactModalComponent } from '../contact-modal/contact-modal.component';
+import { FilterModalComponent } from '../filter-modal/filter-modal.component';
 
 // import { GoogleSigninButtonDirective } from 'src/app/core/directives/google-signin-button.directive';
 
@@ -35,6 +36,7 @@ const components = [
   LatestCardComponent,
   ProfileEditComponent,
   ContactModalComponent,
+  FilterModalComponent,
 ];
 
 @NgModule({

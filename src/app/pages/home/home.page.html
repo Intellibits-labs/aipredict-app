@@ -32,12 +32,21 @@
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
     </div>
-    <h2 class="sub_title">Latest Predictions</h2>
+    <ion-toolbar mode="md">
+      <ion-title class="home-title">Latest Predictions</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="filterModal()">
+          <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
     <ion-grid class="ion-no-padding">
       <ion-row>
-        <ng-container *ngFor="let item of predictionArray;let i = index">
+        <ng-container
+          *ngFor="let item of predictionArray| paginate:config;let i = index"
+        >
           <ion-col
-            *ngIf="i < 6"
             class="col_assets"
             sizeLg="4"
             sizeMd="6"
@@ -52,7 +61,17 @@
         </ng-container>
       </ion-row>
     </ion-grid>
-
+    <pagination-controls
+      id="some_id"
+      (pageChange)="pageChanged($event)"
+      (pageBoundsCorrection)="pageChanged($event)"
+      previousLabel="Previous"
+      nextLabel="Next"
+      screenReaderPaginationLabel="Pagination"
+      screenReaderPageLabel="page"
+      screenReaderCurrentLabel="You're on page"
+    >
+    </pagination-controls>
     <!-- <h2 class="sub_title">Trending Assets</h2>
     <ion-grid class="ion-no-padding">
       <ion-row>

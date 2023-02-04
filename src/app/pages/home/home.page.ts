@@ -1,11 +1,13 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
+import { PaginationInstance } from 'ngx-pagination';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { AuthService } from 'src/app/core/general/service/auth.service';
 import { CookieService } from 'src/app/core/general/service/cookie.service';
 import { DataService } from 'src/app/core/general/service/data.service';
 import { ContactModalComponent } from 'src/app/shared/contact-modal/contact-modal.component';
+import { FilterModalComponent } from 'src/app/shared/filter-modal/filter-modal.component';
 import { LatestModalComponent } from 'src/app/shared/latest-modal/latest-modal.component';
 import { LoginModalComponent } from 'src/app/shared/login-modal/login-modal.component';
 import { PredictorModalComponent } from 'src/app/shared/predictor-modal/predictor-modal.component';
@@ -44,6 +46,13 @@ export class HomePage implements OnInit {
   predictionArray: any = [];
   userData: any;
   loginCard: boolean = false;
+  page: number = 0;
+  collection: any = [];
+  config: PaginationInstance = {
+    id: 'some_id',
+    itemsPerPage: 9,
+    currentPage: 1,
+  };
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -92,17 +101,22 @@ export class HomePage implements OnInit {
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
           this.predictorArray = res.results;
+          this.page = res.page - 1;
         },
         error: (e) => console.error(e),
       });
   }
-  getPredictions() {
+  getPredictions(page = '1') {
     this.dataService
-      .getMethod(HttpApi.getPrediction + '?sortBy=createdAt:desc')
+      .getMethod(
+        HttpApi.getPrediction + '?limit=9&sortBy=createdAt:desc&page=' + page
+      )
       .subscribe({
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
+          this.page = res.page;
           this.predictionArray = res.results;
+          this.config.totalItems = res.totalResults;
         },
         error: (e) => console.error(e),
       });
@@ -218,6 +232,26 @@ export class HomePage implements OnInit {
     const modal = await this.modalController.create({
       component: ContactModalComponent,
       cssClass: 'contactModal',
+      mode: 'md',
+      componentProps: {},
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.role == 'success') {
+      }
+    });
+    await modal.present();
+  }
+
+  pageChanged(ev: any) {
+    console.log('ev', ev);
+    this.config.currentPage = ev;
+    this.getPredictions(ev);
+  }
+
+  async filterModal() {
+    const modal = await this.modalController.create({
+      component: FilterModalComponent,
+      cssClass: '',
       mode: 'md',
       componentProps: {},
     });
