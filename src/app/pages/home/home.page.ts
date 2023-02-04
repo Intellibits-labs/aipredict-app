@@ -87,7 +87,7 @@ export class HomePage implements OnInit {
   }
   getPredictors() {
     this.dataService
-      .getMethod(HttpApi.userPredictors + '?sortBy=createdAt:desc')
+      .getMethod(HttpApi.userPredictors + '?sortBy=annualROI:desc')
       .subscribe({
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
