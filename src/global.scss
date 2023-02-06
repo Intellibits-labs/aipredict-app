@@ -111,6 +111,9 @@ ion-title {
   text-transform: capitalize;
 }
 .commonTextLine {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box !important;

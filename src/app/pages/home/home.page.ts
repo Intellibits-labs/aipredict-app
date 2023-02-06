@@ -19,6 +19,8 @@ import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.comp
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  filterData: any = {};
+  sortBy = 'recently';
   assetsSlideOpts = {
     initialSlide: 3,
     speed: 400,
@@ -106,10 +108,29 @@ export class HomePage implements OnInit {
         error: (e) => console.error(e),
       });
   }
+  serialize = (obj: { [key: string]: any }): string =>
+    Object.entries(obj)
+      .filter(([key]) => obj.hasOwnProperty(key))
+      .map(
+        ([key, value]) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+      )
+      .join('&');
   getPredictions(page = '1') {
+    let sortByVar;
+    if (this.sortBy == 'recently') {
+      sortByVar = 'createdAt:desc';
+    } else if (this.sortBy == 'oldest') {
+      sortByVar = 'createdAt:asc';
+    }
+    let numofObj = Object.keys(this.filterData).length;
     this.dataService
       .getMethod(
-        HttpApi.getPrediction + '?limit=9&sortBy=createdAt:desc&page=' + page
+        HttpApi.getPrediction +
+          `?limit=9&sortBy=${sortByVar}&page=` +
+          page +
+          '&' +
+          (numofObj > 0 ? this.serialize(this.filterData) : '')
       )
       .subscribe({
         next: (res) => {
@@ -161,7 +182,9 @@ export class HomePage implements OnInit {
       this.navCtrl.navigateForward(['pages/search-result/' + value]);
     }
   }
-
+  sortByChange() {
+    this.getPredictions(this.page + '');
+  }
   async latestModal(item: any) {
     const modal = await this.modalController.create({
       cssClass: '',
@@ -253,10 +276,13 @@ export class HomePage implements OnInit {
       component: FilterModalComponent,
       cssClass: '',
       mode: 'md',
-      componentProps: {},
+      componentProps: { filterData: this.filterData },
     });
     modal.onDidDismiss().then((data) => {
       if (data.role == 'success') {
+        this.filterData = data.data;
+        this.page = 1;
+        this.getPredictions('1');
       }
     });
     await modal.present();

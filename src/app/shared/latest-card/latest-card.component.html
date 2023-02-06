@@ -19,7 +19,7 @@
     </p> -->
     <p class="commonFlex commonDesc">
       <span> {{ latestItem.stock?.symbol }}</span>
-      <ion-chip color="success" *ngIf="latestItem?.status == 'PENDING'">
+      <ion-chip color="success" *ngIf="latestItem?.status === 'PENDING'">
         <ion-icon name="radio-button-on-outline"></ion-icon>
         <ion-label>Active</ion-label>
       </ion-chip>
@@ -27,7 +27,7 @@
       <ion-chip
         color="danger"
         *ngIf="
-          latestItem?.status == 'FAILED' || latestItem?.status == 'COMPLETED'
+          latestItem?.status === 'FAILED' || latestItem?.status === 'COMPLETED'
         "
       >
         <ion-icon name="close-circle-outline"></ion-icon>
@@ -45,11 +45,12 @@
       <span class="commonFamily">
         <span
           *ngIf="
-            latestItem?.status == 'FAILED' || latestItem?.status == 'COMPLETED'
+            latestItem?.status === 'FAILED' ||
+            latestItem?.status === 'COMPLETED'
           "
           >Actual ROI :</span
         >
-        <span *ngIf="latestItem?.status == 'PENDING'">Expected ROI : </span>
+        <span *ngIf="latestItem?.status === 'PENDING'">Expected ROI : </span>
 
         <span>{{latestItem?.['ROI'] | number}}</span>
       </span>

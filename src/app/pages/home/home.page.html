@@ -16,7 +16,7 @@
       </div>
     </ion-card>
 
-    <div class="search">
+    <!-- <div class="search">
       <input
         type="text"
         #search
@@ -31,10 +31,22 @@
       >
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
-    </div>
+    </div> -->
     <ion-toolbar mode="md">
-      <ion-title class="home-title">Latest Predictions</ion-title>
+      <ion-title class="home-title">Predictions</ion-title>
       <ion-buttons slot="end">
+        <ion-select
+          interface="popover"
+          value="recently"
+          multiple="false"
+          [(ngModel)]="sortBy"
+          placeholder="Sort By"
+          (ionChange)="sortByChange()"
+        >
+          <ion-select-option value="recently">Newest First</ion-select-option>
+          <ion-select-option value="oldest">Oldest First</ion-select-option>
+        </ion-select>
+
         <ion-button (click)="filterModal()">
           <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
         </ion-button>
@@ -42,6 +54,10 @@
     </ion-toolbar>
 
     <ion-grid class="ion-no-padding">
+      <div *ngIf="predictionArray.length===0" class="emptySec">
+        <img src="assets/images/404.svg" alt="" />
+        <p>No predictions found!</p>
+      </div>
       <ion-row>
         <ng-container
           *ngFor="let item of predictionArray| paginate:config;let i = index"
@@ -62,6 +78,7 @@
       </ion-row>
     </ion-grid>
     <pagination-controls
+      *ngIf="predictionArray.length>0"
       id="some_id"
       (pageChange)="pageChanged($event)"
       (pageBoundsCorrection)="pageChanged($event)"
@@ -101,7 +118,9 @@
           ></stock-card>
     </ion-slide>
   </ion-slides> -->
-    <h2 class="sub_title">Predictor Leader Board</h2>
+    <ion-toolbar mode="md">
+      <ion-title class="home-title">Predictor Leader Board</ion-title>
+    </ion-toolbar>
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col

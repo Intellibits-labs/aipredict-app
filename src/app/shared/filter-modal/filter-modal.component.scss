@@ -1,6 +1,6 @@
 ion-content {
-  --padding-start: 20px;
-  --padding-end: 20px;
+  --padding-start: 0px;
+  --padding-end: 0px;
 
   .grid,
   ion-row,
@@ -9,10 +9,17 @@ ion-content {
   }
 
   .left-col {
-    background: #e5dede;
+    background: #f7f7f7;
 
     ion-item {
-      --background: #e5dede;
+      --background: #f7f7f7;
     }
   }
+}
+.selected {
+  --background: #ffffff !important;
+}
+.btnsSec {
+  display: flex;
+  justify-content: flex-end;
 }

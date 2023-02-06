@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary" mode="md">
-    <ion-title>Prediction Filter</ion-title>
+    <ion-title>Filter</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -9,21 +9,44 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid class="grid">
+  <ion-grid class="grid ion-no-padding">
     <ion-row>
       <ion-col size="4" class="left-col">
-        <ion-item lines="none" button (click)="onClick()">
+        <ion-item
+          [class.selected]="selectedItem === 'status'"
+          lines="none"
+          button
+          (click)="onClick('status')"
+        >
           <ion-label>Status</ion-label>
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-item lines="none" button>
-          <ion-label>Active</ion-label>
-        </ion-item>
-        <ion-item lines="none" button>
-          <ion-label>Deactive</ion-label>
-        </ion-item>
+        <ion-list>
+          <ion-radio-group name="auto" [(ngModel)]="status">
+            <ion-item lines="none">
+              <ion-radio mode="md" slot="start" value="ACTIVE"></ion-radio>
+              <!-- <ion-checkbox mode="md" slot="start"></ion-checkbox> -->
+              <ion-label>Active</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-radio mode="md" slot="start" value="COMPLETED"></ion-radio>
+
+              <ion-label>Closed</ion-label>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
+<ion-footer>
+  <ion-toolbar mode="md">
+    <div class="btnsSec">
+      <ion-button expand="block" fill="clear" shape="round"> Clear </ion-button>
+      <ion-button expand="block" shape="full" (click)="submit()">
+        Submit
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,11 +7,30 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./filter-modal.component.scss'],
 })
 export class FilterModalComponent implements OnInit {
+  @Input() filterData: any;
+  status: any;
+  selectedItem = 'status';
   constructor(private modalController: ModalController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.filterData);
+    if (this.filterData?.status) {
+      this.status = this.filterData?.status;
+    }
+  }
   dismiss() {
     this.modalController.dismiss();
   }
-  onClick() {}
+  onClick(ev: string) {
+    this.selectedItem = ev;
+  }
+  submit() {
+    console.log(this.status);
+    if (this.status) {
+      let data = {
+        status: this.status,
+      };
+      this.modalController.dismiss(data, 'success');
+    }
+  }
 }
