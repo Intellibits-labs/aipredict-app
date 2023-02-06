@@ -25,7 +25,7 @@
         <ion-list>
           <ion-radio-group name="auto" [(ngModel)]="status">
             <ion-item lines="none">
-              <ion-radio mode="md" slot="start" value="ACTIVE"></ion-radio>
+              <ion-radio mode="md" slot="start" value="PENDING"></ion-radio>
               <!-- <ion-checkbox mode="md" slot="start"></ion-checkbox> -->
               <ion-label>Active</ion-label>
             </ion-item>
@@ -43,7 +43,14 @@
 <ion-footer>
   <ion-toolbar mode="md">
     <div class="btnsSec">
-      <ion-button expand="block" fill="clear" shape="round"> Clear </ion-button>
+      <ion-button
+        expand="block"
+        fill="clear"
+        shape="round"
+        (click)="clearClick()"
+      >
+        Clear
+      </ion-button>
       <ion-button expand="block" shape="full" (click)="submit()">
         Submit
       </ion-button>

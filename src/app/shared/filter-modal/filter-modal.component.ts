@@ -24,6 +24,11 @@ export class FilterModalComponent implements OnInit {
   onClick(ev: string) {
     this.selectedItem = ev;
   }
+  clearClick() {
+    this.status = null;
+    this.modalController.dismiss({}, 'success');
+  }
+
   submit() {
     console.log(this.status);
     if (this.status) {
