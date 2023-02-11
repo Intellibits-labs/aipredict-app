@@ -37,6 +37,7 @@ const components = [
   ProfileEditComponent,
   ContactModalComponent,
   FilterModalComponent,
+  FooterComponent,
 ];
 
 @NgModule({

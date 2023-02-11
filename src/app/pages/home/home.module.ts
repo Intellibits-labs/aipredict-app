@@ -9,7 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomePageRoutingModule,
     SharedModule,
     NgxPaginationModule,
+    NgxDatatableModule,
   ],
   declarations: [HomePage],
 })

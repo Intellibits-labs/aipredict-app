@@ -1,3 +1,41 @@
-<p>
-  footer works!
-</p>
+<section class="footer_section">
+  <ion-grid class="ion_grid ion-no-padding">
+    <ion-row>
+      <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+        <a href="#">
+          <img class="logo_img" src="assets/images/INDIAPREDICT.png" alt="" />
+        </a>
+        <h4 class="footer_title">Follow us on:</h4>
+        <div class="follow_icons">
+          <a class="icons" href=""
+            ><ion-icon name="logo-facebook"></ion-icon
+          ></a>
+          <a class="icons insta" href=""
+            ><ion-icon name="logo-instagram"></ion-icon
+          ></a>
+          <a class="icons" href=""><ion-icon name="logo-twitter"></ion-icon></a>
+        </div>
+      </ion-col>
+      <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+        <h4 class="footer_title">Links:</h4>
+        <ul class="linksul">
+          <li><a (click)="idClick('home')">Home</a></li>
+          <li><a (click)="idClick('about')">About</a></li>
+          <li><a (click)="idClick('features')">Features</a></li>
+        </ul>
+      </ion-col>
+      <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="4">
+        <h4 class="footer_title">Contact us:</h4>
+        <p class="contacts"></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <p class="designed">
+    <span>Copyright (c) indiapredict.com, all rights reserved worldwide</span>
+    <span>
+      © 2023 indiapredict - All Rights Reserved Designed and Developed by
+      <a href="">Marvenics</a></span
+    >
+  </p>
+</section>

@@ -38,8 +38,10 @@
       {{ latestItem?.stock.name }}
     </h3>
     <p class="commonFlex commonDesc commonFamily">
-      <span>CreatedAt : {{ latestItem?.tradeDate | date : "dd/MM/yyyy" }}</span>
-      <span>tradeDate :{{ latestItem?.createdAt | date : "dd/MM/yyyy" }}</span>
+      <span
+        >Created At : {{ latestItem?.createdAt | date : "mediumDate" }}</span
+      >
+      <span>trade Date :{{ latestItem?.tradeDate | date : "mediumDate" }}</span>
     </p>
     <p class="commonFlex commonDesc">
       <span class="commonFamily">
