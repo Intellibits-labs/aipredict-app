@@ -55,6 +55,26 @@ export class HomePage implements OnInit {
     itemsPerPage: 9,
     currentPage: 1,
   };
+
+  public rows: any[];
+  public selected: any = [];
+  public columns = [
+    { name: 'Image', prop: 'user.picture' },
+    { name: 'User Name', prop: 'user.name' },
+    { name: 'Stock', prop: 'stock.name' },
+    { name: 'Created At', prop: 'createdAt' },
+    { name: 'Trade Date', prop: 'tradeDate' },
+    { name: 'Expected ROI', prop: 'status' },
+    { name: 'Actual ROI', prop: 'status' },
+    { name: 'Buy Price', prop: 'buyPrice' },
+    { name: 'Sell Price', prop: 'sellPrice' },
+    { name: 'Stop Loss', prop: 'stopLoss' },
+    { name: 'Status', prop: 'status' },
+  ];
+  public count = 100;
+  public pageSize = 3;
+  public limit = 10;
+  public offset = 0;
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -138,9 +158,24 @@ export class HomePage implements OnInit {
           this.page = res.page;
           this.predictionArray = res.results;
           this.config.totalItems = res.totalResults;
+          this.pageSize = res.totalPages;
+          this.limit = res.limit;
+          this.offset = res.page - 1;
+          this.count = res.totalResults;
+          this.rows = res.results;
         },
         error: (e) => console.error(e),
       });
+  }
+
+  setPage(event: any) {
+    const page = JSON.stringify(event.offset + 1);
+
+    this.getPredictions(page);
+  }
+
+  onSort(ev: any) {
+    console.log(ev);
   }
   async communityClick(item: any) {
     const modal = await this.modalController.create({

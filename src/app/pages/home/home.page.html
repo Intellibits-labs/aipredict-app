@@ -89,6 +89,85 @@
       screenReaderCurrentLabel="You're on page"
     >
     </pagination-controls>
+
+    <div *ngIf="rows &&rows.length>0">
+      <ngx-datatable
+        style="width: 100%; margin: auto"
+        class="material expandable table"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="limit"
+        [externalPaging]="true"
+        [count]="count"
+        [offset]="offset"
+        [rows]="rows"
+        [columns]="columns"
+        (page)="setPage($event)"
+        [externalSorting]="true"
+        (sort)="onSort($event)"
+      >
+        <ngx-datatable-column
+          [sortable]="false"
+          *ngFor="let col of columns"
+          [name]="col.name"
+          [prop]="col.prop"
+        >
+          <ng-template ngx-datatable-header-template>
+            <span class="table-header"> {{col.name}}</span>
+          </ng-template>
+          <ng-template
+            let-row="row"
+            ngx-datatable-cell-template
+            let-value="value"
+          >
+            <span *ngIf="col.name === 'User Name'">{{value}}</span>
+            <span *ngIf="col.name === 'Stock'">{{value}}</span>
+            <span *ngIf="col.name === 'Created At' || col.name === 'Trade Date'"
+              >{{value | date:'mediumDate'}}</span
+            >
+            <span
+              *ngIf="col.name === 'Buy Price' || col.name === 'Sell Price'  || col.name === 'Stop Loss'"
+              >{{value}}</span
+            >
+            <span *ngIf="col.name === ''">{{value.title}}</span>
+
+            <span *ngIf="col.name === 'Image'">
+              <ion-avatar class="image">
+                <img [src]="value" alt="" />
+              </ion-avatar>
+            </span>
+            <span *ngIf="col.name === 'Expected ROI'">
+              <span
+                *ngIf="value=== 'FAILED' || value === 'COMPLETED'
+"
+                >{{row['ROI']}}</span
+              >
+            </span>
+            <span *ngIf="col.name === 'Actual ROI'">
+              <span *ngIf="value == 'PENDING'">{{row?.['ROI']}}</span>
+            </span>
+            <span *ngIf="col.name === 'Status'">
+              <ion-chip color="success" *ngIf="value === 'PENDING'">
+                <ion-icon name="radio-button-on-outline"></ion-icon>
+                <ion-label>Active</ion-label>
+              </ion-chip>
+
+              <ion-chip
+                color="danger"
+                *ngIf="
+                  value === 'FAILED' || value === 'COMPLETED'
+                "
+              >
+                <ion-icon name="close-circle-outline"></ion-icon>
+                <ion-label>Closed</ion-label>
+              </ion-chip>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
     <!-- <h2 class="sub_title">Trending Assets</h2>
     <ion-grid class="ion-no-padding">
       <ion-row>
