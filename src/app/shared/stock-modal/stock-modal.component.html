@@ -52,7 +52,7 @@
       </p>
       <p class="commonFlex commonDesc">
         <span class="commonFamily">
-          {{ item.tradeDate | date : "dd/MM/YYYY" }}</span
+          {{ item.tradeDate | date : "dd-MMM-YYYY" }}</span
         >
         <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
           <ion-icon name="radio-button-on-outline"></ion-icon>
@@ -89,7 +89,7 @@
         <tr *ngFor="let item of predictorArray">
           <td>{{ item.user.name }}</td>
           <td class="commonFamily">
-            {{ item.tradeDate | date : "dd/MM/YYYY" }}
+            {{ item.tradeDate | date : "dd-MMM-YYYY" }}
           </td>
           <td class="commonFamily">₹{{ item.buyPrice }}</td>
           <td class="commonFamily">₹{{ item.sellPrice }}</td>
@@ -132,7 +132,7 @@
       </p>
       <p class="commonFlex commonDesc">
         <span class="commonFamily">
-          {{ item.tradeDate | date : "dd/MM/YYYY" }}</span
+          {{ item.tradeDate | date : "dd-MMM-YYYY" }}</span
         >
         <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
           <ion-icon name="radio-button-on-outline"></ion-icon>
@@ -168,7 +168,7 @@
         <tr *ngFor="let item of predictorArray">
           <td>{{ item.user.name }}</td>
           <td class="commonFamily">
-            {{ item.tradeDate | date : "dd/MM/YYYY" }}
+            {{ item.tradeDate | date : "dd-MMM-YYYY" }}
           </td>
           <td class="commonFamily">₹{{ item.buyPrice }}</td>
           <td class="commonFamily">₹{{ item.sellPrice }}</td>

@@ -39,9 +39,11 @@
     </h3>
     <p class="commonFlex commonDesc commonFamily">
       <span
-        >Created At : {{ latestItem?.createdAt | date : "mediumDate" }}</span
+        >Created At : {{ latestItem?.createdAt | date : "dd-MMM-YYYY" }}</span
       >
-      <span>trade Date :{{ latestItem?.tradeDate | date : "mediumDate" }}</span>
+      <span
+        >trade Date :{{ latestItem?.tradeDate | date : "dd-MMM-YYYY" }}</span
+      >
     </p>
     <p class="commonFlex commonDesc">
       <span class="commonFamily">

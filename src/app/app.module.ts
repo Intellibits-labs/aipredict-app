@@ -28,6 +28,7 @@ import { LogoutInterceptor } from './core/general/interceptor/logout.interceptor
     IonicModule.forRoot(),
     AppRoutingModule,
     SocialLoginModule,
+
     // NgxPaginationModule,
   ],
   providers: [

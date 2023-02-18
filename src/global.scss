@@ -25,9 +25,12 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import "../node_modules/@swimlane/ngx-datatable/index.scss";
+// @import "../node_modules/@swimlane/ngx-datatable/index.scss";
 @import "../node_modules/@swimlane/ngx-datatable/themes/material.scss";
 @import "../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+@import "../node_modules/ngx-easy-table/style.scss";
 
 .commonBackgroundImg {
   background-position: center !important;
@@ -158,6 +161,7 @@ a {
     margin: 0 auto !important;
     padding-top: 70px;
     padding-bottom: 20px;
+    // height: 100%;
   }
   ion-header ion-toolbar {
     max-width: 1500px;

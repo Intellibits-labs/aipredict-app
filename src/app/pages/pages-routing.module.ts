@@ -51,6 +51,13 @@ const routes: Routes = [
             (m) => m.MypredictionPageModule
           ),
       },
+      {
+        path: 'desclaimer',
+        loadChildren: () =>
+          import('./desclaimer/desclaimer.module').then(
+            (m) => m.DesclaimerPageModule
+          ),
+      },
     ],
   },
 ];

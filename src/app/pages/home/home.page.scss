@@ -40,6 +40,15 @@ ion-content {
   .home-title {
     color: #000000;
   }
+
+  .picture {
+    width: 45px;
+    height: 45px;
+  }
+}
+.align {
+  display: flex;
+  justify-content: center;
 }
 .search {
   width: 100%;

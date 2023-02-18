@@ -10,6 +10,7 @@ import { HomePage } from './home.page';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { TableModule } from 'ngx-easy-table';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +20,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     SharedModule,
     NgxPaginationModule,
     NgxDatatableModule,
+    TableModule,
   ],
   declarations: [HomePage],
 })

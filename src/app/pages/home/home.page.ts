@@ -1,6 +1,14 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
+import { ColumnMode, SortType } from '@swimlane/ngx-datatable';
 import { PaginationInstance } from 'ngx-pagination';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { AuthService } from 'src/app/core/general/service/auth.service';
@@ -12,6 +20,18 @@ import { LatestModalComponent } from 'src/app/shared/latest-modal/latest-modal.c
 import { LoginModalComponent } from 'src/app/shared/login-modal/login-modal.component';
 import { PredictorModalComponent } from 'src/app/shared/predictor-modal/predictor-modal.component';
 import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.component';
+import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+import { Subject } from 'rxjs';
+
+interface EventObject {
+  event: string;
+  value: {
+    limit: number;
+    page: number;
+    key: string;
+    order: string;
+  };
+}
 
 @Component({
   selector: 'app-home',
@@ -19,6 +39,7 @@ import { StockModalComponent } from 'src/app/shared/stock-modal/stock-modal.comp
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild('template', { static: true }) phoneTpl: TemplateRef<any>;
   filterData: any = {};
   sortBy = 'recently';
   assetsSlideOpts = {
@@ -49,6 +70,15 @@ export class HomePage implements OnInit {
   userData: any;
   loginCard: boolean = false;
   page: number = 0;
+  columnMode = ColumnMode;
+  sortType = SortType;
+  loading = false;
+  sorts = [
+    {
+      prop: 'createdAt',
+      dir: 'desc',
+    },
+  ];
   collection: any = [];
   config: PaginationInstance = {
     id: 'some_id',
@@ -58,38 +88,93 @@ export class HomePage implements OnInit {
 
   public rows: any[];
   public selected: any = [];
-  public columns = [
-    { name: 'Image', prop: 'user.picture' },
-    { name: 'User Name', prop: 'user.name' },
-    { name: 'Stock', prop: 'stock.name' },
-    { name: 'Created At', prop: 'createdAt' },
-    { name: 'Trade Date', prop: 'tradeDate' },
-    { name: 'Expected ROI', prop: 'status' },
-    { name: 'Actual ROI', prop: 'status' },
-    { name: 'Buy Price', prop: 'buyPrice' },
-    { name: 'Sell Price', prop: 'sellPrice' },
-    { name: 'Stop Loss', prop: 'stopLoss' },
-    { name: 'Status', prop: 'status' },
-  ];
+  // public columns: any = [
+  //   { name: 'Image', prop: 'user.picture' },
+  //   { name: 'User Name', prop: 'user.name' },
+  //   { name: 'Stock', prop: 'stock.name' },
+  //   { name: 'Created At', prop: 'createdAt' },
+  //   { name: 'Trade Date', prop: 'tradeDate' },
+  //   { name: 'Expected ROI', prop: 'status' },
+  //   { name: 'Actual ROI', prop: 'status' },
+  //   { name: 'Buy Price', prop: 'buyPrice' },
+  //   { name: 'Sell Price', prop: 'sellPrice' },
+  //   { name: 'Stop Loss', prop: 'stopLoss' },
+  //   { name: 'Status', prop: 'status' },
+  // ];
   public count = 100;
   public pageSize = 3;
   public limit = 10;
   public offset = 0;
+
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  public data: any = [];
+  public configuration: Config;
+  public columns: Columns[] = [];
+  public pagination = {
+    limit: 10,
+    offset: 0,
+    count: -1,
+    sort: '',
+    order: '',
+  };
+
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
     private navCtrl: NavController,
     private authService: AuthService,
     private cookieService: CookieService,
-    private readonly _authService: SocialAuthService
+    private readonly _authService: SocialAuthService,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.loginCard = this.authService.isLogged();
   }
 
   ngOnInit() {
+    this.columns = [
+      {
+        title: 'Image',
+        key: 'user.picture',
+        cellTemplate: this.phoneTpl,
+        orderEnabled: false,
+      },
+      { title: 'Predictor Name', key: 'user.name' },
+      { title: 'Stock', key: 'stock.name' },
+      { title: 'Created At', key: 'createdAt', cellTemplate: this.phoneTpl },
+      { title: 'Trade Date', key: 'tradeDate', cellTemplate: this.phoneTpl },
+      { title: 'Expected ROI', key: 'ROI', cellTemplate: this.phoneTpl },
+      { title: 'Actual ROI', key: 'ROI', cellTemplate: this.phoneTpl },
+      { title: 'Buy Price', key: 'buyPrice', cellTemplate: this.phoneTpl },
+      {
+        title: 'Sell Price',
+        key: 'sellPrice',
+        cellTemplate: this.phoneTpl,
+        orderEnabled: false,
+      },
+      {
+        title: 'Stop Loss',
+        key: 'stopLoss',
+        cellTemplate: this.phoneTpl,
+        orderEnabled: false,
+      },
+      {
+        title: 'Status',
+        key: 'status',
+        cellTemplate: this.phoneTpl,
+      },
+    ];
+    this.configuration = { ...DefaultConfig };
+    this.configuration.serverPagination = true;
+    this.configuration.threeWaySort = true;
+    this.configuration.horizontalScroll = true;
+    this.configuration.clickEvent = true;
     // this.getStock();
     this.getPredictors();
-    this.getPredictions();
+    this.getPredictions('');
+  }
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
   ionViewDidEnter() {
     this.getUserData();
@@ -136,33 +221,40 @@ export class HomePage implements OnInit {
           `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
       )
       .join('&');
-  getPredictions(page = '1') {
-    let sortByVar;
-    if (this.sortBy == 'recently') {
-      sortByVar = 'createdAt:desc';
-    } else if (this.sortBy == 'oldest') {
-      sortByVar = 'createdAt:asc';
-    }
+  getPredictions(params: string) {
+    // let sortByVar;
+    // if (this.sortBy == 'recently') {
+    //   sortByVar = 'createdAt:desc';
+    // } else if (this.sortBy == 'oldest') {
+    //   sortByVar = 'createdAt:asc';
+    // }
     let numofObj = Object.keys(this.filterData).length;
     this.dataService
       .getMethod(
         HttpApi.getPrediction +
-          `?limit=9&sortBy=${sortByVar}&page=` +
-          page +
-          '&' +
+          params +
           (numofObj > 0 ? this.serialize(this.filterData) : '')
       )
       .subscribe({
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
-          this.page = res.page;
           this.predictionArray = res.results;
-          this.config.totalItems = res.totalResults;
-          this.pageSize = res.totalPages;
-          this.limit = res.limit;
-          this.offset = res.page - 1;
-          this.count = res.totalResults;
-          this.rows = res.results;
+          // this.page = res.page;
+          // this.config.totalItems = res.totalResults;
+          // this.pageSize = res.totalPages;
+          // this.limit = res.limit;
+          // this.offset = res.page - 1;
+          // this.count = res.totalResults;
+          // this.rows = res.results;
+
+          this.data = res.results;
+          this.pagination.count = res.totalResults;
+          this.pagination.limit = res.limit;
+          this.pagination.offset = res.page;
+          this.pagination = { ...this.pagination };
+          this.cdr.markForCheck();
+          // this.pagination.order = ;
+          // this.pagination.sort = ;
         },
         error: (e) => console.error(e),
       });
@@ -173,9 +265,48 @@ export class HomePage implements OnInit {
 
     this.getPredictions(page);
   }
+  eventEmitted(event: { event: string; value: any }): void {
+    if (event.event !== 'onClick') {
+      this.parseEvent(event);
+    }
+  }
+  private parseEvent(obj: EventObject): void {
+    this.pagination.limit = obj.value.limit
+      ? obj.value.limit
+      : this.pagination.limit;
+    this.pagination.offset = obj.value.page
+      ? obj.value.page
+      : this.pagination.offset;
+    this.pagination.sort = !!obj.value.key
+      ? obj.value.key
+      : this.pagination.sort;
+    this.pagination.order = !!obj.value.order
+      ? obj.value.order
+      : this.pagination.order;
+    this.pagination = { ...this.pagination };
+
+    const pagination = `?limit=${this.pagination.limit}&page=${this.pagination.offset}`;
+    const sort = `&sortBy=${this.pagination.sort}:${this.pagination.order}`;
+    this.getPredictions(pagination + sort);
+  }
 
   onSort(ev: any) {
-    console.log(ev);
+    setTimeout(() => {
+      const rows = [...this.rows];
+
+      const sort = ev.sorts[0];
+      console.log(sort);
+
+      // rows.sort((a, b) => {
+      //   return (
+      //     a[sort.prop].localeCompare(b[sort.prop]) *
+      //     (sort.dir === 'desc' ? -1 : 1)
+      //   );
+      // });
+
+      this.rows = rows;
+      this.loading = false;
+    }, 1000);
   }
   async communityClick(item: any) {
     const modal = await this.modalController.create({

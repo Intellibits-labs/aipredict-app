@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-footer',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
 
   ngOnInit() {}
   idClick(element: any) {
@@ -16,4 +17,6 @@ export class FooterComponent implements OnInit {
       .getElementById(element)
       .scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
+
+  desclaimer() {}
 }

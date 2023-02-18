@@ -1,5 +1,6 @@
+<!-- <app-header></app-header> -->
 <ion-content>
-  <div class="common_content">
+  <div class="common_content my-content">
     <ion-toolbar mode="md">
       <ion-title class="prediction_title">My Predictions</ion-title>
       <ion-buttons slot="end">
@@ -30,7 +31,7 @@
         <tr *ngFor="let item of predictions">
           <td>{{item.stock.name}}</td>
           <td>{{item.stock.symbol}}</td>
-          <td class="commonFamily">{{item.tradeDate | date:'dd/MM/YYYY'}}</td>
+          <td class="commonFamily">{{item.tradeDate | date:'dd-MMM-YYYY'}}</td>
           <td class="commonFamily">₹{{item.buyPrice}}</td>
           <td class="commonFamily">₹{{item.sellPrice}}</td>
           <td class="commonFamily">₹{{item.stopLoss || 0}}</td>
@@ -82,7 +83,7 @@
       </p>
       <h2 class="commonTitle-16 commonTextLine">{{item.stock.name}}</h2>
       <p class="commonFlex commonFamily commonDesc">
-        <span>{{item.tradeDate | date:'dd/MM/YYYY'}}</span>
+        <span>{{item.tradeDate | date:'dd-MM-YYYY'}}</span>
         <span>{{item.type}}</span>
       </p>
       <p class="commonFlex commonFamily commonDesc">
