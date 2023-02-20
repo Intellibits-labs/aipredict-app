@@ -91,7 +91,7 @@ export class AddPredictModalComponent implements OnInit {
       console.log(this.isData);
       let data = {
         stock: this.isData?.stock?.id,
-        tradeDate: moment(this.isData?.tradeDate).format('DD-MMM-YYYY'),
+        tradeDate: moment(this.isData?.tradeDate),
         buyPrice: this.isData?.buyPrice,
         sellPrice: this.isData?.sellPrice,
         currentPrice: this.isData?.currentPrice,
@@ -259,16 +259,16 @@ export class AddPredictModalComponent implements OnInit {
     if (this.selectedType == 'INTRADAY') {
       if (moment().isBefore(moment().set({ hour: 15, minutes: 45 }))) {
         this.predictForm.patchValue({
-          tradeDate: moment().format('dd-MMM-YYYY'),
+          tradeDate: moment(),
         });
       } else {
         this.predictForm.patchValue({
-          tradeDate: moment().add(1, 'day').format('dd-MMM-YYYY'),
+          tradeDate: moment().add(1, 'day'),
         });
       }
       console.log(this.predictForm.value.tradeDate);
     } else if (this.selectedType == 'DELIVERY') {
-      let now = moment().add(1, 'months').format('dd-MMM-YYYY');
+      let now = moment().add(1, 'months');
       console.log(now);
       this.predictForm.patchValue({ tradeDate: now });
     }

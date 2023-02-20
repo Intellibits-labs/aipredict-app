@@ -98,21 +98,21 @@
     >
     </ngx-table>
     <ng-template #template let-row let-rowIndex="rowIndex" let-column="column">
-      <span *ngIf="column.title == 'Created At'"
+      <span *ngIf="column.title === 'Created At'"
         >{{row.createdAt | date:'dd-MMM-YYYY'}}</span
       >
-      <span *ngIf="column.title == 'Trade Date'"
+      <span *ngIf="column.title === 'Trade Date'"
         >{{row.tradeDate | date:'dd-MMM-YYYY'}}</span
       >
-      <span class="align" *ngIf="column.title == 'Expected ROI'">
+      <span class="align" *ngIf="column.title === 'Expected ROI'">
         <span
           *ngIf="row.status=== 'FAILED' || row.status === 'COMPLETED'
 "
           >{{row['ROI'] | number}}</span
         >
       </span>
-      <span class="align" *ngIf="column.title == 'Actual ROI'">
-        <span *ngIf="row.status == 'PENDING'">{{row?.['ROI'] | number}}</span>
+      <span class="align" *ngIf="column.title === 'Actual ROI'">
+        <span *ngIf="row.status === 'PENDING'">{{row?.['ROI'] | number}}</span>
       </span>
       <span class="align" *ngIf="column.title === 'Buy Price' "
         >{{row.buyPrice}}</span
@@ -139,7 +139,7 @@
           <ion-label>Closed</ion-label>
         </ion-chip>
       </span>
-      <ion-avatar class="picture" *ngIf="column.title == 'Image'">
+      <ion-avatar class="picture" *ngIf="column.title === 'Image'">
         <img [src]="row.user.picture" />
       </ion-avatar>
     </ng-template>

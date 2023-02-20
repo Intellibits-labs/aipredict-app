@@ -94,14 +94,14 @@ export class Oauth2Interceptor implements HttpInterceptor {
             return next.handle(this.performRequest(req));
           }
 
-          throw new Error('Acceso denegado.');
+          throw new Error('Access denied.');
         }),
         catchError((error) => {
           console.log(
             '🚀  ~ line 91 ~ Oauth2Interceptor ~ catchError ~ error',
             error
           );
-          this.authService.logout();
+          this.authService.logoutUser();
 
           return throwError(error);
         }),
