@@ -1,5 +1,6 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   HostListener,
@@ -34,6 +35,7 @@ interface EventObject {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
@@ -57,14 +59,8 @@ export class HomePage implements OnInit {
       dir: 'desc',
     },
   ];
-  collection: any = [];
-  config: PaginationInstance = {
-    id: 'some_id',
-    itemsPerPage: 9,
-    currentPage: 1,
-  };
 
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  // private ngUnsubscribe: Subject<void> = new Subject<void>();
   public data: any = [];
   public configuration: Config;
   public columns: Columns[] = [];
@@ -78,7 +74,13 @@ export class HomePage implements OnInit {
 
   public preConfiguration: Config;
   public predictorColumns: Columns[] = [];
-
+  public prePagination = {
+    limit: 10,
+    offset: 0,
+    count: -1,
+    sort: '',
+    order: '',
+  };
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -153,29 +155,33 @@ export class HomePage implements OnInit {
       { title: 'Created At', key: 'createdAt', cellTemplate: this.preTpl },
     ];
     this.preConfiguration = { ...DefaultConfig };
-    this.preConfiguration.serverPagination = false;
-    this.preConfiguration.paginationEnabled = false;
-
+    this.preConfiguration.serverPagination = true;
     this.preConfiguration.clickEvent = true;
 
     this.getPredictors();
     this.getPredictions('');
   }
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    // this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
   }
   ionViewDidEnter() {
     this.getUserData();
   }
 
-  getPredictors() {
+  getPredictors(params: string = '') {
+    // sortBy=annualROI:desc
     this.dataService
-      .getMethod(HttpApi.userPredictors + '?sortBy=annualROI:desc')
+      .getMethod(HttpApi.userPredictors + '?' + params)
       .subscribe({
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
           this.predictorArray = res.results;
+          this.prePagination.count = res.totalResults;
+          this.prePagination.limit = res.limit;
+          this.prePagination.offset = res.page;
+          this.prePagination = { ...this.prePagination };
+          console.log('prePagination ', this.prePagination);
 
           this.perCdr.markForCheck();
         },
@@ -225,8 +231,12 @@ export class HomePage implements OnInit {
   }
 
   eventEmitted(event: { event: string; value: any }): void {
+    console.log('event ', event);
+
     if (event.event !== 'onClick') {
-      this.parseEvent(event);
+      this.preParseEvent(event);
+    } else if (event.event === 'onClick') {
+      // this.latestModal(event.value.row);
     }
   }
   private parseEvent(obj: EventObject): void {
@@ -248,8 +258,36 @@ export class HomePage implements OnInit {
     const sort = `&sortBy=${this.pagination.sort}:${this.pagination.order}`;
     this.getPredictions(pagination + sort);
   }
+  predictorEmitted(event: { event: string; value: any }): void {
+    console.log(event);
+    if (event.event !== 'onClick') {
+      this.preParseEvent(event);
+    } else if (event.event === 'onClick') {
+      this.communityClick(event.value.row);
+    }
+  }
+  private preParseEvent(obj: EventObject): void {
+    this.prePagination.limit = obj.value.limit
+      ? obj.value.limit
+      : this.prePagination.limit;
+    this.prePagination.offset = obj.value.page
+      ? obj.value.page
+      : this.prePagination.offset;
+    this.prePagination.sort = !!obj.value.key
+      ? obj.value.key
+      : this.prePagination.sort;
+    this.prePagination.order = !!obj.value.order
+      ? obj.value.order
+      : this.prePagination.order;
+    this.prePagination = { ...this.prePagination };
 
+    const pagination = `limit=${this.prePagination.limit}&page=${this.prePagination.offset}`;
+    const sort = `&sortBy=${this.prePagination.sort}:${this.prePagination.order}`;
+    this.getPredictors(pagination + sort);
+  }
   async communityClick(item: any) {
+    console.log(item);
+
     const modal = await this.modalController.create({
       cssClass: 'predictor_stock_modal',
       component: PredictorModalComponent,

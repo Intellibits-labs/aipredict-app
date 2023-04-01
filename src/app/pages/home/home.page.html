@@ -44,7 +44,7 @@
       </div>
       <ion-row>
         <ng-container
-          *ngFor="let item of predictionArray| paginate:config;let i = index"
+          *ngFor="let item of predictionArray ;let i = index"
         >
           <ion-col
             class="col_assets"
@@ -63,6 +63,7 @@
     </ion-grid> -->
 
     <ngx-table
+      id="predictionTable"
       [configuration]="configuration"
       [data]="data"
       [columns]="columns"
@@ -120,9 +121,12 @@
     </ion-toolbar>
 
     <ngx-table
+      id="predictorTable"
       [configuration]="preConfiguration"
       [data]="predictorArray"
       [columns]="predictorColumns"
+      [pagination]="prePagination"
+      (event)="predictorEmitted($event)"
     >
     </ngx-table>
     <ng-template
@@ -134,11 +138,7 @@
       <span *ngIf="column.title == 'Created At'"
         >{{row.createdAt | date:'dd-MMM-YYYY'}}</span
       >
-      <ion-avatar
-        class="picture"
-        *ngIf="column.title == 'Image'"
-        (click)="communityClick(row)"
-      >
+      <ion-avatar class="picture" *ngIf="column.title == 'Image'">
         <img [src]="row.picture" />
       </ion-avatar>
       <span class="no" *ngIf="column.title == 'No'"> #{{rowIndex+1}} </span>
