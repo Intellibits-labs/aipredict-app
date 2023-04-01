@@ -81,5 +81,11 @@
   .footer_section {
     padding: 20px;
     height: auto;
+
+    .designed {
+      display: block;
+      text-align: left;
+      padding-left: 0;
+    }
   }
 }

@@ -16,22 +16,6 @@
       </div>
     </ion-card>
 
-    <!-- <div class="search">
-      <input
-        type="text"
-        #search
-        (keyup.enter)="searchKey($event)"
-        class="searchTerm"
-        placeholder="Search stocks, users..."
-      />
-      <ion-button
-        type="submit"
-        class="searchButton"
-        (click)="searchClick(search.value)"
-      >
-        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
-      </ion-button>
-    </div> -->
     <ion-toolbar mode="md">
       <ion-title class="home-title">Predictions</ion-title>
       <ion-buttons slot="end">
@@ -53,7 +37,7 @@
       </ion-buttons>
     </ion-toolbar>
 
-    <ion-grid class="ion-no-padding">
+    <!-- <ion-grid class="ion-no-padding">
       <div *ngIf="predictionArray.length===0" class="emptySec">
         <img src="assets/images/404.svg" alt="" />
         <p>No predictions found!</p>
@@ -76,19 +60,8 @@
           </ion-col>
         </ng-container>
       </ion-row>
-    </ion-grid>
-    <pagination-controls
-      *ngIf="predictionArray.length>0"
-      id="some_id"
-      (pageChange)="pageChanged($event)"
-      (pageBoundsCorrection)="pageChanged($event)"
-      previousLabel="Previous"
-      nextLabel="Next"
-      screenReaderPaginationLabel="Pagination"
-      screenReaderPageLabel="page"
-      screenReaderCurrentLabel="You're on page"
-    >
-    </pagination-controls>
+    </ion-grid> -->
+
     <ngx-table
       [configuration]="configuration"
       [data]="data"
@@ -104,16 +77,14 @@
       <span *ngIf="column.title === 'Trade Date'"
         >{{row.tradeDate | date:'dd-MMM-YYYY'}}</span
       >
-      <span class="align" *ngIf="column.title === 'Expected ROI'">
-        <span
-          *ngIf="row.status=== 'FAILED' || row.status === 'COMPLETED'
-"
-          >{{row['ROI'] | number}}</span
-        >
-      </span>
-      <span class="align" *ngIf="column.title === 'Actual ROI'">
-        <span *ngIf="row.status === 'PENDING'">{{row?.['ROI'] | number}}</span>
-      </span>
+      <span class="align" *ngIf="column.title == 'Expected ROI'">
+        {{row.expectedROI | number}}</span
+      >
+
+      <span class="align" *ngIf="column.title == 'Actual ROI'">
+        {{row?.['ROI'] | number}}</span
+      >
+
       <span class="align" *ngIf="column.title === 'Buy Price' "
         >{{row.buyPrice}}</span
       >
@@ -143,121 +114,37 @@
         <img [src]="row.user.picture" />
       </ion-avatar>
     </ng-template>
-    <!-- <div *ngIf="rows &&rows.length>0">
-      <ngx-datatable
-        style="width: 100%; margin: auto"
-        class="material"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'"
-        [limit]="limit"
-        [externalPaging]="true"
-        [count]="count"
-        [offset]="offset"
-        [rows]="rows"
-        [columns]="columns"
-        [columnMode]="columnMode.force"
-        (page)="setPage($event)"
-        [externalSorting]="true"
-        (sort)="onSort($event)"
-        [sortType]="sortType.multi"
-        [sorts]="sorts"
-        [loadingIndicator]="loading"
-      >
-        <ngx-datatable-column
-          [sortable]="true"
-          *ngFor="let col of columns"
-          [name]="col.name"
-          [prop]="col.prop"
-        >
-          <ng-template ngx-datatable-header-template>
-            <span class="table-header"> {{col.name}}</span>
-          </ng-template>
-          <ng-template
-            let-row="row"
-            ngx-datatable-cell-template
-            let-value="value"
-          >
-            <span *ngIf="col.name === 'User Name'">{{value}}</span>
-            <span *ngIf="col.name === 'Stock'">{{value}}</span>
-            <span *ngIf="col.name === 'Created At' || col.name === 'Trade Date'"
-              >{{value | date:'dd-MMM-YYYY'}}</span
-            >
-            <span
-              *ngIf="col.name === 'Buy Price' || col.name === 'Sell Price'  || col.name === 'Stop Loss'"
-              >{{value}}</span
-            >
 
-
-            <span *ngIf="col.name === 'Image'">
-              <ion-avatar class="image">
-                <img [src]="value" alt="" />
-              </ion-avatar>
-            </span>
-            <span *ngIf="col.name === 'Expected ROI'">
-              <span
-                *ngIf="value=== 'FAILED' || value === 'COMPLETED'
-"
-                >{{row['ROI'] | number}}</span
-              >
-            </span>
-            <span *ngIf="col.name === 'Actual ROI'">
-              <span *ngIf="value == 'PENDING'">{{row?.['ROI'] | number}}</span>
-            </span>
-            <span *ngIf="col.name === 'Status'">
-              <ion-chip color="success" *ngIf="value === 'PENDING'">
-                <ion-icon name="radio-button-on-outline"></ion-icon>
-                <ion-label>Active</ion-label>
-              </ion-chip>
-
-              <ion-chip
-                color="danger"
-                *ngIf="
-                  value === 'FAILED' || value === 'COMPLETED'
-                "
-              >
-                <ion-icon name="close-circle-outline"></ion-icon>
-                <ion-label>Closed</ion-label>
-              </ion-chip>
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
-    </div> -->
-    <!-- <h2 class="sub_title">Trending Assets</h2>
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ng-container *ngFor="let item of trendingAssets;let i =index">
-          <ion-col
-            *ngIf="i < 6"
-            class="col_assets"
-            sizeLg="4"
-            sizeMd="6"
-            sizeSm="12"
-            sizeXs="12"
-          >
-            <stock-card
-              [stockItem]="item"
-              (click)="stockModal(item)"
-            ></stock-card>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </ion-grid> -->
-
-    <!-- <ion-slides pager="false" [options]="assetsSlideOpts">
-    <ion-slide *ngFor="let item of trendingAssets">
-       <stock-card
-            [stockItem]="item"
-            (click)="stockModal(item)"
-          ></stock-card>
-    </ion-slide>
-  </ion-slides> -->
     <ion-toolbar mode="md">
       <ion-title class="home-title">Predictor Leader Board</ion-title>
     </ion-toolbar>
-    <ion-grid class="ion-no-padding">
+
+    <ngx-table
+      [configuration]="preConfiguration"
+      [data]="predictorArray"
+      [columns]="predictorColumns"
+    >
+    </ngx-table>
+    <ng-template
+      #preTemplate
+      let-row
+      let-rowIndex="rowIndex"
+      let-column="column"
+    >
+      <span *ngIf="column.title == 'Created At'"
+        >{{row.createdAt | date:'dd-MMM-YYYY'}}</span
+      >
+      <ion-avatar
+        class="picture"
+        *ngIf="column.title == 'Image'"
+        (click)="communityClick(row)"
+      >
+        <img [src]="row.picture" />
+      </ion-avatar>
+      <span class="no" *ngIf="column.title == 'No'"> #{{rowIndex+1}} </span>
+    </ng-template>
+
+    <!-- <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col
           class="col_assets"
@@ -282,7 +169,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
   </div>
   <app-footer></app-footer>
 </ion-content>

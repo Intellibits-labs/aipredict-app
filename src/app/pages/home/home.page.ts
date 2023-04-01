@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
-import { ColumnMode, SortType } from '@swimlane/ngx-datatable';
+
 import { PaginationInstance } from 'ngx-pagination';
 import { HttpApi } from 'src/app/core/general/http/http-api';
 import { AuthService } from 'src/app/core/general/service/auth.service';
@@ -40,38 +40,16 @@ interface EventObject {
 })
 export class HomePage implements OnInit {
   @ViewChild('template', { static: true }) phoneTpl: TemplateRef<any>;
+  @ViewChild('preTemplate', { static: true }) preTpl: TemplateRef<any>;
   filterData: any = {};
   sortBy = 'recently';
-  assetsSlideOpts = {
-    initialSlide: 3,
-    speed: 400,
-    direction: 'horizontal',
-    fill: 'column',
-    spaceBetween: 15,
-    effect: 'cards',
-    breakpoints: {
-      576: {
-        slidesPerView: 1,
-        spaceBetween: 30,
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 30,
-      },
-      769: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-    },
-  };
-  trendingAssets: any = [];
+
   predictorArray: any = [];
   predictionArray: any = [];
   userData: any;
   loginCard: boolean = false;
   page: number = 0;
-  columnMode = ColumnMode;
-  sortType = SortType;
+
   loading = false;
   sorts = [
     {
@@ -86,26 +64,6 @@ export class HomePage implements OnInit {
     currentPage: 1,
   };
 
-  public rows: any[];
-  public selected: any = [];
-  // public columns: any = [
-  //   { name: 'Image', prop: 'user.picture' },
-  //   { name: 'User Name', prop: 'user.name' },
-  //   { name: 'Stock', prop: 'stock.name' },
-  //   { name: 'Created At', prop: 'createdAt' },
-  //   { name: 'Trade Date', prop: 'tradeDate' },
-  //   { name: 'Expected ROI', prop: 'status' },
-  //   { name: 'Actual ROI', prop: 'status' },
-  //   { name: 'Buy Price', prop: 'buyPrice' },
-  //   { name: 'Sell Price', prop: 'sellPrice' },
-  //   { name: 'Stop Loss', prop: 'stopLoss' },
-  //   { name: 'Status', prop: 'status' },
-  // ];
-  public count = 100;
-  public pageSize = 3;
-  public limit = 10;
-  public offset = 0;
-
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   public data: any = [];
   public configuration: Config;
@@ -118,6 +76,9 @@ export class HomePage implements OnInit {
     order: '',
   };
 
+  public preConfiguration: Config;
+  public predictorColumns: Columns[] = [];
+
   constructor(
     private modalController: ModalController,
     private dataService: DataService,
@@ -125,7 +86,8 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private cookieService: CookieService,
     private readonly _authService: SocialAuthService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly perCdr: ChangeDetectorRef
   ) {
     this.loginCard = this.authService.isLogged();
   }
@@ -142,7 +104,11 @@ export class HomePage implements OnInit {
       { title: 'Stock', key: 'stock.name' },
       { title: 'Created At', key: 'createdAt', cellTemplate: this.phoneTpl },
       { title: 'Trade Date', key: 'tradeDate', cellTemplate: this.phoneTpl },
-      { title: 'Expected ROI', key: 'ROI', cellTemplate: this.phoneTpl },
+      {
+        title: 'Expected ROI',
+        key: 'expectedROI',
+        cellTemplate: this.phoneTpl,
+      },
       { title: 'Actual ROI', key: 'ROI', cellTemplate: this.phoneTpl },
       { title: 'Buy Price', key: 'buyPrice', cellTemplate: this.phoneTpl },
       {
@@ -168,7 +134,30 @@ export class HomePage implements OnInit {
     this.configuration.threeWaySort = true;
     this.configuration.horizontalScroll = true;
     this.configuration.clickEvent = true;
-    // this.getStock();
+
+    this.predictorColumns = [
+      {
+        title: 'No',
+        key: '',
+        cellTemplate: this.preTpl,
+        orderEnabled: false,
+      },
+      {
+        title: 'Image',
+        key: 'picture',
+        cellTemplate: this.preTpl,
+        orderEnabled: false,
+      },
+      { title: 'Predictor Name', key: 'name' },
+      { title: 'Average Annual ROI', key: 'annualROI' },
+      { title: 'Created At', key: 'createdAt', cellTemplate: this.preTpl },
+    ];
+    this.preConfiguration = { ...DefaultConfig };
+    this.preConfiguration.serverPagination = false;
+    this.preConfiguration.paginationEnabled = false;
+
+    this.preConfiguration.clickEvent = true;
+
     this.getPredictors();
     this.getPredictions('');
   }
@@ -179,28 +168,7 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.getUserData();
   }
-  getStock() {
-    this.dataService
-      .getMethod(HttpApi.getStocks + '?sortBy=createdAt:desc')
-      .subscribe({
-        next: (res) => {
-          console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
-          res.results.map((x: any) => {
-            if (
-              x?.['meta']?.['Global Quote']?.['10. change percent'].includes(
-                '-'
-              )
-            ) {
-              x.flag = true;
-            } else {
-              x.flag = false;
-            }
-            this.trendingAssets.push(x);
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
+
   getPredictors() {
     this.dataService
       .getMethod(HttpApi.userPredictors + '?sortBy=annualROI:desc')
@@ -208,7 +176,8 @@ export class HomePage implements OnInit {
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
           this.predictorArray = res.results;
-          this.page = res.page - 1;
+
+          this.perCdr.markForCheck();
         },
         error: (e) => console.error(e),
       });
@@ -222,6 +191,10 @@ export class HomePage implements OnInit {
       )
       .join('&');
   getPredictions(params: string) {
+    console.log(
+      '🚀 ~ file: home.page.ts:225 ~ HomePage ~ getPredictions ~ params:',
+      params
+    );
     // let sortByVar;
     // if (this.sortBy == 'recently') {
     //   sortByVar = 'createdAt:desc';
@@ -232,39 +205,25 @@ export class HomePage implements OnInit {
     this.dataService
       .getMethod(
         HttpApi.getPrediction +
+          '?' +
           params +
-          (numofObj > 0 ? this.serialize(this.filterData) : '')
+          (numofObj > 0 ? '&' + this.serialize(this.filterData) : '')
       )
       .subscribe({
         next: (res) => {
           console.log('🚀 ~ file: home.page.ts:51 ~ HomePage ~  ~ res', res);
           this.predictionArray = res.results;
-          // this.page = res.page;
-          // this.config.totalItems = res.totalResults;
-          // this.pageSize = res.totalPages;
-          // this.limit = res.limit;
-          // this.offset = res.page - 1;
-          // this.count = res.totalResults;
-          // this.rows = res.results;
-
           this.data = res.results;
           this.pagination.count = res.totalResults;
           this.pagination.limit = res.limit;
           this.pagination.offset = res.page;
           this.pagination = { ...this.pagination };
           this.cdr.markForCheck();
-          // this.pagination.order = ;
-          // this.pagination.sort = ;
         },
         error: (e) => console.error(e),
       });
   }
 
-  setPage(event: any) {
-    const page = JSON.stringify(event.offset + 1);
-
-    this.getPredictions(page);
-  }
   eventEmitted(event: { event: string; value: any }): void {
     if (event.event !== 'onClick') {
       this.parseEvent(event);
@@ -285,29 +244,11 @@ export class HomePage implements OnInit {
       : this.pagination.order;
     this.pagination = { ...this.pagination };
 
-    const pagination = `?limit=${this.pagination.limit}&page=${this.pagination.offset}`;
+    const pagination = `limit=${this.pagination.limit}&page=${this.pagination.offset}`;
     const sort = `&sortBy=${this.pagination.sort}:${this.pagination.order}`;
     this.getPredictions(pagination + sort);
   }
 
-  onSort(ev: any) {
-    setTimeout(() => {
-      const rows = [...this.rows];
-
-      const sort = ev.sorts[0];
-      console.log(sort);
-
-      // rows.sort((a, b) => {
-      //   return (
-      //     a[sort.prop].localeCompare(b[sort.prop]) *
-      //     (sort.dir === 'desc' ? -1 : 1)
-      //   );
-      // });
-
-      this.rows = rows;
-      this.loading = false;
-    }, 1000);
-  }
   async communityClick(item: any) {
     const modal = await this.modalController.create({
       cssClass: 'predictor_stock_modal',
@@ -322,32 +263,6 @@ export class HomePage implements OnInit {
     await modal.present();
   }
 
-  async stockModal(item: any) {
-    const modal = await this.modalController.create({
-      cssClass: 'predictor_stock_modal',
-      component: StockModalComponent,
-      mode: 'md',
-      componentProps: { stockDetail: item },
-    });
-    modal.onDidDismiss().then((data) => {
-      if (data.role == 'success') {
-      }
-    });
-    await modal.present();
-  }
-  searchKey(ev: any) {
-    console.log(ev.target.value);
-    let searchV = ev.target.value;
-    if (searchV) {
-      this.navCtrl.navigateForward(['pages/search-result/' + searchV]);
-    }
-  }
-  searchClick(value: any) {
-    console.log(value);
-    if (value) {
-      this.navCtrl.navigateForward(['pages/search-result/' + value]);
-    }
-  }
   sortByChange() {
     this.getPredictions(this.page + '');
   }
@@ -431,12 +346,6 @@ export class HomePage implements OnInit {
     await modal.present();
   }
 
-  pageChanged(ev: any) {
-    console.log('ev', ev);
-    this.config.currentPage = ev;
-    this.getPredictions(ev);
-  }
-
   async filterModal() {
     const modal = await this.modalController.create({
       component: FilterModalComponent,
@@ -448,7 +357,7 @@ export class HomePage implements OnInit {
       if (data.role == 'success') {
         this.filterData = data.data;
         this.page = 1;
-        this.getPredictions('1');
+        this.getPredictions('');
       }
     });
     await modal.present();

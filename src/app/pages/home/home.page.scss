@@ -3,6 +3,13 @@ ion-content {
   --padding-start: 0;
   --padding-end: 0;
 
+  .subTitle {
+    --padding-start: 0;
+  }
+  .no {
+    color: #000000;
+    font-weight: 500;
+  }
   .login_alertcard {
     width: 70%;
     padding: 20px;
@@ -39,6 +46,7 @@ ion-content {
   }
   .home-title {
     color: #000000;
+    padding-left: 0;
   }
 
   .picture {

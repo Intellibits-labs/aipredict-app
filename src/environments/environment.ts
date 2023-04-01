@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://api.indiapredict.com/v1/',
-  imageUrl: 'https://api.indiapredict.com/',
+  baseUrl: 'http://192.168.1.22:3008/v1/',
+  imageUrl: 'http://192.168.1.22:3008/',
 
   backend: {
-    host: 'https://api.indiapredict.com/v1',
+    host: 'http://192.168.1.22:3008/v1',
   },
   oauth: {
-    host: 'https://api.indiapredict.com/v1/',
+    host: 'http://192.168.1.22:3008/v1/',
     client_id: '2',
     client_secret: 'tsN80QNwTawD3WZSX2uziOFI6HstTEs2bXBqsCyv',
     scope: '*',

@@ -1,7 +1,7 @@
 ion-content {
   --padding-start: 0px;
   --padding-end: 0px;
-
+  --padding-top: 20px;
   .grid,
   ion-row,
   ion-col {
@@ -10,10 +10,13 @@ ion-content {
 
   .left-col {
     background: #f7f7f7;
-
+    border-right: 1px solid #dddddd;
     ion-item {
       --background: #f7f7f7;
     }
+  }
+  .right_col {
+    // border-left: 1px solid #dddddd;
   }
 }
 .selected {
