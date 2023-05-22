@@ -132,12 +132,8 @@ export class AddPredictModalComponent implements OnInit {
           .subscribe({
             next: (res) => {
               console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
-              // this.autoCompleteArray = res?.bestMatches;
-              res?.bestMatches.forEach((element: any) => {
-                if (element['8. currency'] == 'INR') {
-                  this.autoCompleteArray.push(element);
-                }
-              });
+
+              this.autoCompleteArray = res?.results;
               this.loader.dismiss();
               console.log('INR ', this.autoCompleteArray);
             },
@@ -150,44 +146,44 @@ export class AddPredictModalComponent implements OnInit {
     }
   }
   selectStock(item: any) {
-    console.log('first working');
-    this.selectedName = item?.['2. name'];
-    this.loader.presentLoading().then(() => {
-      let url;
-      if (item['1. symbol']) {
-        url = item['1. symbol'];
-      } else {
-        url = item;
-      }
-      this.dataService.getMethod(HttpApi.getStock + url).subscribe({
-        next: (res) => {
-          console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
-          this.getStockDetail = res['Global Quote'];
-          if (this.getStockDetail['10. change percent'].includes('-')) {
-            this.symbolIcon = true;
-          }
-          if (!this.isEdit) {
-            this.predictForm.patchValue({
-              stock: item['1. symbol'],
-              buyPrice: this.getStockDetail['05. price'],
-              currentPrice: this.getStockDetail['05. price'],
-              stopLoss: this.getStockDetail['05. price'] / 2,
-            });
-          }
-          this.typeChange();
-          this.autoCompleteArray = [];
-          this.slider.lockSwipes(false);
-          this.slider.slideNext();
-          this.slider.lockSwipes(true);
-          this.loader.dismiss();
-        },
-        error: (e) => {
-          console.error(e);
-          this.loader.dismiss();
-          this.toast.presentToast(e.message);
-        },
-      });
+    this.selectedName = item?.['name'];
+    this.getStockDetail = item;
+    let url;
+    if (item['symbol']) {
+      url = item['symbol'];
+    } else {
+      url = item;
+    }
+    this.predictForm.patchValue({
+      stock: item['id'],
+      buyPrice: 0,
+      currentPrice: 0,
+      stopLoss: 0 / 2,
     });
+    this.typeChange();
+    this.autoCompleteArray = [];
+    this.slider.lockSwipes(false);
+    this.slider.slideNext();
+    this.slider.lockSwipes(true);
+    // this.dataService.getMethod(HttpApi.getStock + url).subscribe({
+    //   next: (res) => {
+    //     console.log('🚀 46 ~ AddPredictModalComponent ~ ~ res', res);
+    //     this.loader.dismiss();
+    //     this.getStockDetail = res['Global Quote'];
+    //     if (this.getStockDetail['10. change percent'].includes('-')) {
+    //       this.symbolIcon = true;
+    //     }
+    //     if (!this.isEdit) {
+
+    //     }
+
+    //   },
+    //   error: (e) => {
+    //     console.error(e);
+    //     this.loader.dismiss();
+    //     this.toast.presentToast(e.message);
+    //   },
+    // });
   }
   onSaveClick() {
     this.dataService

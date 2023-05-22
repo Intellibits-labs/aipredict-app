@@ -40,23 +40,23 @@
           (click)="selectStock(item)"
         >
           <p class="symbol_type">
-            <span>{{ item["1. symbol"] }}</span>
-            <span>{{ item["3. type"] }}</span>
+            <span>{{ item?.symbol }}</span>
+            <!-- <span>{{ item["3. type"] }}</span> -->
           </p>
-          <h3 class="name commonTextLine">{{ item["2. name"] }}</h3>
+          <h3 class="name commonTextLine">{{ item?.name }}</h3>
         </ion-card>
       </ng-container>
     </ion-slide>
     <ion-slide class="form_slide">
       <form [formGroup]="predictForm">
-        <p class="stock_symbol">{{ getStockDetail?.["01. symbol"] }}</p>
+        <p class="stock_symbol">{{ getStockDetail?.["symbol"] }}</p>
         <div>
           <h1 class="stock_name">{{ selectedName }}</h1>
         </div>
 
         <h2 class="stock_price">
           <span class="commonFamily price"
-            >₹{{ getStockDetail?.["05. price"] }}</span
+            >₹{{ getStockDetail?.["price"] || 0 }}</span
           >
           <span *ngIf="symbolIcon" class="percentageStyle down"
             ><ion-icon name="arrow-down-outline"></ion-icon>
@@ -140,12 +140,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar *ngIf="slideIndex === 1" mode="md">
-    <ion-button
-      *ngIf="!isEdit"
-      (click)="saveClick()"
-      class="commonSubmitBtn"
-      [disabled]="!predictForm.valid"
-    >
+    <ion-button *ngIf="!isEdit" (click)="saveClick()" class="commonSubmitBtn">
       Save
     </ion-button>
     <ion-button

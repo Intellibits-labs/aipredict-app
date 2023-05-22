@@ -22,7 +22,7 @@ export class HttpApi {
   static facebookLogin = 'auth/facebook';
 
   // Prediction
-  static searchStock = 'stock/search/';
+  static searchStock = 'stock/search2/';
   static getStock = 'stock/quote/';
   static predictionNew = 'prediction/new';
   static getPredictionMy = 'prediction/my';
