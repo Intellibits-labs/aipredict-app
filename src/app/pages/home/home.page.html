@@ -78,11 +78,11 @@
       <span *ngIf="column.title === 'Trade Date'"
         >{{row.tradeDate | date:'dd-MMM-YYYY'}}</span
       >
-      <span class="align" *ngIf="column.title == 'Expected ROI'">
+      <span class="align" *ngIf="column.title == 'Expected ROR'">
         {{row.expectedROI | number}}</span
       >
 
-      <span class="align" *ngIf="column.title == 'Actual ROI'">
+      <span class="align" *ngIf="column.title == 'Actual ROR'">
         {{row?.['ROI'] | number}}</span
       >
 

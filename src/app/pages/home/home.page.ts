@@ -107,11 +107,11 @@ export class HomePage implements OnInit {
       { title: 'Created At', key: 'createdAt', cellTemplate: this.phoneTpl },
       { title: 'Trade Date', key: 'tradeDate', cellTemplate: this.phoneTpl },
       {
-        title: 'Expected ROI',
+        title: 'Expected ROR',
         key: 'expectedROI',
         cellTemplate: this.phoneTpl,
       },
-      { title: 'Actual ROI', key: 'ROI', cellTemplate: this.phoneTpl },
+      { title: 'Actual ROR', key: 'ROI', cellTemplate: this.phoneTpl },
       { title: 'Buy Price', key: 'buyPrice', cellTemplate: this.phoneTpl },
       {
         title: 'Sell Price',
@@ -151,7 +151,7 @@ export class HomePage implements OnInit {
         orderEnabled: false,
       },
       { title: 'Predictor Name', key: 'name' },
-      { title: 'Average Annual ROI', key: 'annualROI' },
+      { title: 'Average Annual ROR', key: 'annualROI' },
       { title: 'Created At', key: 'createdAt', cellTemplate: this.preTpl },
     ];
     this.preConfiguration = { ...DefaultConfig };

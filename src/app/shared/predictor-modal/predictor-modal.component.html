@@ -18,7 +18,7 @@
         <h2 class="commonTitle-16">{{ predictor?.name }}</h2>
         <p class="commonFlex commonDesc">
           <span
-            >Expected ROI :
+            >Expected ROR :
             <span class="commonFamily">
               {{predictor?.['ROI']/predictor?.predCount || 0 }}</span
             ></span
@@ -43,7 +43,7 @@
       <h2 class="commonTitle-16 commonTextLine">{{ item.stock.name }}</h2>
       <p class="commonFlex commonDesc">
         <span class="commonFamily"
-          >Expected ROI : {{item?.['ROI'] | number}}</span
+          >Expected ROR : {{item?.['ROI'] | number}}</span
         >
         <span>{{ item?.type }}</span>
       </p>
@@ -78,7 +78,7 @@
           <th>Sell Price</th>
           <th>Stop Loss</th>
           <th>Type</th>
-          <th>Expected ROI</th>
+          <th>Expected ROR</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -120,7 +120,7 @@
       <h2 class="commonTitle-16 commonTextLine">{{ item.stock.name }}</h2>
       <p class="commonFlex commonDesc">
         <span class="commonFamily"
-          >Expected ROI : {{item?.['ROI'] | number}}</span
+          >Expected ROR : {{item?.['ROI'] | number}}</span
         >
         <span>{{ item?.type }}</span>
       </p>
@@ -154,7 +154,7 @@
           <th>Sell Price</th>
           <th>Stop Loss</th>
           <th>Type</th>
-          <th>Expected ROI</th>
+          <th>Expected ROR</th>
           <th>Status</th>
         </tr>
       </thead>

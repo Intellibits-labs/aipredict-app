@@ -52,10 +52,10 @@
             latestItem?.status === 'FAILED' ||
             latestItem?.status === 'COMPLETED'
           "
-          >Actual ROI :{{latestItem?.['ROI'] | number}}</span
+          >Actual ROR :{{latestItem?.['ROI'] | number}}</span
         >
         <span *ngIf="latestItem?.status === 'PENDING'"
-          >Expected ROI : {{ latestItem?.expectedROI | number }}</span
+          >Expected ROR : {{ latestItem?.expectedROI | number }}</span
         >
       </span>
       <span>{{ latestItem.type }}</span>
