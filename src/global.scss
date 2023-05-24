@@ -161,7 +161,7 @@ a {
     margin: 0 auto !important;
     padding-top: 70px;
     padding-bottom: 20px;
-    // height: 100%;
+    min-height: 100vh;
   }
   ion-header ion-toolbar {
     max-width: 1500px;
