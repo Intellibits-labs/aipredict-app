@@ -102,7 +102,10 @@ export class HomePage implements OnInit {
         cellTemplate: this.phoneTpl,
         orderEnabled: false,
       },
-      { title: 'Predictor Name', key: 'user.name' },
+      {
+        title: 'Predictor Name',
+        key: 'user.name',
+      },
       { title: 'Stock', key: 'stock.name' },
       { title: 'Created At', key: 'createdAt', cellTemplate: this.phoneTpl },
       { title: 'Trade Date', key: 'tradeDate', cellTemplate: this.phoneTpl },
@@ -150,13 +153,19 @@ export class HomePage implements OnInit {
         cellTemplate: this.preTpl,
         orderEnabled: false,
       },
-      { title: 'Predictor Name', key: 'name' },
-      { title: 'Average Annual ROR', key: 'annualROI' },
-      { title: 'Created At', key: 'createdAt', cellTemplate: this.preTpl },
+      { title: 'Predictor Name', key: 'name', orderEnabled: false },
+      { title: 'Average Annual ROR', key: 'annualROI', orderEnabled: false },
+      {
+        title: 'Created At',
+        key: 'createdAt',
+        cellTemplate: this.preTpl,
+        orderEnabled: false,
+      },
     ];
     this.preConfiguration = { ...DefaultConfig };
     this.preConfiguration.serverPagination = true;
     this.preConfiguration.clickEvent = true;
+    this.preConfiguration.threeWaySort = false;
 
     this.getPredictors();
     this.getPredictions('');
@@ -230,16 +239,16 @@ export class HomePage implements OnInit {
       });
   }
 
-  eventEmitted(event: { event: string; value: any }): void {
+  predictionEventEmitted(event: { event: string; value: any }): void {
     console.log('event ', event);
 
     if (event.event !== 'onClick') {
-      this.preParseEvent(event);
+      this.predictionParseEvent(event);
     } else if (event.event === 'onClick') {
       // this.latestModal(event.value.row);
     }
   }
-  private parseEvent(obj: EventObject): void {
+  private predictionParseEvent(obj: EventObject): void {
     this.pagination.limit = obj.value.limit
       ? obj.value.limit
       : this.pagination.limit;
@@ -261,12 +270,12 @@ export class HomePage implements OnInit {
   predictorEmitted(event: { event: string; value: any }): void {
     console.log(event);
     if (event.event !== 'onClick') {
-      this.preParseEvent(event);
+      // this.predictorParseEvent(event);
     } else if (event.event === 'onClick') {
       this.communityClick(event.value.row);
     }
   }
-  private preParseEvent(obj: EventObject): void {
+  private predictorParseEvent(obj: EventObject): void {
     this.prePagination.limit = obj.value.limit
       ? obj.value.limit
       : this.prePagination.limit;
