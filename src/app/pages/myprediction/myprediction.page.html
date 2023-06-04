@@ -22,6 +22,7 @@
           <th>Stop Loss</th>
           <th>Type</th>
           <th>Expected ROR</th>
+          <th>ROR</th>
 
           <th>Status</th>
           <th>Actions</th>
@@ -36,15 +37,16 @@
           <td class="commonFamily">₹{{item.sellPrice}}</td>
           <td class="commonFamily">₹{{item.stopLoss || 0}}</td>
           <td class="commonFamily">{{item.type}}</td>
+          <td class="commonFamily">{{item['expectedROI'] | number}}</td>
           <td class="commonFamily">{{item['ROI'] | number}}</td>
           <td>
-            <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+            <ion-chip color="success" *ngIf="item?.status === 'PENDING'">
               <ion-icon name="radio-button-on-outline"></ion-icon>
               <ion-label>Active</ion-label>
             </ion-chip>
             <ion-chip
               color="danger"
-              *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+              *ngIf="item?.status === 'FAILED' || item?.status === 'COMPLETED'"
             >
               <ion-icon name="close-circle-outline"></ion-icon>
               <ion-label>Closed</ion-label>
@@ -52,7 +54,7 @@
           </td>
           <td>
             <ion-button
-              *ngIf="item.status =='PENDING'"
+              *ngIf="item.status ==='PENDING'"
               class="morebtn"
               (click)="actionClick($event,item)"
               fill="clear"
@@ -70,7 +72,7 @@
       <p class="commonFlex commonDesc">
         <span> {{item.stock.symbol}}</span>
         <ion-button
-          *ngIf="item.status =='PENDING'"
+          *ngIf="item.status ==='PENDING'"
           (click)="actionClick($event,item)"
           class="morebtn"
           fill="clear"
@@ -88,13 +90,13 @@
       </p>
       <p class="commonFlex commonFamily commonDesc">
         <span>Expected ROR : {{item?.['ROI'] | number}}</span>
-        <ion-chip color="success" *ngIf="item?.status == 'PENDING'">
+        <ion-chip color="success" *ngIf="item?.status === 'PENDING'">
           <ion-icon name="radio-button-on-outline"></ion-icon>
           <ion-label>Active</ion-label>
         </ion-chip>
         <ion-chip
           color="danger"
-          *ngIf="item?.status == 'FAILED' || item?.status == 'COMPLETED'"
+          *ngIf="item?.status === 'FAILED' || item?.status === 'COMPLETED'"
         >
           <ion-icon name="close-circle-outline"></ion-icon>
           <ion-label>Closed</ion-label>
