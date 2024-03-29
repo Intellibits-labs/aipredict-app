@@ -5,6 +5,7 @@
         <img class="logo_img" src="assets/images/INDIAPREDICT.png" alt="" />
       </a>
     </ion-title>
+    <ion-text color="danger"><ion-icon name="warning"></ion-icon> Site under Test. Data in the portal is for testing and not for real use</ion-text>
     <ion-buttons slot="end" class="ion-hide-md-down">
       <ion-button fill="clear" class="home_btn" (click)="idClick('home')">
         Home
@@ -35,6 +36,13 @@
   (ionScroll)="logScrolling($event)"
   id="landing"
 >
+  <div class="warningDiv">
+    <p>Beta version: Site under testing, Data currently on the portal is for testing and not for real use for share prediction</p>
+  </div>
+  <div class="emailDiv">
+    <p>For any queries, Please contact us @ intellibits.kochi@gmail.com</p>
+  </div>
+  
   <section
     id="home"
     class="top_section"
